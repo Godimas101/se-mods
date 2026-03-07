@@ -138,10 +138,8 @@ Claude will reference known issues and provide the composite key solution.
 ```
 Claude will provide API quick reference for `IMyPowerProducer` and `MyResourceSourceComponent`.
 
-## Resources
+## Other Resources
 
-- **SDK**: `D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\`
-- **Project guide**: [CLAUDE.md](../../../CLAUDE.md)
 - **Official docs**: [SE Modding Wiki](https://spaceengineers.wiki.gg/wiki/Modding/Reference)
 - **API docs**: [Mod API Reference](https://keensoftwarehouse.github.io/SpaceEngineersModAPI/api/index.html)
 
