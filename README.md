@@ -78,7 +78,7 @@ These mods adjust third-party mods for compatibility with Sturmgrenadier servers
 ### Other Mods
 
 #### Not Just For Looks
-Gameplay enhancement mod adding cosmetic blocks with functional benefits.
+Gameplay enhancement mod adding boosted stats for DLC cosmetic blocks.
 
 **Status:** Stable
 
