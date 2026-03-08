@@ -1,0 +1,576 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <CubeBlocks>
+        <!-- Region Isy's Dense Solar Panels Large -->
+        <Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>LargeBlockSolarPanel2x</SubtypeId>
+            </Id>
+            <DisplayName>Dense Solar Panel 2x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 2x output and costs 2x solar cells and steel plates.
+			
+			Max output: 320 kW</Description>
+            <CubeSize>Large</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="4" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="4" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Girder" Count="12" />
+                <Component Subtype="Computer" Count="4" />
+                <Component Subtype="SolarCell" Count="64" />
+                <Component Subtype="Construction" Count="4" />
+                <Component Subtype="BulletproofGlass" Count="4" />
+				<Component Subtype="SteelPlate" Count="4" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <Center x="0" y="0" z="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="2" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="2" Default="true" />
+                <MountPoint Side="Top" StartX="3.8" StartY="0.9" EndX="4" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="3.8" StartY="0" EndX="4" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="2" />
+                <MountPoint Side="Front" StartX="3.8" StartY="0" EndX="4" EndY="2" />
+            </MountPoints>
+
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels2x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>50</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.32</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <DamageEffectName>Damage_Electrical_Damaged_SolarPanels</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>LargeBlockSolarPanel5x</SubtypeId>
+            </Id>
+            <DisplayName>Dense Solar Panel 5x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 5x output and costs 5x solar cells and steel plates.
+			
+			Max output: 800 kW</Description>
+            <CubeSize>Large</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="4" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Girder" Count="12" />
+                <Component Subtype="Computer" Count="4" />
+				<Component Subtype="PowerCell" Count="5" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+                <Component Subtype="SolarCell" Count="160" />
+                <Component Subtype="Construction" Count="4" />
+                <Component Subtype="BulletproofGlass" Count="4" />
+				<Component Subtype="SteelPlate" Count="10" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <Center x="0" y="0" z="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="2" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="2" Default="true" />
+                <MountPoint Side="Top" StartX="3.8" StartY="0.9" EndX="4" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="3.8" StartY="0" EndX="4" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="2" />
+                <MountPoint Side="Front" StartX="3.8" StartY="0" EndX="4" EndY="2" />
+            </MountPoints>
+
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels5x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>70</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.8</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <DamageEffectName>Damage_Electrical_Damaged_SolarPanels</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>LargeBlockSolarPanel10x</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Dense Solar Panel 10x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 10x output and costs 10x solar cells and steel plates.
+			
+			Max output: 1.6 MW</Description>
+            <CubeSize>Large</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="4" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Girder" Count="12" />
+                <Component Subtype="Computer" Count="4" />
+				<Component Subtype="PowerCell" Count="10" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Superconductor" Count="2" />
+				<Component Subtype="PrototechCapacitor" Count="1" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+                <Component Subtype="SolarCell" Count="320" />
+                <Component Subtype="Construction" Count="4" />
+                <Component Subtype="BulletproofGlass" Count="4" />
+				<Component Subtype="SteelPlate" Count="20" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <Center x="0" y="0" z="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="2" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="2" Default="true" />
+                <MountPoint Side="Top" StartX="3.8" StartY="0.9" EndX="4" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="3.8" StartY="0" EndX="4" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="2" />
+                <MountPoint Side="Front" StartX="3.8" StartY="0" EndX="4" EndY="2" />
+            </MountPoints>
+
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels10x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>90</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>1.6</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <DamageEffectName>Damage_Electrical_Damaged_SolarPanels</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>LargeBlockSolarPanel20x</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Dense Solar Panel 20x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 20x output and costs 20x solar cells and steel plates.
+			
+			Max output: 3.2 MW</Description>
+            <CubeSize>Large</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="4" y="2" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="40" />
+                <Component Subtype="Construction" Count="10" />
+                <Component Subtype="Girder" Count="12" />
+                <Component Subtype="Computer" Count="4" />
+				<Component Subtype="PowerCell" Count="20" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Superconductor" Count="5" />
+				<Component Subtype="PrototechCapacitor" Count="2" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechPanel" Count="2" /> <!-- Additional Cost -->
+                <Component Subtype="SolarCell" Count="640" />
+                <Component Subtype="Construction" Count="4" />
+                <Component Subtype="BulletproofGlass" Count="4" />
+				<Component Subtype="SteelPlate" Count="40" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <Center x="0" y="0" z="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="2" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="2" Default="true" />
+                <MountPoint Side="Top" StartX="3.8" StartY="0.9" EndX="4" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="3.8" StartY="0" EndX="4" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="2" />
+                <MountPoint Side="Front" StartX="3.8" StartY="0" EndX="4" EndY="2" />
+            </MountPoints>
+
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels20x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>110</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>3.2</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <DamageEffectName>Damage_Electrical_Damaged_SolarPanels</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<!-- End Region Isy's Dense Solar Panels Large -->
+		
+		<!-- Region Isy's Dense Solar Panels Small -->
+        <Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>SmallBlockSolarPanel2x</SubtypeId>
+            </Id>
+            <DisplayName>Dense Solar Panel 2x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 2x output and costs 2x solar cells and steel plates.
+			
+			Max output: 80 kW</Description>
+            <CubeSize>Small</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="10" y="5" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Center x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="2" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="Girder" Count="4" />
+                <Component Subtype="Computer" Count="1" />
+                <Component Subtype="SolarCell" Count="16" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="BulletproofGlass" Count="1" />
+				<Component Subtype="SteelPlate" Count="2" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="5" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="5" Default="true" />
+                <MountPoint Side="Top" StartX="9.8" StartY="0.9" EndX="10" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="9.8" StartY="0" EndX="10" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="5" />
+                <MountPoint Side="Front" StartX="9.8" StartY="0" EndX="10" EndY="5" />
+            </MountPoints>
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels2x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>40</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.08</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <MirroringX>Z</MirroringX>
+            <MirroringZ>X</MirroringZ>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>SmallBlockSolarPanel5x</SubtypeId>
+            </Id>
+            <DisplayName>Dense Solar Panel 5x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 5x output and costs 5x solar cells and steel plates.
+			
+			Max output: 200 kW</Description>
+            <CubeSize>Small</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="10" y="5" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Center x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="5" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="Girder" Count="4" />
+                <Component Subtype="Computer" Count="1" />
+				<Component Subtype="PowerCell" Count="1" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+                <Component Subtype="SolarCell" Count="40" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="BulletproofGlass" Count="1" />
+				<Component Subtype="SteelPlate" Count="5" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="5" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="5" Default="true" />
+                <MountPoint Side="Top" StartX="9.8" StartY="0.9" EndX="10" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="9.8" StartY="0" EndX="10" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="5" />
+                <MountPoint Side="Front" StartX="9.8" StartY="0" EndX="10" EndY="5" />
+            </MountPoints>
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels5x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>60</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.2</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <MirroringX>Z</MirroringX>
+            <MirroringZ>X</MirroringZ>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>SmallBlockSolarPanel10x</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Dense Solar Panel 10x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 10x output and costs 10x solar cells and steel plates.
+			
+			Max output: 400 kW</Description>
+            <CubeSize>Small</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="10" y="5" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Center x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="10" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="Girder" Count="4" />
+                <Component Subtype="Computer" Count="1" />
+				<Component Subtype="PowerCell" Count="3" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Superconductor" Count="1" />
+				<Component Subtype="PrototechCapacitor" Count="1" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+                <Component Subtype="SolarCell" Count="80" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="BulletproofGlass" Count="1" />
+				<Component Subtype="SteelPlate" Count="10" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="5" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="5" Default="true" />
+                <MountPoint Side="Top" StartX="9.8" StartY="0.9" EndX="10" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="9.8" StartY="0" EndX="10" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="5" />
+                <MountPoint Side="Front" StartX="9.8" StartY="0" EndX="10" EndY="5" />
+            </MountPoints>
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels10x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>80</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.4</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <MirroringX>Z</MirroringX>
+            <MirroringZ>X</MirroringZ>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<Definition xsi:type="MyObjectBuilder_SolarPanelDefinition">
+            <Id>
+                <TypeId>SolarPanel</TypeId>
+                <SubtypeId>SmallBlockSolarPanel20x</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Dense Solar Panel 20x</DisplayName> <!-- Updated name -->
+            <Description>This solar panel has 20x output and costs 20x solar cells and steel plates.
+			
+			Max output: 800 kW</Description>
+            <CubeSize>Small</CubeSize>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="10" y="5" z="1" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Center x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="20" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="Girder" Count="4" />
+                <Component Subtype="Computer" Count="1" />
+				<Component Subtype="PowerCell" Count="5" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="Superconductor" Count="2" />
+				<Component Subtype="PrototechCapacitor" Count="2" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechPanel" Count="2" /> <!-- Additional Cost -->
+                <Component Subtype="SolarCell" Count="160" />
+                <Component Subtype="Construction" Count="1" />
+                <Component Subtype="BulletproofGlass" Count="1" />
+				<Component Subtype="SteelPlate" Count="20" />
+            </Components>
+            <CriticalComponent Subtype="SolarCell" Index="0" />
+            <MountPoints>
+                <MountPoint Side="Right" StartX="0.9" StartY="0" EndX="1" EndY="5" />
+                <MountPoint Side="Left" StartX="0" StartY="0" EndX="0.1" EndY="5" Default="true" />
+                <MountPoint Side="Top" StartX="9.8" StartY="0.9" EndX="10" EndY="1" />
+                <MountPoint Side="Top" StartX="0" StartY="0.9" EndX="0.2" EndY="1" />
+                <MountPoint Side="Bottom" StartX="9.8" StartY="0" EndX="10" EndY="0.1" />
+                <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="0.2" EndY="0.1" />
+                <MountPoint Side="Front" StartX="0" StartY="0" EndX="0.2" EndY="5" />
+                <MountPoint Side="Front" StartX="9.8" StartY="0" EndX="10" EndY="5" />
+            </MountPoints>
+            <BuildProgressModels>
+
+            </BuildProgressModels>
+            <BlockPairName>IsysDenseSolarPanels20x</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>100</BuildTimeSeconds>
+			
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>0.8</MaxPowerOutput>
+
+            <PanelOrientation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>-1</Z>
+            </PanelOrientation>
+            <TwoSidedPanel>true</TwoSidedPanel>
+            <PanelOffset>1.0</PanelOffset>
+            <MirroringX>Z</MirroringX>
+            <MirroringZ>X</MirroringZ>
+            <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <PhysicalMaterial>GlassOpaque</PhysicalMaterial>
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <DestroyEffect>BlockDestroyed_Large3X</DestroyEffect>
+            <DestroySound>PoofExplosionCat3</DestroySound>
+            <PCU>55</PCU>
+            <IsAirTight>false</IsAirTight>
+        </Definition>
+		<!-- End Region Isy's Dense Solar Panels Small -->
+    </CubeBlocks>
+</Definitions>

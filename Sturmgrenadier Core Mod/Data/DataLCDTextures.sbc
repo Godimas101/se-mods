@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LCDTextures>
+
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Shield</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Sturmgrenadier-Shield.dds</TexturePath>
+   </LCDTextureDefinition>
+      <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Shield Silver</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Shield-Silver.dds</TexturePath>
+   </LCDTextureDefinition>
+       <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Shield Name</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Shield-Name.dds</TexturePath>
+   </LCDTextureDefinition>
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Logo</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Sturmgrenadier-Logo.dds</TexturePath>
+   </LCDTextureDefinition>
+         <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Logo Classic</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Classic-SG-Logo.dds</TexturePath>
+   </LCDTextureDefinition>
+            <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Logo Fancy</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Fancy-SG-Logo.dds</TexturePath>
+   </LCDTextureDefinition>
+            <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Banner Wide</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Banner-Wide.dds</TexturePath>
+   </LCDTextureDefinition>
+               <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Banner Tall</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Banner-Tall.dds</TexturePath>
+   </LCDTextureDefinition>
+                  <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Name</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Text-Name.dds</TexturePath>
+   </LCDTextureDefinition>
+                     <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Initials</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\SG-Text-Initials.dds</TexturePath>
+   </LCDTextureDefinition>
+         <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] General Apok Gun</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\General_Apok_Gun.dds</TexturePath>
+   </LCDTextureDefinition>
+            <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] General Apok Tank</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\General_Apok_Tank.dds</TexturePath>
+   </LCDTextureDefinition>
+               <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] General Apok Wide</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\General_Apok_Wide.dds</TexturePath>
+   </LCDTextureDefinition>
+               <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] General Apok Tall</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\General_Apok_Tall.dds</TexturePath>
+   </LCDTextureDefinition>
+      <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Planetside Logo</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Planetside-Logo.dds</TexturePath>
+   </LCDTextureDefinition>
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] NC Logo</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\NC-Logo.dds</TexturePath>
+   </LCDTextureDefinition>
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Cert</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Cert.dds</TexturePath>
+   </LCDTextureDefinition>
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Cat</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Cat.dds</TexturePath>
+   </LCDTextureDefinition>
+   <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Doom Engineers</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\Doom-Engineers.dds</TexturePath>
+   </LCDTextureDefinition>
+    <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Flag Canada</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\flagCa.dds</TexturePath>
+   </LCDTextureDefinition>
+       <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Flag USA</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\flagUs.dds</TexturePath>
+   </LCDTextureDefinition>
+       <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Flag United Kingdom</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\flagUk.dds</TexturePath>
+   </LCDTextureDefinition>
+       <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Flag New Zealand</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\flagNz.dds</TexturePath>
+   </LCDTextureDefinition>
+       <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Flag Iceland</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\flagIc.dds</TexturePath>
+	</LCDTextureDefinition>
+	<LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] FAFO</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\FAFO.dds</TexturePath>
+	</LCDTextureDefinition>
+  </LCDTextures>
+</Definitions>
+
+

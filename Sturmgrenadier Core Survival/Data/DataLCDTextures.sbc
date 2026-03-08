@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LCDTextures>
+
+	<LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Algae Production</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\algaeProcessing.dds</TexturePath>
+	</LCDTextureDefinition>
+    <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Food Production</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\foodProductoin.dds</TexturePath>
+	</LCDTextureDefinition>
+    <LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Organic Processing</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\organicProcessing.dds</TexturePath>
+	</LCDTextureDefinition>
+	<LCDTextureDefinition>
+     <Id>
+       <TypeId>LCDTextureDefinition</TypeId>
+       <SubtypeId>[SG] Water Filtration</SubtypeId>
+     </Id>
+    <TexturePath>Textures\Models\waterFiltration.dds</TexturePath>
+	</LCDTextureDefinition>
+  </LCDTextures>
+</Definitions>
+
+
+ 

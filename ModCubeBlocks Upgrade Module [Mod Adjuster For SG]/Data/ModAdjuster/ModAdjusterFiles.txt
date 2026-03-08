@@ -1,0 +1,1 @@
+ModCubeBlocksUpgradeModule_CubeBlocks.xml

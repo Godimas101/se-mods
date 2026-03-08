@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <Definition xsi:type="MyObjectBuilder_FactionTypeDefinition">
+        <Id Type="MyObjectBuilder_FactionTypeDefinition" Subtype="Trader" />
+
+        <OffersList>
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="AutomaticRifleItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="PreciseAutomaticRifleItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="RapidFireAutomaticRifleItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="UltimateAutomaticRifleItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="SemiAutoPistolItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="FullAutoPistolItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="ElitePistolItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="BasicHandHeldLauncherItem" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="AdvancedHandHeldLauncherItem" />
+
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="Welder2Item" />
+
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="AngleGrinder2Item" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="AngleGrinder3Item" />
+
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="HandDrill2Item" />
+
+            <ItemId Type="MyObjectBuilder_OxygenContainerObject" Subtype="OxygenBottle" />
+            <ItemId Type="MyObjectBuilder_GasContainerObject" Subtype="HydrogenBottle" />
+
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Construction" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="MetalGrid" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="InteriorPlate" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SteelPlate" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Girder" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SmallTube" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="LargeTube" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Motor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Display" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="BulletproofGlass" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Superconductor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Computer" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Reactor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Thrust" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="GravityGenerator" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="RadioCommunication" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Detector" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Explosives" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SolarCell" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="PowerCell" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Canvas" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Medical" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="ZoneChip" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="EngineerPlushie" />
+
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="NATO_25x184mm" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="Missile200mm" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="AutocannonClip" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="MediumCalibreAmmo" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="LargeCalibreAmmo" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="LargeRailgunAmmo" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="SmallRailgunAmmo" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="SemiAutoPistolMagazine" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="FullAutoPistolMagazine" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="ElitePistolMagazine" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="AutomaticRifleGun_Mag_20rd" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="RapidFireAutomaticRifleGun_Mag_50rd" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="PreciseAutomaticRifleGun_Mag_5rd" />
+            <ItemId Type="MyObjectBuilder_AmmoMagazine" Subtype="UltimateAutomaticRifleGun_Mag_30rd" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Medkit" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Powerkit" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="ClangCola" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="CosmicCoffee" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+			
+        </OffersList>
+
+        <OrdersList>
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Superconductor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Reactor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Thrust" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="GravityGenerator" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="RadioCommunication" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Detector" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SolarCell" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="PowerCell" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="EngineerPlushie" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+        </OrdersList>
+
+        <CanSellOxygen>true</CanSellOxygen>
+        <CanSellHydrogen>true</CanSellHydrogen>
+
+        <MaxContractCount>15</MaxContractCount>
+
+    </Definition>
+	
+	
+	<Definition xsi:type="MyObjectBuilder_FactionTypeDefinition">
+        <Id Type="MyObjectBuilder_FactionTypeDefinition" Subtype="Military" />
+
+        <OffersList>
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Iron" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Nickel" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silicon" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Iron" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Nickel" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Silicon" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="HandDrill3Item" />
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="HandDrill4Item" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Medkit" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Powerkit" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="ClangCola" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="CosmicCoffee" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+        </OffersList>
+
+        <OrdersList>
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SteelPlate" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Construction" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Detector" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Motor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Computer" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="LargeTube" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+
+        </OrdersList>
+
+        <CanSellOxygen>true</CanSellOxygen>
+        <CanSellHydrogen>true</CanSellHydrogen>
+
+        <MaxContractCount>15</MaxContractCount>
+
+    </Definition>
+	
+	<Definition xsi:type="MyObjectBuilder_FactionTypeDefinition">
+        <Id Type="MyObjectBuilder_FactionTypeDefinition" Subtype="Pirate" />
+
+        <OffersList>
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Iron" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Nickel" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silicon" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Iron" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Nickel" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Silicon" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ingot" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_PhysicalGunObject" Subtype="HandDrill3Item" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Medkit" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="Powerkit" />
+
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="ClangCola" />
+            <ItemId Type="MyObjectBuilder_ConsumableItem" Subtype="CosmicCoffee" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+        </OffersList>
+
+        <OrdersList>
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Cobalt" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Magnesium" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Silver" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Gold" />
+            <ItemId Type="MyObjectBuilder_Ore" Subtype="Platinum" />
+
+            <ItemId Type="MyObjectBuilder_Component" Subtype="SteelPlate" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Construction" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Detector" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Motor" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="Computer" />
+            <ItemId Type="MyObjectBuilder_Component" Subtype="LargeTube" />
+			
+			<ItemId Type="MyObjectBuilder_Component" Subtype="PrototechFrame" />
+			<ItemId Type="MyObjectBuilder_Ingot" Subtype="PrototechScrap" />
+
+        </OrdersList>
+
+        <CanSellOxygen>true</CanSellOxygen>
+        <CanSellHydrogen>true</CanSellHydrogen>
+
+        <MaxContractCount>15</MaxContractCount>
+
+    </Definition>
+
+</Definitions>
+

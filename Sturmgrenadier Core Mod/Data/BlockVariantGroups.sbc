@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <BlockVariantGroups>
+<!-- Variant group for all blocks included in the SG Core Mod -->
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="SGCoreModGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\detector.dds</Icon> <!-- Custom SG icon -->
+			<Icon>Textures\GUI\Icons\Cubes\minSG.dds</Icon> <!-- Custom SG mini icon -->
+            <DisplayName>SG Core Mod</DisplayName>
+            <Description>Modified versions of blocks included in the SG Core Mod</Description>
+            <Blocks>
+                <Block Type="MyObjectBuilder_OreDetector" Subtype="SGLargeOreDetector" />
+				<Block Type="MyObjectBuilder_OreDetector" Subtype="SGSmallBlockOreDetector" />
+				<Block Type="MyObjectBuilder_LandingGear" Subtype="SGLargeMagneticPlate" />
+				<Block Type="MyObjectBuilder_LandingGear" Subtype="SGSmallMagneticPlate" />
+				<Block Type="MyObjectBuilder_Searchlight" Subtype="SGLargeSearchlight" />
+				<Block Type="MyObjectBuilder_Searchlight" Subtype="SGSmallSearchlight" />
+            </Blocks>
+        </BlockVariantGroup>
+		
+		<BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="SGWatrerTanks" />
+            <Icon>Textures\GUI\Icons\Cubes\WaterTank_Small.dds</Icon>
+			<Icon>Textures\GUI\Icons\Cubes\minSG.dds</Icon> <!-- Custom SG mini icon -->
+            <DisplayName>Water Tanks</DisplayName>
+            <Description>Water tanks for storing water</Description>
+            <Blocks>
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LG_WaterTank_Small" />
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="SG_WaterTank_Small" />
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LG_WaterTank_Small_1x1" />
+				<Block Type="MyObjectBuilder_OxygenTank" Subtype="LG_WaterTank_Small_1x1_Fieldwork" />
+            </Blocks>
+        </BlockVariantGroup>
+    </BlockVariantGroups>
+</Definitions>

@@ -1,0 +1,368 @@
+<?xml version="1.0" ?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<CubeBlocks>
+		<Definition xsi:type="MyObjectBuilder_WindTurbineDefinition">
+            <Id>
+                <TypeId>WindTurbine</TypeId>
+                <SubtypeId>Serg_25MW_Wind_Turbine</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Windmill</DisplayName> <!-- Updated name -->
+            <Description>Unlimited Power</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <PlaceDecals>false</PlaceDecals>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="17" y="25" z="5"/>
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="200" /> <!-- Updated from 2000 -->
+                <Component Subtype="Motor" Count="750" /> <!-- Updated from 300 -->
+                <Component Subtype="Construction" Count="1875" /> <!-- Updated from 2000 -->
+                <Component Subtype="Girder" Count="2250" /> <!-- Updated from 1000 -->
+                <Component Subtype="InteriorPlate" Count="3750" /> <!-- Additional Cost -->
+                <Component Subtype="LargeTube" Count="350" /> <!-- Additional Cost -->
+				<!-- <Component Subtype="PowerCell" Count="500" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component> -->
+				<Component Subtype="Superconductor" Count="30" /> <!-- Updated from 150 -->
+                <Component Subtype="Computer" Count="190" /> <!-- Updated from 100 -->
+				<Component Subtype="PrototechCapacitor" Count="1" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechCoolingUnit" Count="5" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechFrame" Count="1" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechMachinery" Count="15" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechPanel" Count= "15" /> <!-- Additional Cost -->
+                <Component Subtype="SteelPlate" Count="800" /> <!-- Updated from 1200 -->
+            </Components>
+            <CriticalComponent Subtype="Superconductor" Index="0" />
+            <MountPoints>
+				<MountPoint Side="Bottom" StartX="8.0" StartY="2.0" EndX="9.0" EndY="3.0"/>
+			</MountPoints>
+            <MirroringY>Z</MirroringY>
+            <BuildProgressModels>
+
+			</BuildProgressModels>
+            <BlockPairName>Serg_25MW_Wind_Turbine</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>360</BuildTimeSeconds>
+            <DamageEffectId>214</DamageEffectId>
+            <ActionSound>ArcBlockWindTurbine</ActionSound>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>50</MaxPowerOutput> <!-- Updated From 25 -->
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <IsAirTight>false</IsAirTight>
+            <RaycasterSize>20</RaycasterSize>
+            <RaycastersCount>9</RaycastersCount>
+            <MinRaycasterClearance>0.3</MinRaycasterClearance>
+            <OptimalGroundClearance>25</OptimalGroundClearance>
+            <RaycastersToFullEfficiency>7</RaycastersToFullEfficiency>
+            <OptimalWindSpeed>80</OptimalWindSpeed>
+            <TurbineSpinUpSpeed>3</TurbineSpinUpSpeed>
+            <TurbineSpinDownSpeed>0.3</TurbineSpinDownSpeed>
+            <TurbineRotationSpeed>2</TurbineRotationSpeed>
+            <PCU>500</PCU> <!-- Updated from 1000 -->
+        </Definition>
+		
+		<Definition xsi:type="MyObjectBuilder_WindTurbineDefinition">
+            <Id>
+                <TypeId>WindTurbine</TypeId>
+                <SubtypeId>SergWindTurbine</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Stackable Wind Turbine Top</DisplayName> <!-- Updated name -->
+            <Description>Unlimited Power</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <PlaceDecals>false</PlaceDecals>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="5" y="9" z="5"/>
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="120" /> <!-- Updated from 850 -->
+                <Component Subtype="Motor" Count="136" /> <!-- Updated from 850 -->
+                <Component Subtype="Construction" Count="340" /> <!-- Updated from 650 -->
+                <Component Subtype="Girder" Count="408" /> <!-- Updated from 1400 -->
+                <Component Subtype="InteriorPlate" Count="680" /> <!-- Additional Cost -->
+				<!-- <Component Subtype="PowerCell" Count="1500" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component> -->
+				<Component Subtype="Superconductor" Count="10" /> <!-- Updated from 200 -->
+                <Component Subtype="Computer" Count="34" /> <!-- Updated from 600 -->
+				<Component Subtype="PrototechFrame" Count="1" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechMachinery" Count="5" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechPanel" Count= "1" /> <!-- Additional Cost -->
+                <Component Subtype="SteelPlate" Count="180" /> <!-- Updated from 1200 -->
+            </Components>
+            <CriticalComponent Subtype="Superconductor" Index="0" />
+            <MountPoints>
+				<MountPoint Side="Bottom" StartX="2" StartY="2" EndX="3" EndY="3" />
+			</MountPoints>
+            <MirroringY>Z</MirroringY>
+            <BuildProgressModels>
+
+			</BuildProgressModels>
+            <BlockPairName>SergWindTurbine</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>75</BuildTimeSeconds>
+            <DamageEffectId>214</DamageEffectId>
+            <ActionSound>ArcBlockWindTurbine</ActionSound>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>8</MaxPowerOutput> <!-- Updated from 5 -->
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <IsAirTight>false</IsAirTight>
+
+            <VoxelPlacement>
+                <StaticMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </StaticMode>
+                <DynamicMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </DynamicMode>
+            </VoxelPlacement>
+            <RaycasterSize>20</RaycasterSize>
+            <RaycastersCount>9</RaycastersCount>
+            <MinRaycasterClearance>0.3</MinRaycasterClearance>
+            <OptimalGroundClearance>25</OptimalGroundClearance>
+            <RaycastersToFullEfficiency>7</RaycastersToFullEfficiency>
+            <OptimalWindSpeed>80</OptimalWindSpeed>
+            <TurbineSpinUpSpeed>3</TurbineSpinUpSpeed>
+            <TurbineSpinDownSpeed>0.3</TurbineSpinDownSpeed>
+            <TurbineRotationSpeed>5</TurbineRotationSpeed>
+            <PCU>250</PCU>
+        </Definition>
+		
+		<Definition xsi:type="MyObjectBuilder_WindTurbineDefinition">
+            <Id>
+                <TypeId>WindTurbine</TypeId>
+                <SubtypeId>SergWindTurbinePart</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Stackable Wind Turbine</DisplayName> <!-- Updated name -->
+            <Description>Unlimited Power</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <PlaceDecals>false</PlaceDecals>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="5" y="9" z="5" />
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="120" /> <!-- Updated from 850 -->
+                <Component Subtype="Motor" Count="136" /> <!-- Updated from 850 -->
+                <Component Subtype="Construction" Count="340" /> <!-- Updated from 650 -->
+                <Component Subtype="Girder" Count="408" /> <!-- Updated from 1400 -->
+                <Component Subtype="InteriorPlate" Count="680" /> <!-- Additional Cost -->
+				<!-- <Component Subtype="PowerCell" Count="1500" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component> -->
+				<Component Subtype="Superconductor" Count="10" /> <!-- Updated from 200 -->
+                <Component Subtype="Computer" Count="34" /> <!-- Updated from 600 -->
+				<Component Subtype="PrototechFrame" Count="1" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechMachinery" Count="5" > <!-- Additional Cost -->
+					<DeconstructId>
+						<TypeId>Ingot</TypeId>
+						<SubtypeId>PrototechScrap</SubtypeId>
+					</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechPanel" Count= "1" /> <!-- Additional Cost -->
+                <Component Subtype="SteelPlate" Count="180" /> <!-- Updated from 1200 -->
+            </Components>
+            <CriticalComponent Subtype="Superconductor" Index="0" />
+            <MountPoints>
+				<MountPoint Side="Bottom" StartX="2" StartY="2" EndX="3" EndY="3" />
+				<MountPoint Side="Top" StartX="2" StartY="2" EndX="3" EndY="3"/>
+			</MountPoints>
+            <MirroringY>Z</MirroringY>
+            <BuildProgressModels>
+
+			</BuildProgressModels>
+            <BlockPairName>SergWindTurbinePart</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>75</BuildTimeSeconds>
+            <DamageEffectId>214</DamageEffectId>
+            <ActionSound>ArcBlockWindTurbine</ActionSound>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>8</MaxPowerOutput> <!-- Updated from 5 -->
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <IsAirTight>false</IsAirTight>
+            <VoxelPlacement>
+                <StaticMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </StaticMode>
+                <DynamicMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </DynamicMode>
+            </VoxelPlacement>
+            <RaycasterSize>20</RaycasterSize>
+            <RaycastersCount>9</RaycastersCount>
+            <MinRaycasterClearance>0.3</MinRaycasterClearance>
+            <OptimalGroundClearance>25</OptimalGroundClearance>
+            <RaycastersToFullEfficiency>7</RaycastersToFullEfficiency>
+            <OptimalWindSpeed>80</OptimalWindSpeed>
+            <TurbineSpinUpSpeed>3</TurbineSpinUpSpeed>
+            <TurbineSpinDownSpeed>0.3</TurbineSpinDownSpeed>
+            <TurbineRotationSpeed>5</TurbineRotationSpeed>
+            <PCU>250</PCU>
+        </Definition>
+		
+		<Definition xsi:type="MyObjectBuilder_WindTurbineDefinition">
+            <Id>
+                <TypeId>WindTurbine</TypeId>
+                <SubtypeId>Serg_10MW_Wind_Turbine</SubtypeId>
+            </Id>
+            <DisplayName>Prototech Wind Turbine</DisplayName> <!-- Updated name -->
+            <Description>Unlimited Power</Description>
+            <CubeSize>Large</CubeSize>
+            <GuiVisible>false</GuiVisible>
+            <PlaceDecals>false</PlaceDecals>
+            <BlockTopology>TriangleMesh</BlockTopology>
+            <Size x="7" y="4" z="7"/>
+            <ModelOffset x="0" y="0" z="0" />
+            <Components>
+                <Component Subtype="SteelPlate" Count="50" /> <!-- Updated from 200 -->
+                <Component Subtype="Motor" Count="108" /> <!-- Updated from 400 -->
+                <Component Subtype="Construction" Count="270" /> <!-- Updated from 300 -->
+                <Component Subtype="Girder" Count="325" /> <!-- Updated from 700 -->
+				<Component Subtype="InteriorPlate" Count="540" /> <!-- Additional Cost -->
+				<!-- <Component Subtype="PowerCell" Count="850" >
+					<DeconstructId>
+						<TypeId>Ore</TypeId>
+						<SubtypeId>Scrap</SubtypeId>
+					</DeconstructId>
+				</Component> -->
+				<Component Subtype="Superconductor" Count="8" /> <!-- Updated from 100 -->
+                <Component Subtype="Computer" Count="27" /> <!-- Updated from 300 -->
+				<Component Subtype="PrototechFrame" Count="1" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+				<Component Subtype="PrototechMachinery" Count="8" > <!-- Additional Cost -->
+				<DeconstructId>
+					<TypeId>Ingot</TypeId>
+					<SubtypeId>PrototechScrap</SubtypeId>
+				</DeconstructId>
+				</Component>
+                <Component Subtype="SteelPlate" Count="150" /> <!-- Updated from 550 -->
+            </Components>
+            <CriticalComponent Subtype="Superconductor" Index="0" />
+            <MountPoints>
+				<MountPoint Side="Bottom" StartX="3" StartY="3" EndX="4" EndY="4"/>
+			</MountPoints>
+            <MirroringY>Z</MirroringY>
+            <BuildProgressModels>
+
+			</BuildProgressModels>
+            <BlockPairName>Serg_10MW_Wind_Turbine</BlockPairName>
+            <EdgeType>Light</EdgeType>
+            <BuildTimeSeconds>120</BuildTimeSeconds>
+            <DamageEffectId>214</DamageEffectId>
+            <ActionSound>ArcBlockWindTurbine</ActionSound>
+            <DamagedSound>ParticleElectrical</DamagedSound>
+
+            <ResourceSourceGroup>SolarPanels</ResourceSourceGroup>
+            <MaxPowerOutput>6</MaxPowerOutput> <!-- Updated from 550 -->
+            <EmissiveColorPreset>Default</EmissiveColorPreset>
+            <IsAirTight>false</IsAirTight>
+            <VoxelPlacement>
+                <StaticMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </StaticMode>
+                <DynamicMode>
+                    <PlacementMode>OutsideVoxel</PlacementMode>
+                </DynamicMode>
+            </VoxelPlacement>
+            <RaycasterSize>20</RaycasterSize>
+            <RaycastersCount>9</RaycastersCount>
+            <MinRaycasterClearance>0.3</MinRaycasterClearance>
+            <OptimalGroundClearance>25</OptimalGroundClearance>
+            <RaycastersToFullEfficiency>7</RaycastersToFullEfficiency>
+            <OptimalWindSpeed>80</OptimalWindSpeed>
+            <TurbineSpinUpSpeed>3</TurbineSpinUpSpeed>
+            <TurbineSpinDownSpeed>0.3</TurbineSpinDownSpeed>
+            <TurbineRotationSpeed>5</TurbineRotationSpeed>
+            <PCU>500</PCU>
+        </Definition>
+		
+		<Definition>
+			<Id>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>SergWindTurbineCollum</SubtypeId>
+			</Id>
+			<DisplayName>Wind Turbine Pillar</DisplayName>
+			<Description></Description>
+			<CubeSize>Large</CubeSize>
+			<BlockTopology>TriangleMesh</BlockTopology>
+			<Size x="1" y="9" z="1"/>
+			<ModelOffset x="0" y="0" z="0"/>
+			<Components>
+				<Component Subtype="InteriorPlate" Count="150" />
+				<Component Subtype="Construction" Count="140" />
+				<Component Subtype="LargeTube" Count="15" />
+				<Component Subtype="SmallTube" Count="75" />
+				<Component Subtype="InteriorPlate" Count="15" />
+			</Components>
+			<CriticalComponent Index="0" Subtype="SmallTube"/>
+			<BuildProgressModels>
+
+			</BuildProgressModels>
+			<MountPoints>
+        <MountPoint Side="Bottom" StartX="0" StartY="0" EndX="1" EndY="1" Default="true" />
+		<MountPoint Side="Top" StartX="0" StartY="0" EndX="1" EndY="1" Default="true" />
+		</MountPoints>
+		<BlockPairName>SergWindTurbineCollum</BlockPairName>
+		<DamageEffectId>214</DamageEffectId>
+		<DamagedSound>ParticleElectrical</DamagedSound>
+		<MirroringY>Z</MirroringY>
+		<EdgeType>Light</EdgeType>
+		<BuildTimeSeconds>60</BuildTimeSeconds>
+		<PCU>10</PCU>
+		</Definition>
+		
+	</CubeBlocks>
+</Definitions>

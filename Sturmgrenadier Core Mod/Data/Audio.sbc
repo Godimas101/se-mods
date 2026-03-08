@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Sounds>
+      <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Baby Shark Original</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\BabySharkOriginal.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+	<Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Baby Shark Remix</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\BabySharkRemix.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] NC Theme</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\NC-Theme.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+	<Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] War Horn 01</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\WarHorn_01.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+  	<Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] War Horn 02</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\WarHorn_02.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+	<Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] War Horn 03</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\WarHorn_03.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Air Raid 01</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\AirRaid01.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Air Raid 02</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\AirRaid02.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Alarm 01</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\Alarm01.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Alarm 02</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\Alarm02.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Alarm 03</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\Alarm03.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] Alarm 04</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\Alarm04.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+    <Sound>
+      <Id>
+        <TypeId>MyObjectBuilder_AudioDefinition</TypeId>
+        <SubtypeId>[SG] MGS Alert</SubtypeId>
+      </Id>
+      <Category>Sb</Category>
+      <MaxDistance>2000</MaxDistance>
+      <Volume>0.5</Volume>
+      <Waves>
+        <Wave Type="D2">
+          <Start>Audio\MUS\MGSalert.xwm</Start>
+        </Wave>
+      </Waves>
+    </Sound>
+  </Sounds>
+</Definitions>

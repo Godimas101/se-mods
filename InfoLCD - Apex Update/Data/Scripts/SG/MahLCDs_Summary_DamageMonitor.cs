@@ -133,6 +133,24 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine($"ShowMedical={surfaceData.showMedical}");
 
             sb.AppendLine();
+            sb.AppendLine("; [ DAMAGEMONITOR - SCROLLING OPTIONS ]");
+            sb.AppendLine($"ToggleScroll={toggleScroll}");
+            sb.AppendLine("; Enable scrolling to view damaged blocks that don't fit on screen");
+            sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
+            sb.AppendLine();
+            sb.AppendLine($"ReverseDirection={reverseDirection}");
+            sb.AppendLine("; Scroll direction: 'false' scrolls up (bottom items appear), 'true' scrolls down (top items appear)");
+            sb.AppendLine("; The list wraps around, so you'll eventually see all items in a continuous loop");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollSpeed={scrollSpeed}");
+            sb.AppendLine("; Time between scroll steps in ticks (60 ticks ≈ 1 second at normal game speed)");
+            sb.AppendLine("; Lower = faster scrolling, Higher = slower scrolling");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollLines={scrollLines}");
+            sb.AppendLine("; Number of lines to scroll per step");
+            sb.AppendLine("; Set to 1 for smooth scrolling, higher values for faster navigation");
+
+            sb.AppendLine();
 
             myTerminalBlock.CustomData = sb.ToString();
         }
@@ -195,6 +213,16 @@ namespace MahrianeIndustries.LCDInfo
                     if (config.ContainsKey(CONFIG_SECTION_ID, "ShowMedical")) surfaceData.showMedical = config.Get(CONFIG_SECTION_ID, "ShowMedical").ToBoolean();
                     if (config.ContainsKey(CONFIG_SECTION_ID, "ShowStructuralDetails")) surfaceData.showStructuralDetails = config.Get(CONFIG_SECTION_ID, "ShowStructuralDetails").ToBoolean();
 
+                    // Scrolling config (optional - maintains backward compatibility)
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ToggleScroll"))
+                        toggleScroll = config.Get(CONFIG_SECTION_ID, "ToggleScroll").ToBoolean(false);
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ReverseDirection"))
+                        reverseDirection = config.Get(CONFIG_SECTION_ID, "ReverseDirection").ToBoolean(false);
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ScrollSpeed"))
+                        scrollSpeed = Math.Max(1, config.Get(CONFIG_SECTION_ID, "ScrollSpeed").ToInt32(60));
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ScrollLines"))
+                        scrollLines = Math.Max(1, config.Get(CONFIG_SECTION_ID, "ScrollLines").ToInt32(1));
+
                     CreateExcludeIdsList();
 
                     // Is Corner LCD?
@@ -254,6 +282,14 @@ namespace MahrianeIndustries.LCDInfo
         int damagedBlocks = 0;
         Sandbox.ModAPI.Ingame.MyShipMass gridMass;
 
+        // Scrolling state
+        bool toggleScroll = false;
+        bool reverseDirection = false;
+        int scrollSpeed = 60;
+        int scrollLines = 1;
+        int scrollOffset = 0;
+        int ticksSinceLastScroll = 0;
+
     // Structural (slim-block) scanning state (cadence-based)
     int structuralScanTick = 0;
     double structuralCurrentIntegrity = 0d;
@@ -295,6 +331,24 @@ namespace MahrianeIndustries.LCDInfo
             LoadConfig();
 
             UpdateBlocks();
+
+            // Update scrolling offset (Update10 = runs every 10 ticks)
+            if (toggleScroll)
+            {
+                ticksSinceLastScroll += 10;  // Update10 means 10 ticks between calls
+                if (ticksSinceLastScroll >= scrollSpeed)
+                {
+                    if (reverseDirection)
+                        scrollOffset -= scrollLines;
+                    else
+                        scrollOffset += scrollLines;
+                    ticksSinceLastScroll = 0;
+                }
+            }
+            else
+            {
+                scrollOffset = 0;
+            }
 
             var myFrame = mySurface.DrawFrame();
             var myViewport = new RectangleF((mySurface.TextureSize - mySurface.SurfaceSize) / 2f, mySurface.SurfaceSize);
@@ -542,13 +596,40 @@ namespace MahrianeIndustries.LCDInfo
                 // Sort damaged blocks alphabetically by custom name
                 MahSorting.SortBlockStateData(blocks, MahSorting.BlockSortMode.CustomName);
 
+                // Build list of damaged blocks that pass category filter
+                var damagedBlocksList = new List<BlockStateData>();
                 foreach (var block in blocks)
                 {
                     if (block.IsNull) continue;
                     if (block.IsFullIntegrity) continue;
-                    // Respect enabled categories for listing
                     var tb = block.block as IMyTerminalBlock;
                     if (tb == null || !IncludeByCategory(tb)) continue;
+                    damagedBlocksList.Add(block);
+                }
+
+                // Calculate available lines for damaged blocks list
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                // Apply scrolling with wraparound
+                int totalDamagedBlocks = damagedBlocksList.Count;
+                int startIndex = 0;
+
+                if (toggleScroll && totalDamagedBlocks > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDamagedBlocks) + totalDamagedBlocks) % totalDamagedBlocks;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw damaged blocks with scrolling/wrapping
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDamagedBlocks && linesDrawn < availableLines; i++)
+                {
+                    int blockIndex = (startIndex + i) % totalDamagedBlocks;
+                    var block = damagedBlocksList[blockIndex];
 
                     var maxNameLength = (int)(mySurface.SurfaceSize.X > 300 ? 35 : 20);
                     var state = block.IsFunctional ? block.IsWorking ? "   On" : "   Off" : "Broken";
@@ -571,6 +652,7 @@ namespace MahrianeIndustries.LCDInfo
                     }
 
                     position += surfaceData.newLine;
+                    linesDrawn++;
                     
                     // If compactMode, only show the first damaged block, then quit.
                     if (compactMode) return;

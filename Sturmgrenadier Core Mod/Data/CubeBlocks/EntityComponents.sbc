@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<EntityComponents>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop1</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop1</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop2</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop2</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop3</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop3</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop4</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop4</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop5</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop5</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop6</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop6</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>
+        <EntityComponent xsi:type="MyObjectBuilder_ParticleEntityComponentDefinition">
+            <Id>
+                <TypeId>ParticleEntityComponent</TypeId>
+                <SubtypeId>BubblesTop7</SubtypeId>
+            </Id>
+            <ParticleEffectName>BubblesTop03</ParticleEffectName>
+            <DummyName>BubblesTop7</DummyName>
+            <RemoveExistingComponentOnNewInsert>false</RemoveExistingComponentOnNewInsert>
+        </EntityComponent>		
+    </EntityComponents>
+</Definitions>

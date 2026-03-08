@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CubeBlocks>
+
+    <Definition xsi:type="MyObjectBuilder_BatteryBlockDefinition">
+      <Id>
+        <TypeId>BatteryBlock</TypeId>
+        <SubtypeId>Mafoo_Large_LargeBattery</SubtypeId>
+      </Id>
+      <DisplayName>Prototech Large Battery</DisplayName> <!-- Updated name -->
+      <Description>Description_Mafoo_Battery</Description>
+      <CubeSize>Large</CubeSize>
+      <BlockTopology>TriangleMesh</BlockTopology>
+      <Size x="3" y="1" z="3" />
+      <ModelOffset x="0" y="0" z="0" />
+      <Components>
+        <Component Subtype="SteelPlate" Count="100" /> <!-- Updated from 180 -->
+		<Component Subtype="PrototechCapacitor" Count="10" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCircuitry" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCoolingUnit" Count="5" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechFrame" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+        <Component Subtype="Construction" Count="10" /> <!-- Updated from 80 -->
+        <Component Subtype="PowerCell" Count="720" > <!-- Updated from 180 -->
+          <DeconstructId>
+            <TypeId>Ore</TypeId>
+            <SubtypeId>Scrap</SubtypeId>
+          </DeconstructId>
+        </Component>
+        <Component Subtype="Computer" Count="225" /> <!-- Updated from 200 -->
+		<Component Subtype="Superconductor" Count="10" > <!-- Additional cost -->
+        <Component Subtype="Construction" Count="80" /> <!-- Updated from 200 -->
+        <Component Subtype="SteelPlate" Count="170" /> <!-- Updated from 480 -->
+      </Components>
+      <CriticalComponent Subtype="PowerCell" Index="0" />
+      <BuildProgressModels>
+
+      </BuildProgressModels>
+      <BlockPairName>Mafoo_LargeBattery</BlockPairName>
+      <EdgeType>Light</EdgeType>
+      <BuildTimeSeconds>90</BuildTimeSeconds>
+      <ResourceSourceGroup>Battery</ResourceSourceGroup>
+      <MaxPowerOutput>120</MaxPowerOutput> <!-- Updated from 110 -->
+      <ResourceSinkGroup>BatteryBlock</ResourceSinkGroup>
+      <RequiredPowerInput>120</RequiredPowerInput> <!-- Updated from 110 -->
+      <AdaptibleInput>true</AdaptibleInput>
+      <MaxStoredPower>30</MaxStoredPower> <!-- Unchanged -->
+      <InitialStoredPowerRatio>0.3</InitialStoredPowerRatio>
+      <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+      <DamagedSound>ParticleElectrical</DamagedSound>
+      <EmissiveColorPreset>Extended</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>15</PCU>
+      <IsAirTight>true</IsAirTight>
+
+    </Definition>
+
+    <Definition xsi:type="MyObjectBuilder_BatteryBlockDefinition">
+      <Id>
+        <TypeId>BatteryBlock</TypeId>
+        <SubtypeId>Mafoo_Large_GiantBattery</SubtypeId>
+      </Id>
+      <DisplayName>Prototech Giant Battery</DisplayName> <!-- Updated name -->
+      <Description>Description_Mafoo_Battery</Description>
+      <CubeSize>Large</CubeSize>
+      <BlockTopology>TriangleMesh</BlockTopology>
+      <Size x="3" y="2" z="3" />
+      <ModelOffset x="0" y="0" z="0" />
+      <Components>
+        <Component Subtype="SteelPlate" Count="120" /> <!-- Updated from 320 -->
+		<Component Subtype="PrototechCapacitor" Count="15" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCircuitry" Count="2" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCoolingUnit" Count="7" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechFrame" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+        <Component Subtype="Construction" Count="70" /> <!-- Updated from 280 -->
+        <Component Subtype="PowerCell" Count="1360"> <!-- Updated from 320 -->
+          <DeconstructId>
+            <TypeId>Ore</TypeId>
+            <SubtypeId>Scrap</SubtypeId>
+          </DeconstructId>
+        </Component>
+        <Component Subtype="Computer" Count="425" /> <!-- Updated from 400 -->
+		<Component Subtype="Superconductor" Count="10" > <!-- Additional cost -->
+        <Component Subtype="Construction" Count="100" /> <!-- Updated from 500 -->
+        <Component Subtype="SteelPlate" Count="390" /> <!-- Updated from 960 -->
+      </Components>
+      <CriticalComponent Subtype="PowerCell" Index="0" />
+      <BuildProgressModels>
+
+      </BuildProgressModels>
+      <BlockPairName>Mafoo_GiantBattery</BlockPairName>
+      <EdgeType>Light</EdgeType>
+      <BuildTimeSeconds>180</BuildTimeSeconds>
+      <ResourceSourceGroup>Battery</ResourceSourceGroup>
+      <MaxPowerOutput>240</MaxPowerOutput> <!-- Updated from 230 -->
+      <ResourceSinkGroup>BatteryBlock</ResourceSinkGroup>
+      <RequiredPowerInput>240</RequiredPowerInput> <!-- Updated from 230 -->
+      <AdaptibleInput>true</AdaptibleInput>
+      <MaxStoredPower>60</MaxStoredPower> <!-- Unchanged -->
+      <InitialStoredPowerRatio>0.3</InitialStoredPowerRatio>
+      <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+      <DamagedSound>ParticleElectrical</DamagedSound>
+      <EmissiveColorPreset>Extended</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>15</PCU>
+      <IsAirTight>true</IsAirTight>
+
+    </Definition>
+
+    <Definition xsi:type="MyObjectBuilder_BatteryBlockDefinition">
+      <Id>
+        <TypeId>BatteryBlock</TypeId>
+        <SubtypeId>Mafoo_Small_LargeBattery</SubtypeId>
+      </Id>
+      <DisplayName>Prototech Large Battery</DisplayName> <!-- Updated name -->
+      <Description>Description_Mafoo_Battery</Description>
+      <CubeSize>Small</CubeSize>
+      <BlockTopology>TriangleMesh</BlockTopology>
+      <Size x="3" y="2" z="6" />
+      <ModelOffset x="0" y="0" z="0" />
+      <Components>
+        <Component Subtype="SteelPlate" Count="40" /> <!-- Updated from 50 -->
+		<Component Subtype="PrototechCapacitor" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCircuitry" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechFrame" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechPanel" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+        <Component Subtype="Construction" Count="12" /> <!-- Updated from 20 -->
+        <Component Subtype="PowerCell" Count="72" > <!-- Updated from 80 -->
+          <DeconstructId>
+            <TypeId>Ore</TypeId>
+            <SubtypeId>Scrap</SubtypeId>
+          </DeconstructId>
+        </Component>
+        <Component Subtype="Computer" Count="72" /> <!-- Updated from 100 -->
+		<Component Subtype="Superconductor" Count="5" > <!-- Additional cost -->
+        <Component Subtype="Construction" Count="60" /> <!-- Updated from 150 -->
+        <Component Subtype="SteelPlate" Count="104" /> <!-- Updated from 100 -->
+      </Components>
+      <CriticalComponent Subtype="PowerCell" Index="0" />
+      <BuildProgressModels>
+
+      </BuildProgressModels>
+      <BlockPairName>Mafoo_LargeBattery</BlockPairName>
+      <EdgeType>Light</EdgeType>
+      <BuildTimeSeconds>150</BuildTimeSeconds>
+      <ResourceSourceGroup>Battery</ResourceSourceGroup>
+      <MaxPowerOutput>8</MaxPowerOutput> <!-- Updated from 6 -->
+      <ResourceSinkGroup>BatteryBlock</ResourceSinkGroup>
+      <RequiredPowerInput>8</RequiredPowerInput> <!-- Updated from 6 -->
+      <MaxStoredPower>2</MaxStoredPower> <!-- Unchanged -->
+      <InitialStoredPowerRatio>0.3</InitialStoredPowerRatio>
+      <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+      <DamagedSound>ParticleElectrical</DamagedSound>
+      <EmissiveColorPreset>Extended</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>15</PCU>
+      <IsAirTight>true</IsAirTight>
+    </Definition>
+
+    <Definition xsi:type="MyObjectBuilder_BatteryBlockDefinition">
+      <Id>
+        <TypeId>BatteryBlock</TypeId>
+        <SubtypeId>Mafoo_Small_GiantBattery</SubtypeId>
+      </Id>
+      <DisplayName>Prototech Giant Battery</DisplayName> <!-- Updated name -->
+      <Description>Description_Mafoo_Battery</Description>
+      <CubeSize>Small</CubeSize>
+      <BlockTopology>TriangleMesh</BlockTopology>
+      <Size x="8" y="5" z="8" />
+      <ModelOffset x="0" y="0" z="0" />
+      <Components>
+        <Component Subtype="SteelPlate" Count="190" /> <!-- Updated from 75 -->
+		<Component Subtype="PrototechCapacitor" Count="5" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCircuitry" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechCoolingUnit" Count="3" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechFrame" Count="1" > <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+        <Component Subtype="Construction" Count="95" /> <!-- Updated from 100 -->
+        <Component Subtype="PowerCell" Count="595"> <!-- Updated from 300 -->
+          <DeconstructId>
+            <TypeId>Ore</TypeId>
+            <SubtypeId>Scrap</SubtypeId>
+          </DeconstructId>
+        </Component>
+        <Component Subtype="Computer" Count="595" /> <!-- Updated from 200 -->
+		<Component Subtype="Superconductor" Count="5" > <!-- Additional cost -->
+        <Component Subtype="Construction" Count="500" /> <!-- Updated from 180 -->
+        <Component Subtype="SteelPlate" Count="1000" /> <!-- Updated from 300 -->
+      </Components>
+      <CriticalComponent Subtype="PowerCell" Index="0" />
+      <BuildProgressModels>
+
+      </BuildProgressModels>
+      <BlockPairName>Mafoo_GiantBattery</BlockPairName>
+      <EdgeType>Light</EdgeType>
+      <BuildTimeSeconds>150</BuildTimeSeconds>
+      <ResourceSourceGroup>Battery</ResourceSourceGroup>
+      <MaxPowerOutput>70</MaxPowerOutput> <!-- Updated from 60 -->
+      <ResourceSinkGroup>BatteryBlock</ResourceSinkGroup>
+      <RequiredPowerInput>70</RequiredPowerInput> <!-- Updated from 60 -->
+      <MaxStoredPower>18</MaxStoredPower> <!-- Updated from 20 -->
+      <InitialStoredPowerRatio>0.3</InitialStoredPowerRatio>
+      <DamageEffectName>Damage_Electrical_Damaged</DamageEffectName>
+      <DamagedSound>ParticleElectrical</DamagedSound>
+      <EmissiveColorPreset>Extended</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Small</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>15</PCU>
+      <IsAirTight>true</IsAirTight>
+    </Definition>
+  </CubeBlocks>
+</Definitions>

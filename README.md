@@ -4,35 +4,86 @@ Custom mods for Space Engineers, primarily focused on LCD screen information dis
 
 ## Mods in This Repository
 
-### InfoLCD - Apex Update
+### InfoLCD Series
+
+#### InfoLCD - Apex Update
 Current version of the InfoLCD mod suite with advanced features:
-- Multi-screen summary displays (Items, Cargo, Power, Ammo, Components, etc.)
-- Scrolling support with configurable speed and direction
+- Multi-screen summary displays (Items, Cargo, Power, Production, Ammo, Components, etc.)
+- **Scrolling support** with configurable speed and direction
+  - **Unified List Scrolling**: For single-list screens (Items, Components, Ammo, DoorMonitor, DamageMonitor)
+  - **Multi-Category Scrolling**: For multi-section screens with MaxListLines control (Power, Production)
 - Category filtering and visibility controls
-- Multi-category scrolling with MaxListLines limits
 - Subgrid scanning with performance optimization
 - Color-coded status indicators
 - CustomData configuration with INI format
+- Backward-compatible config system
 
 **Status:** Active development, published on Steam Workshop
 
-### InfoLCD - Apex Advanced
-Modified version of the InfoLCD mod, designed to work with the Apex Advanced mod
+**Recent Updates:**
+- Added scrolling to 9 screens: Items, Power, Components, Ingots, Ores, Ammo, DoorMonitor, DamageMonitor, Production
+- Implemented two scrolling approaches for different screen types
+- Fixed item type collision issues with composite keys
+- Fixed scroll timing for Update10 scripts
+
+#### InfoLCD - Apex Advanced
+Modified version of the InfoLCD mod, designed to work with the Apex Advanced mod.
 
 **Status:** Maintenance mode (bug fixes only)
 
-### Artillery MKII Turret - Goliath [Mod Adjuster For SG]
-Turret mod adjuster for SturmGrenadier servers.
+### Sturmgrenadier Core Series
+
+#### Sturmgrenadier Core Mod
+Core functionality mod for the Sturmgrenadier server ecosystem.
 
 **Status:** Stable
 
-### Not Just For Looks
-Gameplay enhancement mod.
+#### Sturmgrenadier Core Power
+Power system modifications and enhancements for Sturmgrenadier servers.
+
+**Status:** Stable
+
+#### Sturmgrenadier Core Production
+Production system modifications for Sturmgrenadier servers.
+
+**Status:** Stable
+
+#### Sturmgrenadier Core Survival
+Survival gameplay modifications for Sturmgrenadier servers.
+
+**Status:** Stable
+
+#### Sturmgrenadier Core Vanilla Combat
+Combat system modifications for Sturmgrenadier servers.
+
+**Status:** Stable
+
+### Mod Adjusters for Sturmgrenadier
+
+These mods adjust third-party mods for compatibility with Sturmgrenadier servers:
+
+- **Artillery MKII Turret - Goliath [Mod Adjuster For SG]** - Turret balance adjustments
+- **Dense Colorable Solar Panels [Mod Adjuster For SG]** - Solar panel adjustments
+- **Federal Industrial - Utilites [Mod Adjuster For SG]** - Utility block adjustments
+- **Isy's Dense Solar Panels [Mod Adjuster For SG]** - Solar panel balance adjustments
+- **Life'Tech-Algaetechnology [Mod Adjuster For SG]** - Algae farm adjustments
+- **ModCubeBlocks Refinery x10 [Mod Adjuster For SG]** - Refinery speed adjustments
+- **ModCubeBlocks Upgrade Module [Mod Adjuster For SG]** - Upgrade module adjustments
+- **More Engineer Characters [Mod Adjuster For SG]** - Character model adjustments
+- **More Wind Turbines [Mod Adjuster For SG]** - Wind turbine balance adjustments
+- **[Mafoo] More Batteries [Mod Adjuster For SG]** - Battery balance adjustments
+
+**Status:** All stable and in use on Sturmgrenadier servers
+
+### Other Mods
+
+#### Not Just For Looks
+Gameplay enhancement mod adding cosmetic blocks with functional benefits.
 
 **Status:** Stable
 
 ### Scripts
-Additional utility scripts and standalone tools.
+Additional utility scripts and standalone tools for Space Engineers modding.
 
 ## Development
 

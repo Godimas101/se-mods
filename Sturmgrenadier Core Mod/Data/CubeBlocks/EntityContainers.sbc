@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<EntityContainers>
+        <Container>
+            <Id>
+                <TypeId>OxygenTank</TypeId>
+                <SubtypeId>LG_WaterTank_Small</SubtypeId>
+            </Id>
+            <DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop1" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop2" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop3" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop4" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop5" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop6" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop7" ForceCreate="true"/>
+            </DefaultComponents>
+        </Container>
+        <Container>
+            <Id>
+                <TypeId>OxygenTank</TypeId>
+                <SubtypeId>LG_WaterTank_Small_1x1</SubtypeId>
+            </Id>
+            <DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop1" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop2" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop3" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop4" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop5" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop6" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop7" ForceCreate="true"/>
+            </DefaultComponents>
+        </Container>
+        <Container>
+            <Id>
+                <TypeId>OxygenTank</TypeId>
+                <SubtypeId>LG_WaterTank_Small_1x1_Fieldwork</SubtypeId>
+            </Id>
+            <DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop1" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop2" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop3" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop4" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop5" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop6" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop7" ForceCreate="true"/>
+            </DefaultComponents>
+        </Container>	
+        <Container>
+            <Id>
+                <TypeId>OxygenTank</TypeId>
+                <SubtypeId>SG_WaterTank_Small</SubtypeId>
+            </Id>
+            <DefaultComponents>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop1" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop2" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop3" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop4" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop5" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop6" ForceCreate="true"/>
+				<Component BuilderType="MyObjectBuilder_ParticleEntityComponent" SubtypeId="BubblesTop7" ForceCreate="true"/>
+            </DefaultComponents>
+        </Container>		
+	</EntityContainers>
+</Definitions>

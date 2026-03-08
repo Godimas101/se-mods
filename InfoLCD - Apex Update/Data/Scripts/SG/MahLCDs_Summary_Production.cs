@@ -36,6 +36,15 @@ namespace MahrianeIndustries.LCDInfo
     bool showIrrigationSystems = true;
     bool showAlgaeFarms = true;
 
+        // Scrolling state
+        bool toggleScroll = false;
+        bool reverseDirection = false;
+        int scrollSpeed = 60;
+        int scrollLines = 1;
+        int maxListLines = 5;
+        int scrollOffset = 0;
+        int ticksSinceLastScroll = 0;
+
         void TryCreateSurfaceData()
         {
             if (surfaceData != null)
@@ -113,6 +122,28 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine($"ShowAlgaeFarms={showAlgaeFarms}");
 
             sb.AppendLine();
+            sb.AppendLine("; [ PRODUCTION - SCROLLING OPTIONS ]");
+            sb.AppendLine($"ToggleScroll={toggleScroll}");
+            sb.AppendLine("; Enable scrolling to view items that don't fit on screen");
+            sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
+            sb.AppendLine();
+            sb.AppendLine($"ReverseDirection={reverseDirection}");
+            sb.AppendLine("; Scroll direction: 'false' scrolls up (bottom items appear), 'true' scrolls down (top items appear)");
+            sb.AppendLine("; The list wraps around, so you'll eventually see all items in a continuous loop");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollSpeed={scrollSpeed}");
+            sb.AppendLine("; Time between scroll steps in ticks (60 ticks ≈ 1 second at normal game speed)");
+            sb.AppendLine("; Lower = faster scrolling, Higher = slower scrolling");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollLines={scrollLines}");
+            sb.AppendLine("; Number of lines to scroll per step");
+            sb.AppendLine("; Set to 1 for smooth scrolling, higher values for faster navigation");
+            sb.AppendLine();
+            sb.AppendLine($"MaxListLines={maxListLines}");
+            sb.AppendLine("; Maximum number of items to display per category (e.g., max refineries shown at once)");
+            sb.AppendLine("; Limits list length even if more screen space is available. Set to 0 to use all available space.");
+            sb.AppendLine("; Useful for grids with many production blocks - shows a portion and scrolls through all items");
+            sb.AppendLine();
 
             myTerminalBlock.CustomData = sb.ToString();
         }
@@ -176,6 +207,18 @@ namespace MahrianeIndustries.LCDInfo
                         showAlgaeFarms = true;
 
                     MahUtillities.TryGetConfigBool(config, CONFIG_SECTION_ID, "UseColors", ref surfaceData.useColors, ref configError);
+
+                    // Load scrolling config (backward compatible - don't flag error if missing)
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ToggleScroll"))
+                        toggleScroll = config.Get(CONFIG_SECTION_ID, "ToggleScroll").ToBoolean();
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ReverseDirection"))
+                        reverseDirection = config.Get(CONFIG_SECTION_ID, "ReverseDirection").ToBoolean();
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ScrollSpeed"))
+                        scrollSpeed = Math.Max(1, config.Get(CONFIG_SECTION_ID, "ScrollSpeed").ToInt32(60));
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "ScrollLines"))
+                        scrollLines = Math.Max(1, config.Get(CONFIG_SECTION_ID, "ScrollLines").ToInt32(1));
+                    if (config.ContainsKey(CONFIG_SECTION_ID, "MaxListLines"))
+                        maxListLines = Math.Max(0, config.Get(CONFIG_SECTION_ID, "MaxListLines").ToInt32(5));
 
                     CreateExcludeIdsList();
 
@@ -274,6 +317,25 @@ namespace MahrianeIndustries.LCDInfo
                 CreateConfig();
 
             LoadConfig();
+
+            // Update scroll position if enabled
+            if (toggleScroll)
+            {
+                ticksSinceLastScroll += 10;  // Update10 = 10 game ticks
+                if (ticksSinceLastScroll >= scrollSpeed)
+                {
+                    ticksSinceLastScroll = 0;
+                    if (reverseDirection)
+                        scrollOffset -= scrollLines;
+                    else
+                        scrollOffset += scrollLines;
+                }
+            }
+            else
+            {
+                // Reset scroll when disabled
+                scrollOffset = 0;
+            }
 
             UpdateBlocks();
 
@@ -466,20 +528,21 @@ namespace MahrianeIndustries.LCDInfo
                 if (surfaceData.showHeader)
                     SurfaceDrawer.DrawHeader(ref frame, ref position, surfaceData, $"Production Summary [{(searchId == "*" ? "All" : searchId)} -{excludeIds.Count}]");
 
+                // Draw each category with scrolling support
                 if (showRefineries)
-                    SurfaceDrawer.DrawRefinerySummarySprite(ref frame, ref position, surfaceData, refineries);
+                    DrawRefineriesWithScrolling(ref frame, ref position);
                 if (showAssemblers)
-                    SurfaceDrawer.DrawAssemblerSummarySprite(ref frame, ref position, surfaceData, assemblers);
+                    DrawAssemblersWithScrolling(ref frame, ref position);
                 if (showFoodProcessors)
-                    DrawFoodProcessorSummarySprite(ref frame, ref position);
+                    DrawFoodProcessorsWithScrolling(ref frame, ref position);
                 if (showGenerators)
-                    SurfaceDrawer.DrawGasGeneratorSummarySprite(ref frame, ref position, surfaceData, generators);
+                    DrawGeneratorsWithScrolling(ref frame, ref position);
                 if (showIrrigationSystems)
-                    DrawIrrigationSystemSummarySprite(ref frame, ref position);
+                    DrawIrrigationSystemsWithScrolling(ref frame, ref position);
                 if (showOxygenFarms)
-                    SurfaceDrawer.DrawOxygenFarmSummarySprite(ref frame, ref position, surfaceData, oxygenFarms);
+                    DrawOxygenFarmsWithScrolling(ref frame, ref position);
                 if (showAlgaeFarms)
-                    DrawAlgaeFarmSummarySprite(ref frame, ref position);
+                    DrawAlgaeFarmsWithScrolling(ref frame, ref position);
             }
             catch (Exception e)
             {
@@ -591,21 +654,189 @@ namespace MahrianeIndustries.LCDInfo
             }
         }
 
-        // Category drawers
-        void DrawFoodProcessorSummarySprite(ref MySpriteDrawFrame frame, ref Vector2 position)
+        // Category drawers with scrolling support (Multi-Category Approach 2)
+
+        void DrawRefineriesWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
+        {
+            if (refineries.Count <= 0) return;
+            try
+            {
+                // Sort refineries alphabetically
+                MahSorting.SortBlocksByName(refineries);
+
+                // Header
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Refineries [{refineries.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Active Task      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+                position += surfaceData.newLine;
+
+                // Calculate available lines from remaining screen space
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                // Apply MaxListLines limit
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = refineries.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw refineries with wraparound
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int refIndex = (startIndex + i) % totalDataLines;
+                    var refinery = refineries[refIndex];
+                    if (refinery == null) continue;
+
+                    var name = refinery.CustomName;
+                    var inventory = refinery.GetInventory(0);
+                    List<VRage.Game.ModAPI.Ingame.MyInventoryItem> queuedItems = new List<VRage.Game.ModAPI.Ingame.MyInventoryItem>();
+                    inventory.GetItems(queuedItems);
+
+                    var subtypeId = queuedItems.Count > 0 ? queuedItems[0].Type.SubtypeId : "";
+                    var amount = queuedItems.Count > 0 ? queuedItems[0].Amount.ToIntSafe() : 0;
+                    var queue = subtypeId == "" ? "-" : $"{MahDefinitions.KiloFormat(amount)} {subtypeId}";
+                    var outputBlocked = refinery.OutputInventory.CurrentVolume >= refinery.OutputInventory.MaxVolume * .9f;
+                    var state = $"{(!refinery.IsWorking ? "    Off" : outputBlocked ? "   Full" : queuedItems.Count > 0 ? "  Work" : "   Halt")}";
+
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state}", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Halt") ? Color.Yellow : state.Contains("Full") ? Color.Red : Color.GreenYellow);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{queue}  +{(queuedItems.Count > 0 ? queuedItems.Count - 1 : 0).ToString("0").Replace("1", " 1")}", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+
+                    position += surfaceData.newLine;
+                    linesDrawn++;
+                }
+
+                position += surfaceData.newLine;
+            }
+            catch (Exception e)
+            {
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawRefineriesWithScrolling: {e.ToString()}");
+            }
+        }
+
+        void DrawAssemblersWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
+        {
+            if (assemblers.Count <= 0) return;
+            try
+            {
+                // Sort assemblers alphabetically
+                MahSorting.SortBlocksByName(assemblers);
+
+                // Header
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Assemblers [{assemblers.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Active Task      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+                position += surfaceData.newLine;
+
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = assemblers.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw assemblers with wraparound
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int asmIndex = (startIndex + i) % totalDataLines;
+                    var assembler = assemblers[asmIndex];
+                    if (assembler == null) continue;
+
+                    var name = assembler.CustomName;
+                    List<Sandbox.ModAPI.Ingame.MyProductionItem> queuedBlueprints = new List<Sandbox.ModAPI.Ingame.MyProductionItem>();
+                    assembler.GetQueue(queuedBlueprints);
+                    var blueprintId = queuedBlueprints.Count > 0 ? queuedBlueprints[0].BlueprintId.ToString().Split('/')[1] : "";
+
+                    // Map blueprint display name
+                    if (blueprintId != "")
+                    {
+                        CargoItemDefinition itemDef = MahDefinitions.GetDefinition("Component", blueprintId) ??
+                                                      MahDefinitions.GetDefinition("AmmoMagazine", blueprintId) ??
+                                                      MahDefinitions.GetDefinition("PhysicalGunObject", blueprintId);
+                        if (itemDef != null)
+                            blueprintId = itemDef.displayName;
+                    }
+
+                    var queue = blueprintId == "" ? "-" : $"{blueprintId}";
+                    var outputBlocked = assembler.OutputInventory.CurrentVolume >= assembler.OutputInventory.MaxVolume * .9f;
+                    var state = $"{(!assembler.IsWorking ? "    Off" : outputBlocked ? "   Full" : queuedBlueprints.Count > 0 && assembler.IsProducing ? "  Work" : "   Halt")}";
+
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state} ", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Halt") ? Color.Yellow : state.Contains("Full") ? Color.Red : Color.GreenYellow);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{queue}  +{(queuedBlueprints.Count > 0 ? queuedBlueprints.Count - 1 : 0).ToString("0").Replace("1", " 1")}", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+
+                    position += surfaceData.newLine;
+                    linesDrawn++;
+                }
+
+                position += surfaceData.newLine;
+            }
+            catch (Exception e)
+            {
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawAssemblersWithScrolling: {e.ToString()}");
+            }
+        }
+
+        void DrawFoodProcessorsWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
         {
             if (foodProcessors.Count <= 0) return;
             try
             {
-                // Sort food processors alphabetically by custom name
+                // Sort food processors alphabetically
                 MahSorting.SortBlocksByName(foodProcessors);
 
+                // Header
                 SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Food Processors [{foodProcessors.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
                 SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Active Task      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
                 position += surfaceData.newLine;
 
-                foreach (var assembler in foodProcessors)
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = foodProcessors.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
                 {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw food processors with wraparound
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int fpIndex = (startIndex + i) % totalDataLines;
+                    var assembler = foodProcessors[fpIndex];
                     if (assembler == null) continue;
 
                     var name = assembler.CustomName;
@@ -614,7 +845,7 @@ namespace MahrianeIndustries.LCDInfo
                     var blueprintId = queuedBlueprints.Count > 0 ? queuedBlueprints[0].BlueprintId.ToString().Split('/')[1] : "";
                     var blueprintAmount = queuedBlueprints.Count > 0 ? (int)queuedBlueprints[0].Amount : 0;
 
-                    // Map blueprint display name using definitions if possible
+                    // Map blueprint display name
                     if (blueprintId != "")
                     {
                         CargoItemDefinition itemDefinition = MahDefinitions.GetDefinition("ConsumableItem", blueprintId) ??
@@ -634,44 +865,68 @@ namespace MahrianeIndustries.LCDInfo
                     SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{(blueprintAmount > 0 ? blueprintAmount.ToString("0") : "")} {queue}  +{(queuedBlueprints.Count > 0 ? queuedBlueprints.Count - 1 : 0).ToString("0").Replace("1", " 1")}", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
 
                     position += surfaceData.newLine;
+                    linesDrawn++;
                 }
 
                 position += surfaceData.newLine;
             }
             catch (Exception e)
             {
-                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawFoodProcessorSummarySprite: {e.ToString()}");
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawFoodProcessorsWithScrolling: {e.ToString()}");
             }
         }
 
-        void DrawIrrigationSystemSummarySprite(ref MySpriteDrawFrame frame, ref Vector2 position)
+        void DrawGeneratorsWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
         {
-            if (irrigationSystems.Count <= 0) return;
+            if (generators.Count <= 0) return;
             try
             {
-                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Irrigation Systems [{irrigationSystems.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                // Sort generators alphabetically
+                MahSorting.SortBlocksByName(generators);
+
+                // Header
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"H2/O2 Generators [{generators.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
                 SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Inventory      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
                 position += surfaceData.newLine;
 
-                float currentVolume = 0.0f;
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = generators.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw generators with wraparound
                 CargoItemDefinition iceDefinition = MahDefinitions.GetDefinition("Ore", "Ice");
                 List<VRage.Game.ModAPI.Ingame.MyInventoryItem> inventoryItems = new List<VRage.Game.ModAPI.Ingame.MyInventoryItem>();
-
-                // Sort irrigation systems alphabetically by custom name
-                MahSorting.SortBlocksByName(irrigationSystems);
-
-                foreach (var gen in irrigationSystems)
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
                 {
+                    int genIndex = (startIndex + i) % totalDataLines;
+                    var gen = generators[genIndex];
                     if (gen == null) continue;
 
                     var name = gen.CustomName;
-                    var amount = 0;
+                    float currentVolume = 0.0f;
                     var inventory = gen.GetInventory(0);
 
                     if (iceDefinition != null)
                     {
                         inventory.GetItems(inventoryItems);
-                        foreach (var item in inventoryItems.OrderBy(i => i.Type.SubtypeId))
+                        int amount = 0;
+                        foreach (var item in inventoryItems.OrderBy(it => it.Type.SubtypeId))
                         {
                             if (item == null) continue;
                             var subtypeId = item.Type.SubtypeId;
@@ -691,48 +946,219 @@ namespace MahrianeIndustries.LCDInfo
                     SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state}", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Halt") ? Color.Yellow : Color.GreenYellow);
                     SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
                     SurfaceDrawer.DrawHalfBar(ref frame, position, surfaceData, TextAlignment.RIGHT, currentVolume, maximumVolume, Unit.Percent, Color.Aquamarine);
+
                     position += surfaceData.newLine;
+                    linesDrawn++;
                 }
 
                 position += surfaceData.newLine;
             }
             catch (Exception e)
             {
-                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawIrrigationSystemSummarySprite: {e.ToString()}");
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawGeneratorsWithScrolling: {e.ToString()}");
             }
         }
 
-        void DrawAlgaeFarmSummarySprite(ref MySpriteDrawFrame frame, ref Vector2 position)
+        void DrawIrrigationSystemsWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
+        {
+            if (irrigationSystems.Count <= 0) return;
+            try
+            {
+                // Sort irrigation systems alphabetically
+                MahSorting.SortBlocksByName(irrigationSystems);
+
+                // Header
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Irrigation Systems [{irrigationSystems.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Inventory      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+                position += surfaceData.newLine;
+
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = irrigationSystems.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw irrigation systems with wraparound
+                CargoItemDefinition iceDefinition = MahDefinitions.GetDefinition("Ore", "Ice");
+                List<VRage.Game.ModAPI.Ingame.MyInventoryItem> inventoryItems = new List<VRage.Game.ModAPI.Ingame.MyInventoryItem>();
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int isIndex = (startIndex + i) % totalDataLines;
+                    var gen = irrigationSystems[isIndex];
+                    if (gen == null) continue;
+
+                    var name = gen.CustomName;
+                    float currentVolume = 0.0f;
+                    var inventory = gen.GetInventory(0);
+
+                    if (iceDefinition != null)
+                    {
+                        inventory.GetItems(inventoryItems);
+                        int amount = 0;
+                        foreach (var item in inventoryItems.OrderBy(it => it.Type.SubtypeId))
+                        {
+                            if (item == null) continue;
+                            var subtypeId = item.Type.SubtypeId;
+                            if (subtypeId.IndexOf("Ice", StringComparison.OrdinalIgnoreCase) >= 0)
+                                amount += item.Amount.ToIntSafe();
+                        }
+                        currentVolume = amount * iceDefinition.volume;
+                    }
+                    else
+                    {
+                        currentVolume = (float)inventory.CurrentVolume;
+                    }
+
+                    float maximumVolume = (float)inventory.MaxVolume * 1000;
+                    var state = $"{(!gen.IsWorking ? "    Off" : currentVolume <= 0 ? "   Halt" : "  Work")}";
+
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state}", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Halt") ? Color.Yellow : Color.GreenYellow);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                    SurfaceDrawer.DrawHalfBar(ref frame, position, surfaceData, TextAlignment.RIGHT, currentVolume, maximumVolume, Unit.Percent, Color.Aquamarine);
+
+                    position += surfaceData.newLine;
+                    linesDrawn++;
+                }
+
+                position += surfaceData.newLine;
+            }
+            catch (Exception e)
+            {
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawIrrigationSystemsWithScrolling: {e.ToString()}");
+            }
+        }
+
+        void DrawOxygenFarmsWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
+        {
+            if (oxygenFarms.Count <= 0) return;
+            try
+            {
+                // Sort oxygen farms alphabetically
+                MahSorting.SortBlocksByName(oxygenFarms);
+
+                // Header
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Oxygen Farms [{oxygenFarms.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Current Progress      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
+                position += surfaceData.newLine;
+
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = oxygenFarms.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
+                {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw oxygen farms with wraparound
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int ofIndex = (startIndex + i) % totalDataLines;
+                    var farm = oxygenFarms[ofIndex];
+                    if (farm == null) continue;
+
+                    var name = farm.CustomName;
+                    float progress = ParseProgressPercent(farm.DetailedInfo);
+                    var state = $"{(!farm.IsWorking ? "    Off" : progress > 0f ? "  Work" : "   Idle")}";
+
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state}", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Idle") ? Color.Yellow : Color.GreenYellow);
+                    SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
+                    SurfaceDrawer.DrawHalfBar(ref frame, position, surfaceData, TextAlignment.RIGHT, progress, 1f, Unit.Percent, Color.GreenYellow);
+
+                    position += surfaceData.newLine;
+                    linesDrawn++;
+                }
+
+                position += surfaceData.newLine;
+            }
+            catch (Exception e)
+            {
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawOxygenFarmsWithScrolling: {e.ToString()}");
+            }
+        }
+
+        void DrawAlgaeFarmsWithScrolling(ref MySpriteDrawFrame frame, ref Vector2 position)
         {
             if (algaeFarms.Count <= 0) return;
             try
             {
-                // Sort algae farms alphabetically by custom name
+                // Sort algae farms alphabetically
                 MahSorting.SortBlocksByName(algaeFarms);
 
+                // Header
                 SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Algae Farms [{algaeFarms.Count}]", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
                 SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"Current Progress      ", TextAlignment.RIGHT, surfaceData.surface.ScriptForegroundColor);
                 position += surfaceData.newLine;
 
-                foreach (var block in algaeFarms)
+                // Calculate available lines
+                float screenHeight = mySurface.SurfaceSize.Y;
+                float lineHeight = 30 * surfaceData.textSize;
+                float currentY = position.Y - surfaceData.viewPortOffsetY;
+                float remainingHeight = screenHeight - currentY;
+                int availableDataLines = Math.Max(1, (int)(remainingHeight / lineHeight));
+
+                if (maxListLines > 0)
+                    availableDataLines = Math.Min(availableDataLines, maxListLines);
+
+                // Apply scrolling
+                int totalDataLines = algaeFarms.Count;
+                int startIndex = 0;
+                if (toggleScroll && totalDataLines > 0)
                 {
+                    int normalizedOffset = ((scrollOffset % totalDataLines) + totalDataLines) % totalDataLines;
+                    startIndex = normalizedOffset;
+                }
+
+                // Draw algae farms with wraparound
+                int linesDrawn = 0;
+                for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
+                {
+                    int afIndex = (startIndex + i) % totalDataLines;
+                    var block = algaeFarms[afIndex];
                     if (block == null) continue;
+
                     var name = block.CustomName;
                     float progress = ParseProgressPercent(block.DetailedInfo);
                     var state = $"{(!block.IsWorking ? "    Off" : progress > 0f ? "  Work" : "   Idle")}";
 
                     SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"{state}", TextAlignment.LEFT, !surfaceData.useColors ? surfaceData.surface.ScriptForegroundColor : state.Contains("Off") ? Color.Orange : state.Contains("Idle") ? Color.Yellow : Color.GreenYellow);
                     SurfaceDrawer.WriteTextSprite(ref frame, position, surfaceData, $"[          ] {name}", TextAlignment.LEFT, surfaceData.surface.ScriptForegroundColor);
-                    // Right: progress half bar same size as generators
                     SurfaceDrawer.DrawHalfBar(ref frame, position, surfaceData, TextAlignment.RIGHT, progress, 1f, Unit.Percent, Color.GreenYellow);
+
                     position += surfaceData.newLine;
+                    linesDrawn++;
                 }
 
                 position += surfaceData.newLine;
             }
             catch (Exception e)
             {
-                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawAlgaeFarmSummarySprite: {e.ToString()}");
+                MyLog.Default.WriteLine($"MahrianeIndustries.LCDInfo.LCDInfoScreenProductionSummary: Caught Exception while DrawAlgaeFarmsWithScrolling: {e.ToString()}");
             }
         }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Public>false</Public>
+
+  <CubeBlocks>
+
+    <Definition xsi:type="MyObjectBuilder_RefineryDefinition">
+      <Id>
+        <TypeId>Refinery</TypeId>
+        <SubtypeId>ModCubeBlockLargeRefineryx10</SubtypeId>
+      </Id>
+      <DisplayName>Prototech Refinery x10</DisplayName> <!-- Updated name -->
+      <Description>Description_Refinery</Description>
+      <CubeSize>Large</CubeSize>
+      <BlockTopology>TriangleMesh</BlockTopology>
+      <Size x="2" y="4" z="2"/>
+      <ModelOffset x="0" y="0" z="0"/>
+      <Components>  
+        <Component Subtype="SteelPlate" Count="11000"/>
+        <Component Subtype="Construction" Count="400"/>
+        <Component Subtype="LargeTube" Count="200"/>
+        <Component Subtype="Motor" Count="160"/>
+		<Component Subtype="PrototechMachinery" Count="10"> <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>
+		<Component Subtype="PrototechFrame" Count="1"> <!-- Additional cost -->
+			<DeconstructId>
+				<TypeId>Ingot</TypeId>
+				<SubtypeId>PrototechScrap</SubtypeId>
+			</DeconstructId>
+		</Component>	
+		<Component Subtype="PrototechPanel" Count="20"/> <!-- Additional cost -->
+        <Component Subtype="MetalGrid" Count="200"/>
+        <Component Subtype="Computer" Count="200"/>
+        <Component Subtype="SteelPlate" Count="1000"/>
+      </Components>
+      <CriticalComponent Subtype="Computer" Index="0"/>
+      <Center x="1" y="0" z="1"/>
+      <MountPoints>
+        <MountPoint Side="Back" StartX="0" StartY="0" EndX="2" EndY="4"/>
+        <MountPoint Side="Bottom" StartX="0" StartY="1" EndX="2" EndY="2"
+					Default="true"/>
+        <MountPoint Side="Top" StartX="0" StartY="0" EndX="2" EndY="1"/>
+        <MountPoint Side="Left" StartX="1" StartY="0" EndX="2" EndY="4"/>
+        <MountPoint Side="Right" StartX="0" StartY="0" EndX="1" EndY="4"/>
+      </MountPoints>
+      <BuildProgressModels>
+
+      </BuildProgressModels>
+      <BlockPairName>ModCubeBlockLargeRefineryx10</BlockPairName>
+      <EdgeType>Light</EdgeType>
+      <BuildTimeSeconds>700</BuildTimeSeconds>
+      <ResourceSinkGroup>Factory</ResourceSinkGroup>
+      <InventoryMaxVolume>75.0</InventoryMaxVolume>
+      <InventorySize>
+        <X>2.5</X>
+        <Y>2.5</Y>
+        <Z>2.5</Z>
+      </InventorySize>
+      <StandbyPowerConsumption>0.001</StandbyPowerConsumption>
+      <OperationalPowerConsumption>5.6</OperationalPowerConsumption>
+      <BlueprintClasses>
+        <Class>Ingots</Class>
+      </BlueprintClasses>
+      <RefineSpeed>13.0</RefineSpeed>
+      <MaterialEfficiency>1</MaterialEfficiency>
+      <OreAmountPerPullRequest>2000</OreAmountPerPullRequest>
+      <DamageEffectName>Damage_HeavyMech_Damaged</DamageEffectName>
+      <Center x="1" y="0" z="0"/>
+      <MirroringZ>Y</MirroringZ>
+      <DamagedSound>ParticleHeavyMech</DamagedSound>
+      <PrimarySound>BlockRafinery</PrimarySound>
+      <ActionSound>BlockRafineryProcess</ActionSound>
+      <EmissiveColorPreset>Default</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>900</PCU>
+    </Definition>
+
+  </CubeBlocks>
+</Definitions>

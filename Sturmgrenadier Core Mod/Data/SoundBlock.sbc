@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SoundCategories>
+    <SoundCategory>
+      <Id>
+        <TypeId>SoundCategoryDefinition</TypeId>
+        <SubtypeId>SGCategory</SubtypeId>
+      </Id>
+      <Sounds>
+	  	<SoundDesc Id="[SG] Baby Shark Original" SoundName="[SG] Baby Shark Original" />
+		<SoundDesc Id="[SG] Baby Shark Remix" SoundName="[SG] Baby Shark Remix" />
+        <SoundDesc Id="[SG] NC Theme" SoundName="[SG] NC Theme" />
+		<SoundDesc Id="[SG] War Horn 01" SoundName="[SG] War Horn 01" />
+		<SoundDesc Id="[SG] War Horn 02" SoundName="[SG] War Horn 02" />
+		<SoundDesc Id="[SG] War Horn 03" SoundName="[SG] War Horn 03" />
+		<SoundDesc Id="[SG] Air Raid 01" SoundName="[SG] Air Raid 01" />
+		<SoundDesc Id="[SG] Air Raid 02" SoundName="[SG] Air Raid 02" />
+		<SoundDesc Id="[SG] Alarm 01" SoundName="[SG] Alarm 01" />
+		<SoundDesc Id="[SG] Alarm 02" SoundName="[SG] Alarm 02" />
+		<SoundDesc Id="[SG] Alarm 03" SoundName="[SG] Alarm 03" />
+		<SoundDesc Id="[SG] Alarm 04" SoundName="[SG] Alarm 04" />
+		<SoundDesc Id="[SG] MGS Alert" SoundName="[SG] MGS Alert" />
+      </Sounds>
+    </SoundCategory>
+  </SoundCategories>
+</Definitions>

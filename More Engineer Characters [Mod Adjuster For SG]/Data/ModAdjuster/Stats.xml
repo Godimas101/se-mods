@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ <!-- <StatGroupDefinitions>
+	<StatGroup>
+      <Id>
+        <TypeId>MyObjectBuilder_StatsDefinition</TypeId>
+        <SubtypeId>Fighter_Astronaut_Stats</SubtypeId>
+      </Id>
+      <Stats>
+        <Stat>
+          <TypeId>MyObjectBuilder_EntityStat</TypeId>
+          <SubtypeId>Fighter_Astronaut_Health</SubtypeId>
+        </Stat>
+      </Stats>
+	  
+	    <Scripts>
+        <Script>SpaceStatEffect</Script>
+      </Scripts>
+    </StatGroup>
+
+	<StatGroup>
+      <Id>
+        <TypeId>MyObjectBuilder_StatsDefinition</TypeId>
+        <SubtypeId>Next_Gen_Astronaut_Stats</SubtypeId>
+      </Id>
+      <Stats>
+        <Stat>
+          <TypeId>MyObjectBuilder_EntityStat</TypeId>
+          <SubtypeId>Next_Gen_Astronaut_Health</SubtypeId>
+        </Stat>
+      </Stats>
+	  
+	    <Scripts>
+        <Script>SpaceStatEffect</Script>
+      </Scripts>
+    </StatGroup>
+
+
+
+  </StatGroupDefinitions>-->
+
+
+
+  <StatDefinitions>
+    
+    <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+      <Id>
+        <TypeId>MyObjectBuilder_EntityStat</TypeId>
+        <SubtypeId>Fighter_Astronaut_Health</SubtypeId>
+      </Id>
+      <Name>Health</Name>
+      <MinValue>0</MinValue>
+      <DefaultValue>200</DefaultValue>
+      <MaxValue>200</MaxValue>
+    </Stat>
+
+        <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+      <Id>
+        <TypeId>MyObjectBuilder_EntityStat</TypeId>
+        <SubtypeId>Next_Gen_Astronaut_Health</SubtypeId>
+      </Id>
+      <Name>Health</Name>
+      <MinValue>0</MinValue>
+      <DefaultValue>200</DefaultValue>
+      <MaxValue>200</MaxValue>
+    </Stat>
+ 
+  </StatDefinitions>
+  
+</Definitions>

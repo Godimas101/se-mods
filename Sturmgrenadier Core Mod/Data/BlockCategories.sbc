@@ -1,0 +1,54 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<CategoryClasses>
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>DisplayName_Category_LargeBlocks</DisplayName>
+			<Name>LargeBlocks</Name>
+			<ItemIds>
+				<string>OreDetector/SGLargeOreDetector</string>
+				<string>LandingGear/SGLargeMagneticPlate</string>
+				<string>Searchlight/SGLargeSearchlight</string>
+				<string>OxygenTank/LG_WaterTank_Small</string>
+				<string>OxygenTank/LG_WaterTank_Small_1x1</string>
+				<string>OxygenTank/LG_WaterTank_Small_1x1_Fieldwork</string>
+			</ItemIds>
+		</Category>
+		
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>DisplayName_Category_SmallBlocks</DisplayName>
+			<Name>SmallBlocks</Name>
+			<ItemIds>
+				<string>OreDetector/SGSmallMagneticPlate</string>
+				<string>OreDetector/SGSmallOreDetector</string>
+				<string>OreDetector/SGSmallSearchlight</string>
+				<string>OreDetector/SG_WaterTank_Small</string>
+			</ItemIds>
+		</Category>
+		
+		<Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+			<Id>
+				<TypeId>GuiBlockCategoryDefinition</TypeId>
+				<SubtypeId/>
+			</Id>
+			<DisplayName>SG Core Mod Blocks</DisplayName>
+			<Name>SG Core Mod Blocks</Name>
+			<ItemIds>
+				<string>OreDetector/SGLargeOreDetector</string>
+				<string>LandingGear/SGLargeMagneticPlate</string>
+				<string>Searchlight/SGLargeSearchlight</string>
+				<string>OxygenTank/LG_WaterTank_Small</string>
+				<string>OxygenTank/LG_WaterTank_Small_1x1</string>
+				<string>OxygenTank/LG_WaterTank_Small_1x1_Fieldwork</string>
+			</ItemIds>
+		</Category>
+		
+	</CategoryClasses>
+</Definitions>
