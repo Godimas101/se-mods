@@ -1,249 +1,102 @@
-# Space Engineers Mods
+# 🛸 Space Engineers Mods
 
-Custom mods for Space Engineers, primarily focused on LCD screen information displays and gameplay enhancements.
+> **Custom mods for Space Engineers — LCD displays, server gameplay overhauls, and compatibility patches.**
 
-## Mods in This Repository
+## What's This?
 
-### InfoLCD Series
+My full Space Engineers mod collection. The flagship project is **InfoLCD** — a suite of information display screens for LCDs. The rest are gameplay overhauls and balance patches built for the Sturmgrenadier server community.
 
-#### InfoLCD - Apex Update
-Current version of the InfoLCD mod suite with advanced features:
-- Multi-screen summary displays (Items, Cargo, Power, Production, Ammo, Components, etc.)
-- **Scrolling support** with configurable speed and direction
-  - **Unified List Scrolling**: For single-list screens (Items, Components, Ammo, DoorMonitor, DamageMonitor)
-  - **Multi-Category Scrolling**: For multi-section screens with MaxListLines control (Power, Production)
-- Category filtering and visibility controls
-- Subgrid scanning with performance optimization
-- Color-coded status indicators
-- CustomData configuration with INI format
-- Backward-compatible config system
+## What Lives Here?
 
-**Status:** Active development, published on Steam Workshop
+### 📊 InfoLCD Series
 
-**Recent Updates:**
-- Added scrolling to 9 screens: Items, Power, Components, Ingots, Ores, Ammo, DoorMonitor, DamageMonitor, Production
-- Implemented two scrolling approaches for different screen types
-- Fixed item type collision issues with composite keys
-- Fixed scroll timing for Update10 scripts
+| Mod | Status | Notes |
+|-----|--------|-------|
+| **InfoLCD - Apex Update** | Active development | For the Apex Update modpack |
+| **InfoLCD - Apex Advanced** | Maintenance only | For the Apex Advanced modpack — kept in sync |
 
-#### InfoLCD - Apex Advanced
-Modified version of the InfoLCD mod, designed to work with the Apex Advanced mod.
+20+ specialized screens: Items, Cargo, Power, Production, Ammo, Components, Doors, Damage, Gas, Life Support, and more. Scrolling lists, category filtering, subgrid scanning, CustomData configuration.
 
-**Status:** Maintenance mode (bug fixes only)
+See [Mods/InfoLCD - Apex Update/CLAUDE.md](Mods/InfoLCD%20-%20Apex%20Update/CLAUDE.md) for the full screen inventory and implementation details.
 
-### Sturmgrenadier Core Series
+---
 
-#### Sturmgrenadier Core Mod
-Core functionality mod for the Sturmgrenadier server ecosystem.
+### ⚙️ Sturmgrenadier Core Series
 
-**Status:** Stable
+Core gameplay overhaul for the Sturmgrenadier server ecosystem.
 
-#### Sturmgrenadier Core Power
-Power system modifications and enhancements for Sturmgrenadier servers.
+| Mod | Purpose |
+|-----|---------|
+| Sturmgrenadier Core Mod | Base overhaul |
+| Sturmgrenadier Core Power | Power system |
+| Sturmgrenadier Core Production | Production & crafting |
+| Sturmgrenadier Core Survival | Survival mechanics |
+| Sturmgrenadier Core Vanilla Combat | Combat balance |
 
-**Status:** Stable
+---
 
-#### Sturmgrenadier Core Production
-Production system modifications for Sturmgrenadier servers.
+### 🔧 Mod Adjusters
 
-**Status:** Stable
+Balance and compatibility patches for third-party mods used on Sturmgrenadier servers.
 
-#### Sturmgrenadier Core Survival
-Survival gameplay modifications for Sturmgrenadier servers.
+| Mod | Adjusts |
+|-----|---------|
+| Artillery MKII Turret - Goliath | Weapon balance |
+| Dense Colorable Solar Panels | Power output |
+| Federal Industrial - Utilities | Compatibility |
+| Isy's Dense Solar Panels | Power output |
+| Life'Tech - Algaetechnology | Farming/resources |
+| ModCubeBlocks Refinery x10 | Refinery speed |
+| ModCubeBlocks Upgrade Module | Module balance |
+| More Engineer Characters | Character compatibility |
+| More Wind Turbines | Wind power output |
+| [Mafoo] More Batteries | Battery capacity/charge |
 
-**Status:** Stable
+---
 
-#### Sturmgrenadier Core Vanilla Combat
-Combat system modifications for Sturmgrenadier servers.
+### ✨ Other Mods
 
-**Status:** Stable
+| Mod | Description |
+|-----|-------------|
+| Not Just For Looks | Gives DLC cosmetic blocks actual useful stats |
 
-### Mod Adjusters for Sturmgrenadier
+---
 
-These mods adjust third-party mods for compatibility with Sturmgrenadier servers:
+## 🛠️ Development Setup
 
-- **Artillery MKII Turret - Goliath [Mod Adjuster For SG]** - Turret balance adjustments
-- **Dense Colorable Solar Panels [Mod Adjuster For SG]** - Solar panel adjustments
-- **Federal Industrial - Utilites [Mod Adjuster For SG]** - Utility block adjustments
-- **Isy's Dense Solar Panels [Mod Adjuster For SG]** - Solar panel balance adjustments
-- **Life'Tech-Algaetechnology [Mod Adjuster For SG]** - Algae farm adjustments
-- **ModCubeBlocks Refinery x10 [Mod Adjuster For SG]** - Refinery speed adjustments
-- **ModCubeBlocks Upgrade Module [Mod Adjuster For SG]** - Upgrade module adjustments
-- **More Engineer Characters [Mod Adjuster For SG]** - Character model adjustments
-- **More Wind Turbines [Mod Adjuster For SG]** - Wind turbine balance adjustments
-- **[Mafoo] More Batteries [Mod Adjuster For SG]** - Battery balance adjustments
+**Prerequisites:**
+- Space Engineers + Mod SDK (auto-installs via Steam)
+- Visual Studio or VS Code for C#
 
-**Status:** All stable and in use on Sturmgrenadier servers
-
-### Other Mods
-
-#### Not Just For Looks
-Gameplay enhancement mod adding boosted stats for DLC cosmetic blocks.
-
-**Status:** Stable
-
-### Scripts
-Additional utility scripts and standalone tools for Space Engineers modding.
-
-## Development
-
-### Prerequisites
-- Space Engineers game installation
-- Space Engineers Mod SDK (auto-installs via Steam)
-- Visual Studio or VS Code for C# development
-- .NET Framework (included with SDK)
-
-### SDK Location
-The Space Engineers Mod SDK is located here once installed from Steam:
+**SDK location:**
 ```
-SteamLibrary\steamapps\common\SpaceEngineersModSDK\
+D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\
 ```
 
-After Steam installs/updates Space Engineers, the SDK is automatically updated. Use it for:
-- API reference (DLLs with XML documentation)
-- Decompiling source implementations
-- Asset structure examples (models, textures)
-- Testing tools (ModelViewer, etc.)
+**Building:**
+1. Reference SDK DLLs for IntelliSense
+2. Write scripts in `Data/Scripts/<namespace>/`
+3. Register LCD scripts in `Data/TextSurfaceScripts.sbc`
+4. Test via `%AppData%\SpaceEngineers\Mods\` or Workshop
 
-### Building Mods
-1. Reference SDK DLLs in your C# project for IntelliSense
-2. Write mod scripts in `Data/Scripts/<namespace>/`
-3. Register text surface scripts in `Data/TextSurfaceScripts.sbc` (if applicable)
-4. Test in game by placing mod in `%AppData%\SpaceEngineers\Mods\` or via workshop
+---
 
-## AI Assistant Skill
+## 📚 Documentation
 
-This repository includes a comprehensive **Space Engineers Modding Skill** for AI assistants (GitHub Copilot, Claude, etc.).
+| File | Purpose |
+|------|---------|
+| [CLAUDE.md](CLAUDE.md) | AI assistant context — API patterns, gotchas, SDK reference |
+| [MOD_MAKING_NOTES.md](MOD_MAKING_NOTES.md) | Working notes — implementation decisions, status tracking |
+| [Mods/InfoLCD - Apex Update/CLAUDE.md](Mods/InfoLCD%20-%20Apex%20Update/CLAUDE.md) | InfoLCD screen inventory and scrolling implementation |
 
-### What It Provides
-- Complete modding workflows for all mod types
-- API quick reference with common interfaces and patterns
-- Known issues and solutions for common pitfalls
-- Text surface script template
-- SDK usage guidance
-- Backward compatibility best practices
+---
 
-### Using the Skill
+## 🔗 Key Resources
 
-**With Claude:**
-- Type `/space-engineers-modding` in chat
-- Or mention Space Engineers modding topics naturally (auto-loads)
+- [Space Engineers Modding Wiki](https://spaceengineers.wiki.gg/wiki/Modding/Reference)
+- [Mod API Documentation](https://keensoftwarehouse.github.io/SpaceEngineersModAPI/api/index.html)
+- [Steam Workshop](https://steamcommunity.com/app/244850/workshop/)
 
-**With GitHub Copilot (VS Code):**
-- The skill is automatically available when you open this workspace
-- Ask questions about Space Engineers modding in the chat
+---
 
-### Setting Up the Skill on Your Own Computer
-
-The skill is located at [`.github/skills/space-engineers-modding/`](.github/skills/space-engineers-modding/) and is automatically available when you clone this repository.
-
-**For VS Code / GitHub Copilot:**
-1. Clone this repository
-2. Open the `space-engineers-mods` folder in VS Code
-3. The skill will be automatically detected from `.github/skills/`
-4. Start chatting - the skill is available immediately
-
-**For Claude Desktop / Claude.ai:**
-
-**Option 1: Project-Scoped (this repository only)**
-1. Clone this repository
-2. Add this folder to your Claude project workspace
-3. The skill will be available when working in this project
-4. Type `/space-engineers-modding` or mention modding topics
-
-**Option 2: Global (available in all Claude sessions)**
-1. Copy the skill folder to Claude's global skills directory:
-   - Windows: `C:\Users\<YourName>\.claude\skills\space-engineers-modding\`
-   - macOS/Linux: `~/.claude/skills/space-engineers-modding/`
-2. Create the `.claude/skills/` directory if it doesn't exist
-3. Copy the entire `space-engineers-modding` folder (including SKILL.md, references/, templates/)
-4. Restart Claude Desktop (if using desktop app)
-5. The skill is now available in all your Claude conversations
-
-**Skill Contents:**
-```
-space-engineers-modding/
-├── SKILL.md                    # Main skill file
-├── README.md                   # Skill documentation
-├── references/
-│   ├── api-quick-reference.md  # API interfaces and patterns
-│   └── known-issues.md         # Common pitfalls and solutions
-└── templates/
-    └── text-surface-script.cs  # LCD script template
-```
-
-**Note:** The skill automatically references the SDK location (`D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\`). Update paths in `SKILL.md` if your installation differs.
-
-## Documentation
-
-- **[.github/skills/space-engineers-modding/](./.github/skills/space-engineers-modding/)** - AI assistant skill for modding workflows
-
-## Key Resources
-
-### Official Documentation
-- [Space Engineers Modding Wiki](https://spaceengineers.wiki.gg/wiki/Modding/Reference) - Primary reference
-- [Mod API Documentation](https://keensoftwarehouse.github.io/SpaceEngineersModAPI/api/index.html) - Complete API reference
-- [Steam Workshop](https://steamcommunity.com/app/244850/workshop/) - Browse and publish mods
-
-### Community
-- [Space Engineers Discord](https://discord.gg/spaceengineers) - Active modding community
-- [Keen Software House Forums](https://forums.keenswh.com/) - Official forums with modding section
-
-## Important Modding Principles
-
-### Backward Compatibility (Critical for Workshop Releases)
-- **Never break existing CustomData formats** - Add new options, don't remove/rename
-- **Support old config keys** - Check for both old and new formats
-- **Test with existing configs** - Verify old CustomData still works before releasing
-- **Graceful degradation** - New features should be optional
-- **Document breaking changes** - Clearly note incompatibilities in mod descriptions
-
-### Performance
-- Cache subgrid scans and update infrequently
-- Minimize LINQ in performance-critical code
-- Always check for dedicated servers: `if (MyAPIGateway.Utilities?.IsDedicated ?? false) return;`
-- Use composite keys for dictionaries when mixing item TypeIds
-
-### Safety
-- Always null-check block/component access
-- Wrap DetailedInfo parsing in try/catch
-- Never rely on default parameter values
-- Validate all user configuration input
-
-## Common Issues
-
-### Item Type Collisions
-Items can share SubtypeIds but have different TypeIds (e.g., `ConsumableItem_Fruit` vs `SeedItem_Fruit`).
-
-**Solution:** Use composite keys: `$"{typeId}_{subtypeId}"`
-
-### Multi-Category Scrolling Space Calculation
-Each category must calculate space from current drawing position, not screen top.
-
-**Solution:** `float currentY = position.Y - surfaceData.viewPortOffsetY;`
-
-### VRage.MyFixedPoint
-Inventory amounts are `MyFixedPoint`, not `int` or `float`.
-
-**Solution:** `int amount = (int)item.Amount;` or `item.Amount.ToIntSafe()`
-
-See [CLAUDE.md](./CLAUDE.md) and the skill's `known-issues.md` for complete lists.
-
-## Contributing
-
-When modifying mods:
-1. Test thoroughly in Creative and Survival modes
-2. Verify backward compatibility with existing CustomData
-3. Update documentation if adding new features
-4. Follow existing code patterns and conventions
-5. Add comments for complex logic
-
-## License
-
-These mods are created for personal use and shared on the Space Engineers Steam Workshop. Please respect the Space Engineers EULA and modding guidelines.
-
-## Credits
-
-SDK provided by Keen Software House.
-
-AI assistance powered by GitHub Copilot and Claude.
+*"Building better blocks, one mod at a time."*
