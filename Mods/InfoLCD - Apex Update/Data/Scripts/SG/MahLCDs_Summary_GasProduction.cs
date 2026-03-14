@@ -98,7 +98,7 @@ namespace MahrianeIndustries.LCDInfo
             ConfigHelpers.AppendUseColorsConfig(sb, surfaceData.useColors);
 
             sb.AppendLine();
-            sb.AppendLine("; [ GASPRODUCTION - SCROLLING OPTIONS ]");
+            sb.AppendLine("; [ SCREEN - SCROLLING OPTIONS ]");
             sb.AppendLine($"ToggleScroll={toggleScroll}");
             sb.AppendLine("; Enable scrolling to view items that don't fit on screen");
             sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");

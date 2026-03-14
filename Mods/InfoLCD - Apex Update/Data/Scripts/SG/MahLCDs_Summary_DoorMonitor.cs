@@ -83,19 +83,7 @@ namespace MahrianeIndustries.LCDInfo
             ConfigHelpers.AppendUseColorsConfig(sb, surfaceData.useColors);
 
             sb.AppendLine();
-            sb.AppendLine("; [ DOORMONITOR - LAYOUT OPTIONS ]");
-            sb.AppendLine($"TextSize={surfaceData.textSize}");
-            sb.AppendLine($"ViewPortOffsetX={surfaceData.viewPortOffsetX}");
-            sb.AppendLine($"ViewPortOffsetY={surfaceData.viewPortOffsetY}");
-            sb.AppendLine($"TitleFieldWidth={surfaceData.titleOffset}");
-            sb.AppendLine($"RatioFieldWidth={surfaceData.ratioOffset}");
-
-            sb.AppendLine();
-            sb.AppendLine("; [ DOORMONITOR - SCREEN OPTIONS ]");
-            sb.AppendLine($"CompactMode={compactMode}");
-
-            sb.AppendLine();
-            sb.AppendLine("; [ DOORMONITOR - SCROLLING OPTIONS ]");
+            sb.AppendLine("; [ SCREEN - SCROLLING OPTIONS ]");
             sb.AppendLine($"ToggleScroll={toggleScroll}");
             sb.AppendLine("; Enable scrolling to view doors that don't fit on screen");
             sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
@@ -111,6 +99,18 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine($"ScrollLines={scrollLines}");
             sb.AppendLine("; Number of lines to scroll per step");
             sb.AppendLine("; Set to 1 for smooth scrolling, higher values for faster navigation");
+
+            sb.AppendLine();
+            sb.AppendLine("; [ DOORMONITOR - LAYOUT OPTIONS ]");
+            sb.AppendLine($"TextSize={surfaceData.textSize}");
+            sb.AppendLine($"ViewPortOffsetX={surfaceData.viewPortOffsetX}");
+            sb.AppendLine($"ViewPortOffsetY={surfaceData.viewPortOffsetY}");
+            sb.AppendLine($"TitleFieldWidth={surfaceData.titleOffset}");
+            sb.AppendLine($"RatioFieldWidth={surfaceData.ratioOffset}");
+
+            sb.AppendLine();
+            sb.AppendLine("; [ DOORMONITOR - SCREEN OPTIONS ]");
+            sb.AppendLine($"CompactMode={compactMode}");
 
             sb.AppendLine();
 

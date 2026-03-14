@@ -104,25 +104,7 @@ namespace MahrianeIndustries.LCDInfo
             ConfigHelpers.AppendUseColorsConfig(sb, surfaceData.useColors);
 
             sb.AppendLine();
-            sb.AppendLine("; [ PRODUCTION - LAYOUT OPTIONS ]");
-            sb.AppendLine($"TextSize={surfaceData.textSize}");
-            sb.AppendLine($"ViewPortOffsetX={surfaceData.viewPortOffsetX}");
-            sb.AppendLine($"ViewPortOffsetY={surfaceData.viewPortOffsetY}");
-            sb.AppendLine($"TitleFieldWidth={surfaceData.titleOffset}");
-            sb.AppendLine($"RatioFieldWidth={surfaceData.ratioOffset}");
-
-            sb.AppendLine();
-            sb.AppendLine("; [ PRODUCTION - SCREEN OPTIONS ]");
-            sb.AppendLine($"ShowRefineries={showRefineries}");
-            sb.AppendLine($"ShowAssemblers={showAssemblers}");
-            sb.AppendLine($"ShowGenerators={showGenerators}");
-            sb.AppendLine($"ShowOxygenFarms={showOxygenFarms}");
-            sb.AppendLine($"ShowFoodProcessors={showFoodProcessors}");
-            sb.AppendLine($"ShowIrrigationSystems={showIrrigationSystems}");
-            sb.AppendLine($"ShowAlgaeFarms={showAlgaeFarms}");
-
-            sb.AppendLine();
-            sb.AppendLine("; [ PRODUCTION - SCROLLING OPTIONS ]");
+            sb.AppendLine("; [ SCREEN - SCROLLING OPTIONS ]");
             sb.AppendLine($"ToggleScroll={toggleScroll}");
             sb.AppendLine("; Enable scrolling to view items that don't fit on screen");
             sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
@@ -143,6 +125,24 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine("; Maximum number of items to display per category (e.g., max refineries shown at once)");
             sb.AppendLine("; Limits list length even if more screen space is available. Set to 0 to use all available space.");
             sb.AppendLine("; Useful for grids with many production blocks - shows a portion and scrolls through all items");
+            sb.AppendLine();
+
+            sb.AppendLine("; [ PRODUCTION - LAYOUT OPTIONS ]");
+            sb.AppendLine($"TextSize={surfaceData.textSize}");
+            sb.AppendLine($"ViewPortOffsetX={surfaceData.viewPortOffsetX}");
+            sb.AppendLine($"ViewPortOffsetY={surfaceData.viewPortOffsetY}");
+            sb.AppendLine($"TitleFieldWidth={surfaceData.titleOffset}");
+            sb.AppendLine($"RatioFieldWidth={surfaceData.ratioOffset}");
+
+            sb.AppendLine();
+            sb.AppendLine("; [ PRODUCTION - SCREEN OPTIONS ]");
+            sb.AppendLine($"ShowRefineries={showRefineries}");
+            sb.AppendLine($"ShowAssemblers={showAssemblers}");
+            sb.AppendLine($"ShowGenerators={showGenerators}");
+            sb.AppendLine($"ShowOxygenFarms={showOxygenFarms}");
+            sb.AppendLine($"ShowFoodProcessors={showFoodProcessors}");
+            sb.AppendLine($"ShowIrrigationSystems={showIrrigationSystems}");
+            sb.AppendLine($"ShowAlgaeFarms={showAlgaeFarms}");
             sb.AppendLine();
 
             myTerminalBlock.CustomData = sb.ToString();

@@ -94,6 +94,24 @@ namespace MahrianeIndustries.LCDInfo
             ConfigHelpers.AppendUseColorsConfig(sb, surfaceData.useColors);
 
             sb.AppendLine();
+            sb.AppendLine("; [ SCREEN - SCROLLING OPTIONS ]");
+            sb.AppendLine($"ToggleScroll={toggleScroll}");
+            sb.AppendLine("; Enable scrolling through air vents that don't fit on screen");
+            sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
+            sb.AppendLine();
+            sb.AppendLine($"ReverseDirection={reverseDirection}");
+            sb.AppendLine("; Scroll direction: 'false' scrolls up (bottom items appear), 'true' scrolls down (top items appear)");
+            sb.AppendLine("; The list wraps around, so you'll eventually see all items in a continuous loop");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollSpeed={scrollSpeed}");
+            sb.AppendLine("; Time between scroll steps in game ticks (60 ticks \u2248 1 second at normal game speed)");
+            sb.AppendLine("; Lower = faster scrolling, Higher = slower scrolling");
+            sb.AppendLine();
+            sb.AppendLine($"ScrollLines={scrollLines}");
+            sb.AppendLine("; Number of lines to scroll per step");
+            sb.AppendLine("; Set to 1 for smooth scrolling, higher values for faster navigation");
+            sb.AppendLine();
+
             sb.AppendLine("; [ LIFESUPPORT - LAYOUT OPTIONS ]");
             sb.AppendLine($"TextSize={surfaceData.textSize}");
             sb.AppendLine($"ViewPortOffsetX={surfaceData.viewPortOffsetX}");
@@ -113,24 +131,6 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine();
             sb.AppendLine("; [ LIFESUPPORT - ITEM THRESHOLDS ]");
             sb.AppendLine($"IceMinAmount={iceMinAmount}");
-            sb.AppendLine();
-
-            sb.AppendLine("; [ LIFESUPPORT - SCROLLING OPTIONS ]");
-            sb.AppendLine($"ToggleScroll={toggleScroll}");
-            sb.AppendLine("; Enable scrolling through air vents that don't fit on screen");
-            sb.AppendLine("; Set to 'true' to activate. Scrolling only occurs when there's overflow data.");
-            sb.AppendLine();
-            sb.AppendLine($"ReverseDirection={reverseDirection}");
-            sb.AppendLine("; Scroll direction: 'false' scrolls up (bottom items appear), 'true' scrolls down (top items appear)");
-            sb.AppendLine("; The list wraps around, so you'll eventually see all items in a continuous loop");
-            sb.AppendLine();
-            sb.AppendLine($"ScrollSpeed={scrollSpeed}");
-            sb.AppendLine("; Time between scroll steps in game ticks (60 ticks \u2248 1 second at normal game speed)");
-            sb.AppendLine("; Lower = faster scrolling, Higher = slower scrolling");
-            sb.AppendLine();
-            sb.AppendLine($"ScrollLines={scrollLines}");
-            sb.AppendLine("; Number of lines to scroll per step");
-            sb.AppendLine("; Set to 1 for smooth scrolling, higher values for faster navigation");
             sb.AppendLine();
 
             myTerminalBlock.CustomData = sb.ToString();
