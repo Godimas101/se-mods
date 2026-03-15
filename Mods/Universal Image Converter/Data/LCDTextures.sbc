@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LCDTextures>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen01</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 01</LocalizationId>
+      <TexturePath>Textures\Models\screen01_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen01_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen02</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 02</LocalizationId>
+      <TexturePath>Textures\Models\screen02_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen02_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen03</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 03</LocalizationId>
+      <TexturePath>Textures\Models\screen03_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen03_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen04</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 04</LocalizationId>
+      <TexturePath>Textures\Models\screen04_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen04_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen05</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 05</LocalizationId>
+      <TexturePath>Textures\Models\screen05_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen05_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+    <LCDTextureDefinition>
+      <Id>
+        <TypeId>LCDTextureDefinition</TypeId>
+        <SubtypeId>UIC_Screen06</SubtypeId>
+      </Id>
+      <LocalizationId>Screen 06</LocalizationId>
+      <TexturePath>Textures\Models\screen06_converted.dds</TexturePath>
+      <SpritePath>Textures\Sprites\screen06_converted.dds</SpritePath>
+      <Selectable>true</Selectable>
+    </LCDTextureDefinition>
+
+  </LCDTextures>
+</Definitions>
