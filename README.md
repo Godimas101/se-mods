@@ -59,6 +59,20 @@ Balance and compatibility patches for third-party mods used on Sturmgrenadier se
 | Mod | Description |
 |-----|-------------|
 | Not Just For Looks | Gives DLC cosmetic blocks actual useful stats |
+| Universal Image Converter | LCD image pack — subscribe to get ready-made images in-game |
+
+---
+
+### 🖼️ SE Image Converter (Standalone Tool)
+
+A Windows desktop tool for converting images to Space Engineers LCD formats — no Python required.
+
+| Tool | What it does |
+|------|-------------|
+| **Image to DDS** | Converts images to `.dds` files ready for LCD texture mods |
+| **Image to LCD Text** | Converts images to SE colour-code strings for pasting directly into LCD text surfaces |
+
+**Download:** [Releases — space-engineers-image-converter](https://github.com/Godimas/space-engineers-image-converter/releases)
 
 ---
 
