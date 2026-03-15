@@ -1,1 +1,11 @@
 CLAUDE.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# PyInstaller build output
+build/
+dist/
+*.exe
