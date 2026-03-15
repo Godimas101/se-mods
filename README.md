@@ -95,16 +95,6 @@ D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\
 
 ---
 
-## 📚 Documentation
-
-| File | Purpose |
-|------|---------|
-| [CLAUDE.md](CLAUDE.md) | AI assistant context — API patterns, gotchas, SDK reference |
-| [MOD_MAKING_NOTES.md](MOD_MAKING_NOTES.md) | Working notes — implementation decisions, status tracking |
-| [Mods/InfoLCD - Apex Update/CLAUDE.md](Mods/InfoLCD%20-%20Apex%20Update/CLAUDE.md) | InfoLCD screen inventory and scrolling implementation |
-
----
-
 ## 🔗 Key Resources
 
 - [Space Engineers Modding Wiki](https://spaceengineers.wiki.gg/wiki/Modding/Reference)
