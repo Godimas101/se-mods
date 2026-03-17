@@ -490,7 +490,7 @@ class EditorScreen(ttk.Frame):
 
         # ── Log ───────────────────────────────────────────────────────────────
         log_frame = ttk.Frame(self, style="Panel.TFrame")
-        log_frame.pack(fill="both", expand=True, padx=16, pady=(0, 14))
+        log_frame.pack(fill="x", padx=16, pady=(0, 14))
 
         log_hdr = ttk.Frame(log_frame, style="Panel.TFrame")
         log_hdr.pack(fill="x", padx=6, pady=(4, 2))
@@ -504,24 +504,43 @@ class EditorScreen(ttk.Frame):
                   cursor="hand2").pack(side="right")
 
         self._log_text = T.log_text_widget(log_frame)
+        self._log_text.config(height=5)
         log_sb = ttk.Scrollbar(log_frame, orient="vertical",
                                command=self._log_text.yview,
                                style="SE.Vertical.TScrollbar")
         self._log_text.config(yscrollcommand=log_sb.set)
         log_sb.pack(side="right", fill="y")
-        self._log_text.pack(fill="both", expand=True, padx=6, pady=(0, 6))
+        self._log_text.pack(fill="x", padx=6, pady=(0, 6))
 
     def _build_edit_toolbar(self):
-        # Row 1 — clip & volume
+        def _grp_label(parent, text):
+            ttk.Label(parent, text=text,
+                      style="Muted.TLabel",
+                      font=("Courier New", 7)).pack(side="left", padx=(0, 4))
+
+        def _vsep(parent):
+            tk.Frame(parent, bg=T.BORDER, width=1).pack(
+                side="left", fill="y", padx=(8, 8), pady=2)
+
+        # ── Row 1: Clip · Transform · Volume ─────────────────────────────────
         row1 = ttk.Frame(self, style="TFrame")
         row1.pack(fill="x", padx=16, pady=(0, 4))
 
-        self._se_btn(row1, "TRIM TO SELECTION", self._op_trim).pack(side="left", padx=(0, 6))
-        self._se_btn(row1, "SILENCE",           self._op_silence).pack(side="left", padx=(0, 6))
-        self._se_btn(row1, "REVERSE",           self._op_reverse).pack(side="left", padx=(0, 6))
-        self._se_btn(row1, "NORMALIZE",         self._op_normalize).pack(side="left", padx=(0, 6))
-        self._se_btn(row1, "DC OFFSET",         self._op_dc_offset).pack(side="left", padx=(0, 16))
+        # Clip group
+        _grp_label(row1, "CLIP")
+        self._se_btn(row1, "\u2702 TRIM",    self._op_trim).pack(side="left", padx=(0, 4))
+        self._se_btn(row1, "\u2298 SILENCE", self._op_silence).pack(side="left", padx=(0, 0))
+        _vsep(row1)
 
+        # Transform group
+        _grp_label(row1, "TRANSFORM")
+        self._se_btn(row1, "\u21c4 REVERSE",   self._op_reverse).pack(side="left", padx=(0, 4))
+        self._se_btn(row1, "\u25b2 NORMALIZE", self._op_normalize).pack(side="left", padx=(0, 4))
+        self._se_btn(row1, "\u2248 DC OFFSET", self._op_dc_offset).pack(side="left", padx=(0, 0))
+        _vsep(row1)
+
+        # Volume group
+        _grp_label(row1, "VOLUME")
         ttk.Label(row1, text="Gain:", style="TLabel").pack(side="left")
         self._gain_var = tk.StringVar(value="1.0")
         tk.Entry(row1, textvariable=self._gain_var,
@@ -529,36 +548,100 @@ class EditorScreen(ttk.Frame):
                  font=("Courier New", 9), relief="flat",
                  highlightthickness=1, highlightbackground=T.BORDER,
                  highlightcolor=T.CYAN, width=6).pack(side="left", padx=(4, 4), ipady=2)
-        self._se_btn(row1, "APPLY", self._op_gain).pack(side="left")
+        self._se_btn(row1, "\u2713 APPLY", self._op_gain).pack(side="left")
 
-        # Row 2 — fades, speed, channels
+        # Info button
+        tk.Button(row1, text="\u24d8",
+                  command=self._on_edit_info,
+                  bg=T.BG, fg=T.MUTED,
+                  activebackground=T.HOVER, activeforeground=T.CYAN,
+                  font=("Courier New", 9), relief="flat", bd=0,
+                  cursor="hand2").pack(side="right")
+
+        # ── Row 2: Fades · Speed ──────────────────────────────────────────────
         row2 = ttk.Frame(self, style="TFrame")
         row2.pack(fill="x", padx=16, pady=(0, 4))
 
-        self._se_btn(row2, "FADE IN",  self._op_fade_in).pack(side="left", padx=(0, 6))
-        self._se_btn(row2, "FADE OUT", self._op_fade_out).pack(side="left", padx=(0, 16))
+        # Fades group
+        _grp_label(row2, "FADES")
+        self._se_btn(row2, "\u2197 FADE IN",  self._op_fade_in).pack(side="left", padx=(0, 4))
+        self._se_btn(row2, "\u2198 FADE OUT", self._op_fade_out).pack(side="left", padx=(0, 0))
+        _vsep(row2)
 
-        ttk.Label(row2, text="Speed:", style="TLabel").pack(side="left")
-        self._speed_var = tk.StringVar(value="1.25×")
+        # Speed group
+        _grp_label(row2, "SPEED")
+        self._speed_var = tk.StringVar(value="1.25\u00d7")
         ttk.Combobox(row2, textvariable=self._speed_var,
                      values=SPEED_OPTIONS,
                      state="readonly", width=7,
-                     style="SE.TCombobox").pack(side="left", padx=(4, 4))
-        self._se_btn(row2, "APPLY", self._op_speed).pack(side="left", padx=(0, 16))
+                     style="SE.TCombobox").pack(side="left", padx=(0, 4))
+        self._se_btn(row2, "\u2713 APPLY", self._op_speed).pack(side="left")
 
-        ttk.Label(row2, text="Channels:", style="TLabel").pack(side="left")
+        # ── Row 3: Channels ───────────────────────────────────────────────────
+        row3 = ttk.Frame(self, style="TFrame")
+        row3.pack(fill="x", padx=16, pady=(0, 4))
+
+        _grp_label(row3, "CHANNELS")
         for label, cmd in [
-            ("MONO\u2192STEREO", self._op_mono_to_stereo),
-            ("STEREO\u2192MONO", self._op_stereo_to_mono),
-            ("SWAP L/R",         self._op_swap),
-            ("EXTRACT L",        lambda: self._op_extract(0)),
-            ("EXTRACT R",        lambda: self._op_extract(1)),
+            ("\u2295 MONO\u2192STEREO", self._op_mono_to_stereo),
+            ("\u2296 STEREO\u2192MONO", self._op_stereo_to_mono),
+            ("\u2194 SWAP L/R",         self._op_swap),
+            ("\u25c4 EXTRACT L",        lambda: self._op_extract(0)),
+            ("EXTRACT R \u25ba",        lambda: self._op_extract(1)),
         ]:
-            self._se_btn(row2, label, cmd).pack(side="left", padx=(4, 0))
+            self._se_btn(row3, label, cmd).pack(side="left", padx=(0, 4))
 
     # -----------------------------------------------------------------------
     # Widget helpers
     # -----------------------------------------------------------------------
+
+    def _on_edit_info(self):
+        T.themed_showinfo(self.winfo_toplevel(), "Audio Editor — Controls Reference", """\
+CLIP
+  ✂ TRIM          Cuts the audio down to just your selection.
+                  Everything outside the selection is removed.
+
+  ⊘ SILENCE       Replaces the selected region with silence.
+                  The total length of the file does not change.
+
+TRANSFORM
+  ⇄ REVERSE       Plays the selected region backwards.
+
+  ▲ NORMALIZE     Boosts (or lowers) the selected region so its
+                  peak volume hits 0 dB — the maximum before clipping.
+
+  ≈ DC OFFSET     Removes a DC bias from the waveform. Useful if the
+                  waveform is shifted above or below the centre line,
+                  which can cause clicks or reduce headroom.
+
+VOLUME
+  Gain / ✓ APPLY  Multiplies the selected region by the gain value.
+                  1.0 = no change  |  0.5 = half volume  |  2.0 = double.
+                  Values above ~1.0 may cause clipping.
+
+FADES
+  ↗ FADE IN       Smoothly ramps volume from silence up to full level
+                  across the selected region.
+
+  ↘ FADE OUT      Smoothly ramps volume from full level down to silence
+                  across the selected region.
+
+SPEED
+  ✓ APPLY         Resamples the audio to change playback speed.
+                  Faster speeds raise pitch; slower speeds lower it.
+                  The file length changes to match.
+
+CHANNELS
+  ⊕ MONO→STEREO   Duplicates a mono track into both L and R channels.
+
+  ⊖ STEREO→MONO   Mixes L and R channels down to a single mono track.
+
+  ↔ SWAP L/R      Swaps the left and right channels.
+
+  ◄ EXTRACT L     Keeps only the left channel, discards the right.
+
+  EXTRACT R ►     Keeps only the right channel, discards the left.\
+""")
 
     def _se_btn(self, parent, text, cmd, width=None):
         kw = {"width": width} if width else {}
