@@ -18,7 +18,7 @@ if errorlevel 1 (
 
 :: Install / upgrade build dependencies
 echo  Installing dependencies...
-pip install --quiet --upgrade numpy pygame pyinstaller
+pip install --quiet --upgrade numpy sounddevice pyinstaller
 
 echo.
 echo  Building executable...
