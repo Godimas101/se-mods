@@ -16,7 +16,7 @@ a = Analysis(
     ["se_launcher.py"],
     pathex=[],
     binaries=pil_binaries,
-    datas=pil_datas,
+    datas=pil_datas + [("icon.ico", ".")],
     hiddenimports=pil_hiddenimports + [
         # Screen modules are loaded lazily by string name in se_launcher.py
         # so PyInstaller won't detect them via static analysis.
@@ -56,6 +56,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
+    icon="icon.ico",
     console=False,      # no console window — GUI only
     disable_windowed_traceback=False,
     argv_emulation=False,

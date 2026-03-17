@@ -67,8 +67,36 @@ class HomeScreen(ttk.Frame):
         # ── Footer ───────────────────────────────────────────────────────────
         T.separator(self, pady=(18, 0))
 
-        ttk.Label(self, text="Made with \u2665 by Godimas and Claude",
-                  style="Muted.TLabel").pack(anchor="center", pady=(6, 0))
+        # "Made with ♥ by [Godimas] and [Claude]" — both names are links
+        made_row = ttk.Frame(self, style="TFrame")
+        made_row.pack(anchor="center", pady=(6, 0))
+
+        ttk.Label(made_row, text="Made with \u2665 by\u00a0",
+                  style="Muted.TLabel").pack(side="left")
+
+        godimas_link = tk.Label(made_row, text="Godimas",
+                                bg=T.BG, fg=T.BLUE,
+                                font=("Courier New", 9, "underline"),
+                                cursor="hand2")
+        godimas_link.pack(side="left")
+        godimas_link.bind("<Button-1>",
+                          lambda _e: webbrowser.open(
+                              "https://steamcommunity.com/id/godimas/myworkshopfiles"))
+        godimas_link.bind("<Enter>", lambda _e: godimas_link.config(fg=T.CYAN))
+        godimas_link.bind("<Leave>", lambda _e: godimas_link.config(fg=T.BLUE))
+
+        ttk.Label(made_row, text="\u00a0and\u00a0",
+                  style="Muted.TLabel").pack(side="left")
+
+        claude_link = tk.Label(made_row, text="Claude",
+                               bg=T.BG, fg=T.BLUE,
+                               font=("Courier New", 9, "underline"),
+                               cursor="hand2")
+        claude_link.pack(side="left")
+        claude_link.bind("<Button-1>",
+                         lambda _e: webbrowser.open("https://claude.ai"))
+        claude_link.bind("<Enter>", lambda _e: claude_link.config(fg=T.CYAN))
+        claude_link.bind("<Leave>", lambda _e: claude_link.config(fg=T.BLUE))
 
         credit_row = ttk.Frame(self, style="TFrame")
         credit_row.pack(anchor="center", pady=(2, 0))
@@ -87,7 +115,7 @@ class HomeScreen(ttk.Frame):
         link.bind("<Enter>", lambda _e: link.config(fg=T.CYAN))
         link.bind("<Leave>", lambda _e: link.config(fg=T.BLUE))
 
-        ttk.Label(self, text="v1.0  \u00b7  SE Image Converter",
+        ttk.Label(self, text="v1.1  \u00b7  SE Image Converter",
                   style="Muted.TLabel").pack(anchor="center", pady=(6, 10))
 
     # -----------------------------------------------------------------------

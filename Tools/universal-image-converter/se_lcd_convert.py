@@ -272,28 +272,30 @@ def _load_and_compose(img_path: Path, preset: ScreenPreset) -> "PIL.Image.Image"
     return Image.merge("RGBA", (r, g, b, Image.new("L", canvas.size, 1)))
 
 
-def _load_and_compose_custom(img_path: Path, max_size: int,
+def _load_and_compose_custom(img_path: Path, max_width: int, max_height: int,
                               preserve_aspect: bool) -> "PIL.Image.Image":
     """
-    Load and resize using the legacy 'custom' rules:
-    each dimension rounded to nearest pow2, capped at max_size.
-    If preserve_aspect=True, scale uniformly then round each to nearest pow2.
-    Returns an RGB PIL image.
+    Load and resize to user-specified dimensions.
+    Each dimension is rounded to the nearest power of two, then capped at
+    max_width / max_height independently.
+    If preserve_aspect=True, scale uniformly so the image fits within the
+    max_width × max_height box before rounding.
+    Returns an RGBA PIL image.
     """
     from PIL import Image
 
     img = _flatten_to_black(_load_image(img_path))
     orig_w, orig_h = img.size
 
-    if preserve_aspect and orig_w != orig_h:
-        scale    = min(max_size / orig_w, max_size / orig_h)
+    if preserve_aspect:
+        scale    = min(max_width / orig_w, max_height / orig_h)
         scaled_w = max(1, round(orig_w * scale))
         scaled_h = max(1, round(orig_h * scale))
-        target_w = min(_nearest_pow2(scaled_w), max_size)
-        target_h = min(_nearest_pow2(scaled_h), max_size)
+        target_w = min(_nearest_pow2(scaled_w), max_width)
+        target_h = min(_nearest_pow2(scaled_h), max_height)
     else:
-        target_w = min(next_pow2(orig_w), max_size)
-        target_h = min(next_pow2(orig_h), max_size)
+        target_w = min(_nearest_pow2(orig_w), max_width)
+        target_h = min(_nearest_pow2(orig_h), max_height)
 
     if (target_w, target_h) != img.size:
         img = img.resize((target_w, target_h), Image.LANCZOS)
@@ -526,21 +528,24 @@ def convert_image(img_path: Path, out_dir: Path,
                   prefix: str = "",
                   suffix: str = "",
                   custom_max_size: int = DEFAULT_MAX_SIZE,
+                  custom_max_height: int | None = None,
                   custom_preserve_aspect: bool = False) -> None:
     """
     Convert a single image to a SE LCD DDS texture.
 
-    preset=None  →  custom path (custom_max_size / custom_preserve_aspect)
+    preset=None  →  custom path (custom_max_size / custom_max_height / custom_preserve_aspect)
     preset=...   →  compose image into the preset's visible surface region,
                     output at preset DDS dimensions.
 
+    custom_max_height defaults to custom_max_size when not specified (square cap).
     Encoder priority: texconv (BC7) → wand (DXT5) → built-in DXT5.
     """
     out_path = out_dir / (prefix + img_path.stem + suffix + ".dds")
 
     # --- Load and compose ---
     if preset is CUSTOM_PRESET:
-        img = _load_and_compose_custom(img_path, custom_max_size,
+        max_h = custom_max_height if custom_max_height is not None else custom_max_size
+        img = _load_and_compose_custom(img_path, custom_max_size, max_h,
                                        custom_preserve_aspect)
     else:
         img = _load_and_compose(img_path, preset)

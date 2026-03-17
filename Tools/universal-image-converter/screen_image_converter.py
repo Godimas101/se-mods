@@ -50,8 +50,8 @@ _PRESET_DISPLAY_MAP   = PRESET_DISPLAY_MAP   if _IMPORT_OK else {}
 # Main screen frame
 # ---------------------------------------------------------------------------
 
-SIZE_OPTIONS  = ["256", "512", "1024", "2048"]
-DEFAULT_SIZE  = "1024"
+DEFAULT_WIDTH  = "1024"
+DEFAULT_HEIGHT = "1024"
 
 
 class ImageConverterScreen(ttk.Frame):
@@ -209,22 +209,47 @@ class ImageConverterScreen(ttk.Frame):
         # Row 2: Custom controls (hidden unless "Custom" selected)
         self._custom_row = ttk.Frame(settings_frame, style="TFrame")
 
-        ttk.Label(self._custom_row, text="Max Size:", style="TLabel").pack(side="left")
-        self._size_var = tk.StringVar(value=DEFAULT_SIZE)
-        size_combo = ttk.Combobox(
-            self._custom_row, textvariable=self._size_var,
-            values=SIZE_OPTIONS, state="readonly",
-            width=7, style="SE.TCombobox",
+        ttk.Label(self._custom_row, text="Width:", style="TLabel").pack(side="left")
+        self._width_var = tk.StringVar(value=DEFAULT_WIDTH)
+        self._width_entry = tk.Entry(
+            self._custom_row, textvariable=self._width_var,
+            bg=T.PANEL, fg=T.TEXT,
+            insertbackground=T.CYAN,
+            font=("Courier New", 9),
+            relief="flat", bd=1,
+            highlightthickness=1,
+            highlightbackground=T.BORDER, highlightcolor=T.CYAN,
+            width=6,
         )
-        size_combo.pack(side="left", padx=(6, 4))
+        self._width_entry.pack(side="left", padx=(6, 2), ipady=3)
+        ttk.Label(self._custom_row, text="px", style="Muted.TLabel").pack(side="left", padx=(0, 16))
+
+        ttk.Label(self._custom_row, text="Height:", style="TLabel").pack(side="left")
+        self._height_var = tk.StringVar(value=DEFAULT_HEIGHT)
+        self._height_entry = tk.Entry(
+            self._custom_row, textvariable=self._height_var,
+            bg=T.PANEL, fg=T.TEXT,
+            insertbackground=T.CYAN,
+            font=("Courier New", 9),
+            relief="flat", bd=1,
+            highlightthickness=1,
+            highlightbackground=T.BORDER, highlightcolor=T.CYAN,
+            width=6,
+        )
+        self._height_entry.pack(side="left", padx=(6, 2), ipady=3)
         ttk.Label(self._custom_row, text="px", style="Muted.TLabel").pack(side="left", padx=(0, 20))
 
-        self._aspect_var = tk.BooleanVar(value=False)
-        ttk.Checkbutton(
+        self._aspect_var = tk.BooleanVar(value=True)
+        self._aspect_cb = ttk.Checkbutton(
             self._custom_row, text="Preserve Aspect Ratio",
             variable=self._aspect_var,
+            command=self._on_aspect_toggle,
             style="SE.TCheckbutton",
-        ).pack(side="left")
+        )
+        self._aspect_cb.pack(side="left")
+
+        # Lock height to width when aspect ratio is preserved
+        self._width_var.trace_add("write", self._on_width_changed)
 
         # Row 3: Output Folder
         ttk.Label(settings_frame, text="Output Folder:", style="TLabel").grid(
@@ -395,11 +420,29 @@ class ImageConverterScreen(ttk.Frame):
             self._affix_entry.config(state="normal")
             self._affix_text_var.set("_converted")
 
+    def _on_aspect_toggle(self) -> None:
+        if self._aspect_var.get():
+            # Just re-sync height to current width
+            self._on_width_changed()
+            self._height_entry.config(state="disabled")
+        else:
+            self._height_entry.config(state="normal")
+
+    def _on_width_changed(self, *_args) -> None:
+        if not self._aspect_var.get():
+            return
+        val = self._width_var.get()
+        if val.isdigit():
+            self._height_var.set(val)
+
     def _on_screen_change(self, _e=None) -> None:
         display = self._screen_var.get()
         name    = _PRESET_DISPLAY_MAP.get(display, display)
         if name.strip().lower() == "custom":
             self._custom_row.grid(row=2, column=1, sticky="w", pady=(0, 6))
+            # Apply initial height-lock state
+            if self._aspect_var.get():
+                self._height_entry.config(state="disabled")
         else:
             self._custom_row.grid_remove()
 
@@ -478,8 +521,9 @@ class ImageConverterScreen(ttk.Frame):
     def _worker(self, screen_name, gen_mipmaps, prefix, suffix, out_dir):
         files   = list(self._files)
         total   = len(files)
-        preset  = get_preset(screen_name)
-        max_size = int(self._size_var.get())
+        preset   = get_preset(screen_name)
+        c_width  = int(self._width_var.get())  if self._width_var.get().isdigit()  else DEFAULT_MAX_SIZE
+        c_height = int(self._height_var.get()) if self._height_var.get().isdigit() else DEFAULT_MAX_SIZE
 
         for i, f in enumerate(files, 1):
             od = out_dir or f.parent
@@ -490,7 +534,8 @@ class ImageConverterScreen(ttk.Frame):
                     f, od, preset, gen_mipmaps,
                     self._use_texconv, self._use_wand,
                     prefix=prefix, suffix=suffix,
-                    custom_max_size=max_size,
+                    custom_max_size=c_width,
+                    custom_max_height=c_height,
                     custom_preserve_aspect=self._aspect_var.get(),
                 )
                 self._q.put(("log", f"  ✓ Saved: {f.stem}.dds", "success"))
