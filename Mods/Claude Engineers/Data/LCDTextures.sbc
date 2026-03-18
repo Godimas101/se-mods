@@ -3,34 +3,25 @@
              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LCDTextures>
 
-    <!-- =====================================================================
-         Claude Engineers — LCD Images
-         Add one LCDTextureDefinition per image.
-         TexturePath  → Textures\Models\   (used on the LCD surface mesh)
-         SpritePath   → Textures\Sprites\  (used in the UI picker thumbnail)
-         Both paths must point to a valid DDS file.
-         SubtypeId must be globally unique — prefix with "ClaudeEngineers_"
-         ===================================================================== -->
-
     <LCDTextureDefinition>
       <Id>
         <TypeId>LCDTextureDefinition</TypeId>
-        <SubtypeId>ClaudeEngineers_Image1</SubtypeId>
+        <SubtypeId>Claude Engineer 01</SubtypeId>
       </Id>
-      <LocalizationId>ClaudeEngineers_Image1</LocalizationId>
-      <TexturePath>Textures\Models\ClaudeEngineers_Image1.dds</TexturePath>
-      <SpritePath>Textures\Sprites\ClaudeEngineers_Image1.dds</SpritePath>
+      <LocalizationId>ClaudeEngineers_01</LocalizationId>
+      <TexturePath>Textures\Models\claude_engineer01.dds</TexturePath>
+      <SpritePath>Textures\Sprites\claude_engineer01.dds</SpritePath>
       <Selectable>true</Selectable>
     </LCDTextureDefinition>
 
     <LCDTextureDefinition>
       <Id>
         <TypeId>LCDTextureDefinition</TypeId>
-        <SubtypeId>ClaudeEngineers_Image2</SubtypeId>
+        <SubtypeId>Claude Engineer 02</SubtypeId>
       </Id>
-      <LocalizationId>ClaudeEngineers_Image2</LocalizationId>
-      <TexturePath>Textures\Models\ClaudeEngineers_Image2.dds</TexturePath>
-      <SpritePath>Textures\Sprites\ClaudeEngineers_Image2.dds</SpritePath>
+      <LocalizationId>ClaudeEngineers_02</LocalizationId>
+      <TexturePath>Textures\Models\claude_engineer02.dds</TexturePath>
+      <SpritePath>Textures\Sprites\claude_engineer02.dds</SpritePath>
       <Selectable>true</Selectable>
     </LCDTextureDefinition>
 
