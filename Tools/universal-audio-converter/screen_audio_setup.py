@@ -154,7 +154,10 @@ class SetupScreen(ttk.Frame):
 
         tk.Label(path_inner,
                  text=("Adding a tool to PATH means Windows can find it from anywhere,\n"
-                       "so you don't need to place it next to the exe every time."),
+                       "so you don't need to place it next to the exe.\n"
+                       "We recommend dropping ffmpeg.exe into your ModSDK Tools folder\n"
+                       "(e.g. C:\\SpaceEngineersModSDK\\Tools) and adding that folder to PATH.\n"
+                       "This covers both ffmpeg and xWMAEncode in one step."),
                  bg=T.PANEL, fg=T.TEXT,
                  font=("Courier New", 9), justify="left", anchor="w").pack(anchor="w")
 
