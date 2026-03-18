@@ -381,6 +381,15 @@ The SG Core mods form the base gameplay overhaul. Individual notes go here as th
 - **Bug caught during implementation:** `AppendScrollingConfig` call in Container was still passing `maxListLines` variable after the field was removed — caused compile error. Fixed by dropping the argument (uses default).
 - **Typo debugging:** Farming ToggleScroll=True was entered as "Ttrue" — `ToBoolean("Ttrue")` returns false silently. Scrolling appeared broken. Lesson: always check manually-typed config values for typos first.
 
+### 2026-03-18 — Claude Engineers LCD Mod + Image Converter Bug Fix
+
+- **Claude Engineers mod created:** LCD texture mod with two images (`claude_engineer01.dds`, `claude_engineer02.dds`). `LCDTextures.sbc` written with SubtypeIds `Claude Engineer 01` / `Claude Engineer 02`. DDS files in both `Textures/Models/` and `Textures/Sprites/`. Tested in-game — working.
+- **Universal Image Converter v1.2.1:** Fixed two bugs in the Custom size path:
+  1. `_load_and_compose_custom` was not creating a full-size canvas — returned the scaled image at whatever size it ended up, causing SE to stretch it to fill the panel (squished result).
+  2. UI was locking height=width when "Preserve Aspect Ratio" was checked, preventing non-square custom targets (e.g. 512×1024).
+  - Fix: always output a canvas exactly `target_w × target_h`; letterbox source when preserve aspect is on. Height field is now always independently editable.
+- **AirlockMonitor scrolling:** Still pending — next up for InfoLCD Apex Update.
+
 ### 2026-03-14 — CustomData Section Header Standardization
 - **Change:** All CustomData section headers now follow consistent `; [ SCREENNAME - CATEGORY ]` pattern
 - **Scrolling headers:** Were mixed (`; [ SCROLLING OPTIONS ]`, `; [ SCREENNAME - SCROLLING OPTIONS ]`) — now all use `; [ SCREENNAME - SCROLLING OPTIONS ]`
