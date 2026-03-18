@@ -14,7 +14,12 @@ import shutil
 import subprocess
 import tempfile
 import threading
-import winsound as _winsound
+try:
+    import sounddevice as _sd
+    _SD_OK = True
+except ImportError:
+    _sd = None
+    _SD_OK = False
 from pathlib import Path
 
 import tkinter as tk
@@ -309,9 +314,13 @@ class ConverterScreen(ttk.Frame):
     def _on_preview(self):
         if self._previewing:
             try:
-                _winsound.PlaySound(None, _winsound.SND_PURGE)
+                if _SD_OK:
+                    _sd.stop()
             except Exception:
                 pass
+            return
+        if not _SD_OK:
+            self._log("sounddevice not installed — preview unavailable.", "warn")
             return
         idx = self._listbox.curselection()
         if not idx:
@@ -323,11 +332,10 @@ class ConverterScreen(ttk.Frame):
         threading.Thread(target=self._preview_thread, args=(path,), daemon=True).start()
 
     def _preview_thread(self, path: Path):
+        import wave, numpy as np
         tmp_path = None
         try:
-            if path.suffix.lower() == ".wav":
-                wav_path = str(path)
-            else:
+            if path.suffix.lower() != ".wav":
                 if not self._ffmpeg_ok:
                     self._q.put(("log", "ffmpeg required to preview non-WAV files.", "warn"))
                     return
@@ -342,7 +350,22 @@ class ConverterScreen(ttk.Frame):
                     self._q.put(("log", "Preview: could not decode file.", "error"))
                     return
                 wav_path = tmp_path
-            _winsound.PlaySound(wav_path, _winsound.SND_FILENAME)
+            else:
+                wav_path = str(path)
+
+            with wave.open(wav_path, "rb") as wf:
+                sr       = wf.getframerate()
+                channels = wf.getnchannels()
+                sampwidth = wf.getsampwidth()
+                frames   = wf.readframes(wf.getnframes())
+
+            dtype = {1: np.int8, 2: np.int16, 4: np.int32}.get(sampwidth, np.int16)
+            data  = np.frombuffer(frames, dtype=dtype)
+            if channels > 1:
+                data = data.reshape(-1, channels)
+
+            _sd.play(data, sr)
+            _sd.wait()          # blocks daemon thread only — UI stays responsive
         except Exception as exc:
             self._q.put(("log", f"Preview error: {exc}", "error"))
         finally:
