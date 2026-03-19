@@ -309,11 +309,22 @@ class AudioEditorReferenceWindow(tk.Toplevel):
          "Faster speeds raise pitch; slower speeds lower it.\n"
          "The file length changes to match."),
         ("section", "CHANNELS"),
+        ("op", "R  /  L  (waveform toggle buttons)",
+         "Stereo files show two waveform lanes — R on top, L on bottom.\n"
+         "Click R or L to toggle which channel is active (lit orange = on).\n"
+         "EXTRACT and SOLO read these to know which channel to target."),
         ("op", "⊕  MONO → STEREO",  "Duplicates a mono track into both L and R channels."),
         ("op", "⊖  STEREO → MONO",  "Mixes L and R channels down to a single mono track."),
         ("op", "↔  SWAP L/R",        "Swaps the left and right channels."),
-        ("op", "◄  EXTRACT L",       "Keeps only the left channel, discards the right."),
-        ("op", "   EXTRACT R  ►",    "Keeps only the right channel, discards the left."),
+        ("op", "⊟  EXTRACT",
+         "Keeps only the active channel as mono — discards the other.\n"
+         "Toggle one channel button on (and the other off) before pressing.\n"
+         "Both on or both off: operation is blocked with a log message."),
+        ("op", "◎  SOLO",
+         "Mutes the inactive channel so only the active one plays.\n"
+         "File stays stereo throughout.\n"
+         "With a time selection active, only that region is affected.\n"
+         "Toggle one channel button on (and the other off) before pressing."),
     ]
 
     def __init__(self, parent):
@@ -335,7 +346,7 @@ class AudioEditorReferenceWindow(tk.Toplevel):
 
         tk.Frame(self, bg=BORDER, height=1).pack(fill="x", padx=14, pady=(8, 0))
         ttk.Label(self,
-                  text="All operations apply to the selected waveform region.",
+                  text="Time-based ops apply to the waveform selection  ·  Channel ops (Extract, Solo) use the L / R toggle buttons.",
                   style="Muted.TLabel").pack(anchor="w", padx=14, pady=(4, 8))
 
         # Scrollable content

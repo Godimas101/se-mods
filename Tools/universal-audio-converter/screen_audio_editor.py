@@ -18,7 +18,8 @@ Edit operations (all numpy-only, no scipy):
   Mono→Stereo  — duplicate single channel to L and R
   Stereo→Mono  — average L and R channels
   Swap         — swap left and right channels
-  Extract L/R  — keep only one channel as mono
+  Extract      — keep the active channel as mono (toggle L or R button to choose)
+  Solo         — mute the inactive channel (selection or whole file; toggle L or R to choose)
 
 Playback via sounddevice (optional — editor is fully functional without it).
 """
@@ -205,6 +206,18 @@ def op_extract_channel(samples, channel: int):
     ch = min(channel, samples.shape[1] - 1)
     return samples[:, ch:ch+1].copy()
 
+def op_solo_channel(samples, channel: int, sel_start: int, sel_end: int):
+    """Mute the other channel within [sel_start:sel_end] (whole file if no selection)."""
+    if samples.shape[1] < 2:
+        return samples
+    out   = samples.copy()
+    other = 1 - channel
+    if sel_end > sel_start:
+        out[sel_start:sel_end, other] = 0.0
+    else:
+        out[:, other] = 0.0
+    return out
+
 
 # ---------------------------------------------------------------------------
 # Waveform Canvas
@@ -234,6 +247,7 @@ class WaveformCanvas(tk.Canvas):
         self._drag_origin   = 0
 
         self._playhead_px   = -1
+        self._ch_active     = [True, True]   # [L_active, R_active]
 
         self.bind("<Configure>",       self._on_resize)
         self.bind("<ButtonPress-1>",   self._on_press)
@@ -287,6 +301,10 @@ class WaveformCanvas(tk.Canvas):
         self._sel_end_px   = 0
         self._redraw()
         self._fire_selection()
+
+    def set_channel_active(self, active: list) -> None:
+        self._ch_active = list(active)
+        self._redraw()
 
     def set_selection_frames(self, start: int, end: int) -> None:
         if self._n_frames <= 0:
@@ -370,43 +388,77 @@ class WaveformCanvas(tk.Canvas):
                              fill=T.MUTED, font=("Courier New", 9))
             return
 
-        # Centre line
-        self.create_line(0, h // 2, w, h // 2, fill=T.BORDER)
-
-        # Waveform — downsample to canvas pixel width
         n_ch   = self._samples.shape[1] if self._samples.ndim == 2 else 1
-        mono   = np.mean(self._samples, axis=1) if n_ch > 1 else self._samples[:, 0]
         bucket = max(1, self._n_frames // w)
 
-        pts = []
-        for px in range(w):
-            lo = px * bucket
-            hi = min(lo + bucket, self._n_frames)
-            chunk = mono[lo:hi]
-            if len(chunk) == 0:
-                continue
-            peak_pos = float(np.max(chunk))
-            peak_neg = float(np.min(chunk))
-            cy       = h // 2
-            y_top    = cy - int(peak_pos * cy)
-            y_bot    = cy - int(peak_neg * cy)
-            pts += [px, y_top, px, y_bot]
-
-        if pts:
-            self.create_line(pts, fill=WAVEFORM_COLOR, width=1)
-
-        # Selection overlay
         sx = min(self._sel_start_px, self._sel_end_px)
         ex = max(self._sel_start_px, self._sel_end_px)
-        if ex > sx:
-            self.create_rectangle(sx, 0, ex, h,
-                                  fill=T.BLUE, stipple="gray25",
-                                  outline="", tags="sel")
-        # Selection handles
+
+        if n_ch == 2:
+            # Stereo: R on top half, L on bottom half
+            slot = h // 2
+            for ch_idx, y_off in [(1, 0), (0, slot)]:
+                active  = self._ch_active[ch_idx]
+                cy      = y_off + slot // 2
+                half    = slot // 2
+                ch_data = self._samples[:, ch_idx]
+                self.create_line(0, cy, w, cy, fill=T.BORDER)
+                # Tint only on active channels
+                if ex > sx and active:
+                    self.create_rectangle(sx, y_off, ex, y_off + slot,
+                                          fill=T.ORANGE, stipple="gray25",
+                                          outline="", tags="sel")
+                pts_grey = []; pts_sel = []
+                for px in range(w):
+                    lo    = px * bucket
+                    hi    = min(lo + bucket, self._n_frames)
+                    chunk = ch_data[lo:hi]
+                    if len(chunk) == 0:
+                        continue
+                    y_top = cy - int(float(np.max(chunk)) * half)
+                    y_bot = cy - int(float(np.min(chunk)) * half)
+                    pt = [px, y_top, px, y_bot]
+                    if active and sx < ex and sx <= px < ex:
+                        pts_sel  += pt
+                    else:
+                        pts_grey += pt
+                if pts_grey: self.create_line(pts_grey, fill=WAVEFORM_COLOR, width=1)
+                if pts_sel:  self.create_line(pts_sel,  fill=T.ORANGE,       width=1)
+            # Divider between R and L
+            self.create_line(0, slot, w, slot, fill=T.BORDER)
+        else:
+            # Mono: single waveform across full height
+            mono = self._samples[:, 0]
+            cy   = h // 2
+            self.create_line(0, cy, w, cy, fill=T.BORDER)
+            if ex > sx:
+                self.create_rectangle(sx, 0, ex, h,
+                                      fill=T.ORANGE, stipple="gray25",
+                                      outline="", tags="sel")
+            pts_left = []; pts_sel = []; pts_right = []
+            for px in range(w):
+                lo    = px * bucket
+                hi    = min(lo + bucket, self._n_frames)
+                chunk = mono[lo:hi]
+                if len(chunk) == 0:
+                    continue
+                y_top = cy - int(float(np.max(chunk)) * cy)
+                y_bot = cy - int(float(np.min(chunk)) * cy)
+                pt = [px, y_top, px, y_bot]
+                if sx < ex and sx <= px < ex:
+                    pts_sel  += pt
+                elif px < sx:
+                    pts_left += pt
+                else:
+                    pts_right += pt
+            if pts_left:  self.create_line(pts_left,  fill=WAVEFORM_COLOR, width=1)
+            if pts_sel:   self.create_line(pts_sel,   fill=T.ORANGE,       width=1)
+            if pts_right: self.create_line(pts_right, fill=WAVEFORM_COLOR, width=1)
+
+        # Selection handles and playhead span full height
         for hx in (sx, ex):
             self.create_line(hx, 0, hx, h, fill=HANDLE_COLOR, width=2)
 
-        # Playhead
         if 0 <= self._playhead_px <= w:
             self.create_line(self._playhead_px, 0,
                              self._playhead_px, h,
@@ -473,8 +525,24 @@ class EditorScreen(ttk.Frame):
         canvas_frame = tk.Frame(self, bg=T.BG)
         canvas_frame.pack(fill="x", padx=16, pady=(0, 4))
 
+        # Channel toggle buttons — shown for stereo, hidden for mono
+        BTN_W = 32
+        self._ch_btn_frame = tk.Frame(canvas_frame, bg=T.PANEL, width=BTN_W)
+        self._ch_btn_frame.pack_propagate(False)
+        # (packed/forgotten in _update_channel_ui — not packed here)
+
+        _btn_kw = dict(font=("Courier New", 10, "bold"), bd=0, relief="flat",
+                       cursor="hand2", activeforeground=T.TEXT)
+        self._btn_ch_r = tk.Button(self._ch_btn_frame, text="R",
+                                   command=lambda: self._toggle_channel(1), **_btn_kw)
+        self._btn_ch_r.pack(fill="both", expand=True)
+        self._btn_ch_l = tk.Button(self._ch_btn_frame, text="L",
+                                   command=lambda: self._toggle_channel(0), **_btn_kw)
+        self._btn_ch_l.pack(fill="both", expand=True)
+        self._ch_active = [True, True]   # [L_active, R_active]
+
         self._waveform = WaveformCanvas(canvas_frame, height=WAVEFORM_HEIGHT)
-        self._waveform.pack(fill="x")
+        self._waveform.pack(side="left", fill="x", expand=True)
         self._waveform.on_selection_change = self._on_selection_change
         self._waveform.clear()
 
@@ -613,8 +681,8 @@ class EditorScreen(ttk.Frame):
             ("\u2295 MONO\u2192STEREO", self._op_mono_to_stereo),
             ("\u2296 STEREO\u2192MONO", self._op_stereo_to_mono),
             ("\u2194 SWAP L/R",         self._op_swap),
-            ("\u25c4 EXTRACT L",        lambda: self._op_extract(0)),
-            ("EXTRACT R \u25ba",        lambda: self._op_extract(1)),
+            ("\u229f EXTRACT",          self._op_extract_active),
+            ("\u25ce SOLO",             self._op_solo_active),
         ]:
             self._se_btn(cell, label, cmd).pack(side="left", padx=(0, 4))
 
@@ -694,6 +762,7 @@ class EditorScreen(ttk.Frame):
             self._sel_end     = 0
             self._waveform.load(samples)
             self._waveform.clear_selection()
+            self._update_channel_ui(samples.shape[1])
             self._file_label_var.set(path.name)
             self._update_info()
             self._log_sep()
@@ -741,6 +810,35 @@ class EditorScreen(ttk.Frame):
         self._sel_start = start_frame
         self._sel_end   = end_frame
         self._update_info()
+
+    # -----------------------------------------------------------------------
+    # Channel toggle buttons
+    # -----------------------------------------------------------------------
+
+    def _toggle_channel(self, ch_idx: int) -> None:
+        self._ch_active[ch_idx] = not self._ch_active[ch_idx]
+        self._update_ch_buttons()
+        self._waveform.set_channel_active(self._ch_active)
+
+    def _update_ch_buttons(self) -> None:
+        for btn, ch_idx in [(self._btn_ch_r, 1), (self._btn_ch_l, 0)]:
+            on = self._ch_active[ch_idx]
+            btn.config(
+                bg=T.ORANGE  if on else T.PANEL,
+                fg=T.BG      if on else T.MUTED,
+                activebackground=T.ORANGE if on else T.PANEL,
+            )
+
+    def _update_channel_ui(self, n_ch: int) -> None:
+        """Show channel toggle buttons for stereo, hide for mono."""
+        if n_ch == 2:
+            self._ch_active = [True, True]
+            self._ch_btn_frame.pack(side="left", fill="y",
+                                    before=self._waveform)
+            self._update_ch_buttons()
+        else:
+            self._ch_btn_frame.pack_forget()
+        self._waveform.set_channel_active(self._ch_active)
 
     def _on_select_all(self):
         if self._samples is None:
@@ -864,6 +962,7 @@ class EditorScreen(ttk.Frame):
         else:
             self._waveform.clear_selection()
 
+        self._update_channel_ui(new_samples.shape[1])
         self._update_info()
         self._log(f"\u2713 {label}", "success")
 
@@ -959,6 +1058,50 @@ class EditorScreen(ttk.Frame):
         label = "L" if channel == 0 else "R"
         self._apply(op_extract_channel(self._samples, channel),
                     f"Extract channel {label} as Mono")
+
+    def _op_solo(self, channel: int):
+        if not self._require_loaded():
+            return
+        if self._samples.shape[1] < 2:
+            self._log("Need stereo for Solo.", "warn")
+            return
+        label = "L" if channel == 0 else "R"
+        s, e  = self._sel_start, self._sel_end
+        scope = f" on selection ({(e-s)/self._sample_rate:.3f}s)" if e > s else " (whole file)"
+        self._apply(op_solo_channel(self._samples, channel, s, e),
+                    f"Solo {label}{scope}")
+
+    def _op_extract_active(self):
+        if not self._require_loaded():
+            return
+        if self._samples.shape[1] < 2:
+            self._log("File is already mono — nothing to extract.", "warn")
+            return
+        l_on, r_on = self._ch_active[0], self._ch_active[1]
+        if l_on and not r_on:
+            self._op_extract(0)
+        elif r_on and not l_on:
+            self._op_extract(1)
+        elif not l_on and not r_on:
+            self._log("No channel selected — toggle L or R first.", "warn")
+        else:
+            self._log("Both channels active — deselect one to extract a single channel.", "warn")
+
+    def _op_solo_active(self):
+        if not self._require_loaded():
+            return
+        if self._samples.shape[1] < 2:
+            self._log("File is mono — nothing to solo.", "warn")
+            return
+        l_on, r_on = self._ch_active[0], self._ch_active[1]
+        if l_on and not r_on:
+            self._op_solo(0)
+        elif r_on and not l_on:
+            self._op_solo(1)
+        elif not l_on and not r_on:
+            self._log("No channel selected — toggle L or R first.", "warn")
+        else:
+            self._log("Both channels active — deselect one to target a single channel.", "warn")
 
 
 # ---------------------------------------------------------------------------
