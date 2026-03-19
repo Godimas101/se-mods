@@ -1,4 +1,5 @@
 # Universal Audio Converter
+#Note -> Tool is currently in a pre-release state. Feel free to use whats here though!
 ### Space Engineers audio tools for modders
 
 ---
