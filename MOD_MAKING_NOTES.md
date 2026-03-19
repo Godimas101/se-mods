@@ -444,6 +444,45 @@ The SG Core mods form the base gameplay overhaul. Individual notes go here as th
 
 ---
 
+### 2026-03-19 — SE Skill Expansion + README + Catalogue Updates
+
+#### Root README
+- `mods/README.md` was essentially a stub. Rewrote as a proper landing page covering: InfoLCD, Claude Engineers, Not Just For Looks (both variants), Sturmgrenadier Core series, Mod Adjusters, Universal Image Converter (v1.3), Universal Audio Converter (pre-release), and Scripts.
+
+#### Space Engineers Skill — Three New Reference Files
+All three files written from local workshop mod data + web research, then synced to VS Code projects copy.
+
+- **`DLC_CATALOGUE.md`** — Full listing of all 20 SE DLC packs (SubtypeIds + AppIds + free/paid content breakdown), sourced directly from `DLCs.sbc`. Includes patch detection instructions: on skill load, compare `DLCs.sbc` SubtypeIds against known list; if new ones appear, prompt user to research new content.
+- **`MES.md`** — Modular Encounters System modding guide. Covers: how MES reads `[Key:Value]` tags from `<Description>` fields, all profile types (SpawnGroup, Behavior, Autopilot, Trigger, Action, SpawnConditions) with real SBC examples sourced from Robot Raider Pods and Zombie Attack mods. Key note: MES disables vanilla cargo ship/encounter/creature spawners on load.
+- **`AI_ENABLED.md`** — AI Enabled modding guide. Covers: bot definition SBC format, character SBC, MES integration via `[BotProfiles:]` and `[AiEnabledReady:true]`, child mods (Crew Enabled, Infestation Enabled, Zombie Attack). Key note: Zombie Attack has been removed from Steam and is incompatible with current SE.
+
+#### SKILL.md Updates
+- **Check #5 (new):** DLC/patch detection — reads `DLCs.sbc` and compares SubtypeIds against `DLC_CATALOGUE.md` on every skill load.
+- **Check #6 (was #5):** "What Are We Working On?" — added **MES / AI Enabled mod** as an explicit project type option.
+- Key Reference Files table updated with `DLCs.sbc`, MES, and AI Enabled workshop IDs.
+- Supporting Reference Files updated with links to all three new files.
+
+#### MOD_CATALOGUE.md Refresh
+- Categories expanded: added **MES**, **AI Enabled**, **Scenario** (split out from the old `NPC/AI` catch-all).
+- Detection rules added to SKILL.md: `Profiles/` subfolder or `[Modular Encounters SpawnGroup]` in SBC → MES; `AnimalBotDefinition` or `AnimationControllers/` → AI Enabled.
+- 11 entries re-identified and re-categorized (names were wrong — pulled from wrong files during original catalogue build):
+  - `Disposable Beacon` → **Modular Encounters System** (MES)
+  - `Ai Enabled` → **Bot_spawner** (AI Enabled — dependency only)
+  - `AiEnabled Combat Bot Material` → **AI Enabled** (framework)
+  - `Raiders` → **Robot Raider Pods** (MES)
+  - `Infestation` → **Infestation Enabled** (AI Enabled)
+  - `Stuff n Things` → **Planet Creature Spawner** (MES)
+  - `Grinder Engineers (Spawn)` → **Populated Worlds** (AI Enabled)
+  - `FAF Founder` → **Ares at War (Scenario)** — this is a world save, not a mod
+  - `Configuration Script` → **Crew Enabled** (AI Enabled)
+  - `Credits Display` → **NPC Programming Extender** (MES)
+  - `ARYLYN Drive Systems` (NPC/AI) → kept, but category review noted
+- 3 entries added (were in workshop folder but missing from catalogue): **Independent Contractors**, **Orks**, **Reavers** — all MES encounter packs.
+- Mod Groups section updated with proper MES and AI Enabled groupings.
+- Total: 295 → 298 mods. Date updated to 2026-03-19.
+
+---
+
 ### 2026-03-14 — CustomData Section Header Standardization
 - **Change:** All CustomData section headers now follow consistent `; [ SCREENNAME - CATEGORY ]` pattern
 - **Scrolling headers:** Were mixed (`; [ SCROLLING OPTIONS ]`, `; [ SCREENNAME - SCROLLING OPTIONS ]`) — now all use `; [ SCREENNAME - SCROLLING OPTIONS ]`
