@@ -50,8 +50,9 @@ class HomeScreen(ttk.Frame):
             nav,
             icon="▣",
             title="IMAGE TO DDS  ·  FOR MODDERS",
-            desc=("Convert images to DDS / BC7_UNORM format for\n"
-                  "Space Engineers LCD texture mods."),
+            desc=("Convert images to DDS / BC7_UNORM_SRGB format for\n"
+                  "Space Engineers LCD texture mods.\n"
+                  "⚠  Source images under 1024px wide lose quality at distance."),
             command=lambda: self._app.show_screen("image_converter"),
         ).pack(fill="x", pady=(0, 10))
 

@@ -9,6 +9,8 @@
 
 **No install required. No Python required. Just download and run.**
 
+**Latest stable release: v1.3**
+
 > Optionally, place [`texconv.exe`](https://github.com/microsoft/DirectXTex/releases/latest) in the same folder as the exe for best-quality DDS output (Image to DDS tool only). Not required — the tool works without it.
 
 ---

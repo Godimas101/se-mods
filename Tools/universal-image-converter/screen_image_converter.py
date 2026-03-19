@@ -389,7 +389,9 @@ class ImageConverterScreen(ttk.Frame):
         if self._use_texconv:
             self._log(f"texconv found: {self._use_texconv}", "success")
         else:
-            self._log("texconv not found — BC7 fallback will be used.", "warn")
+            self._log("texconv not found — falling back to DXT5 encoder.", "warn")
+            self._log("  DXT5 quality degrades at distance in-game.", "warn")
+            self._log("  Install texconv for BC7_UNORM (best quality).", "warn")
         if self._use_wand:
             self._log("ImageMagick (Wand) ready.", "success")
         self._log_sep()

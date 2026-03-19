@@ -330,7 +330,10 @@ def _encode_with_texconv(texconv_path: str, img: "PIL.Image.Image",
         mip_arg = "0" if gen_mipmaps else "1"
         cmd = [
             texconv_path,
-            "-f", "BC7_UNORM",
+            "-f", "BC7_UNORM_SRGB",
+            "-if", "CUBIC",
+            "-bc", "x",
+            "-sepalpha",
             "-y",
             "-m", mip_arg,
             "-o", str(tmp_path),
@@ -409,8 +412,14 @@ def _compress_dxt5_block(pixels: list) -> bytes:
     def to_rgb565(r, g, b):
         return ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3)
 
-    c0 = to_rgb565(max(rs), max(gs), max(bs))
-    c1 = to_rgb565(min(rs), min(gs), min(bs))
+    # Pick endpoints as the actual brightest/darkest pixels (by luminance).
+    # Using per-channel max/min produces synthetic colors that don't exist in
+    # the block, causing severe banding at lower mip levels.
+    lums = [0.299*r + 0.587*g + 0.114*b for r, g, b in zip(rs, gs, bs)]
+    max_i = lums.index(max(lums))
+    min_i = lums.index(min(lums))
+    c0 = to_rgb565(rs[max_i], gs[max_i], bs[max_i])
+    c1 = to_rgb565(rs[min_i], gs[min_i], bs[min_i])
     if c0 < c1:
         c0, c1 = c1, c0
 
@@ -562,7 +571,7 @@ def convert_image(img_path: Path, out_dir: Path,
 
     dds_w, dds_h = img.size
     mips = mip_count(dds_w, dds_h) if gen_mipmaps else 1
-    enc_fmt = "BC7_UNORM" if use_texconv else "DXT5"
+    enc_fmt = "BC7_UNORM_SRGB" if use_texconv else "DXT5"
 
     print(f"  {img_path.name} → {out_path.name}  "
           f"{dds_w}×{dds_h}  {enc_fmt}  "
@@ -677,8 +686,8 @@ Examples:
     use_wand    = False if args.no_wand    else _detect_wand()
 
     if use_texconv:
-        enc_label = f"texconv ({use_texconv})  →  BC7_UNORM"
-        fmt_label = "DDS / BC7_UNORM (DXGI 98)"
+        enc_label = f"texconv ({use_texconv})  →  BC7_UNORM_SRGB"
+        fmt_label = "DDS / BC7_UNORM_SRGB (DXGI 99)"
     elif use_wand:
         enc_label = "wand (ImageMagick)  →  DXT5"
         fmt_label = "DDS / DXT5 (BC3_UNORM)"

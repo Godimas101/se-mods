@@ -381,6 +381,36 @@ The SG Core mods form the base gameplay overhaul. Individual notes go here as th
 - **Bug caught during implementation:** `AppendScrollingConfig` call in Container was still passing `maxListLines` variable after the field was removed — caused compile error. Fixed by dropping the argument (uses default).
 - **Typo debugging:** Farming ToggleScroll=True was entered as "Ttrue" — `ToBoolean("Ttrue")` returns false silently. Scrolling appeared broken. Lesson: always check manually-typed config values for typos first.
 
+### 2026-03-18 (Session 2) — Image Converter v1.3 + Mipmap Quality Investigation
+
+#### Universal Image Converter v1.3
+
+- **Background color picker added (Image to DDS):** Swatch + hex label in Output Settings row 4. `_on_pick_bg()` uses `colorchooser.askcolor`. `bg_color` passed through to `convert_image()` and both compose functions.
+- **Setup screen rewritten:** Matches audio converter pattern — live texconv detection with green ✓ / red ✗ badge. Shows install instructions and download link only when not found. Full "HOW TO ADD A TOOL TO PATH" 10-step card added.
+- **Version bumped:** `screen_home.py` updated to v1.3.
+- **Format corrected:** texconv output changed from `BC7_UNORM` → `BC7_UNORM_SRGB` (DXGI 99). This matches what Keen ships in vanilla SE LCD textures.
+- **DXT5 fallback encoder fixed:** Color endpoint selection was using per-channel max/min (synthetic colors that don't exist in the block). Changed to luminance-based pixel selection — picks actual brightest/darkest pixels as endpoints. Reduces banding at lower mip levels.
+
+#### Mipmap Quality Investigation — Root Cause Found
+
+- **Symptom:** Images converted with texconv (BC7) looked fine close-up but turned to "mud" at any game distance. The same source image exported from Paint.NET looked fine at distance.
+- **Root cause:** texconv uses **premultiplied alpha weighting** when generating mip levels. With our `alpha=1` (value 1 out of 255 ≈ 0.4% opacity), texconv multiplied all RGB values by ~0 during downsampling. Mip 0 reads from the PNG directly (correct), but all lower mips had RGB ≈ 0 (near-black mud).
+- **Why Paint.NET was fine:** Paint.NET's DDS plugin uses straight alpha (not premultiplied) for mip generation. Alpha=255 also avoids the problem since premultiplied math is a no-op at full opacity.
+- **Fix:** Added `-sepalpha` flag to texconv command — generates RGB mip channels independently from alpha, bypassing premultiplied alpha weighting entirely. Colors now average correctly at every mip level, alpha=1 preserved throughout.
+- **Additional improvements applied during investigation:**
+  - `-if CUBIC` — bicubic mip filter (better than default FANT for photographic content)
+  - `-bc x` — maximum quality BC7 compression
+  - `-sepalpha` — the actual root cause fix
+- **Lesson learned:** Any tool that generates DDS mipmaps may use premultiplied alpha internally. With SE's inverse-emissivity alpha=1 (near-zero), this is catastrophic for mip quality. Always use `-sepalpha` or equivalent when alpha has a non-transparency semantic meaning.
+
+#### Space Engineers Skill
+
+- **Check #4 updated:** Workshop directory detection now looks for numbered subfolder structure (10+ numeric subfolders). Blocks catalogue creation if workshop directory not found in workspace.
+- **Check #5 added:** AskUserQuestion on startup — asks what kind of SE project the user is working on (Mod project / Mod Adjuster / PB Script / Torch or Pulsar plugin).
+- **README updated:** Workshop directory row marked as required for catalogue. "What Claude Will Do Automatically" section updated.
+
+---
+
 ### 2026-03-18 — Claude Engineers LCD Mod + Image Converter Bug Fix
 
 - **Claude Engineers mod created:** LCD texture mod with two images (`claude_engineer01.dds`, `claude_engineer02.dds`). `LCDTextures.sbc` written with SubtypeIds `Claude Engineer 01` / `Claude Engineer 02`. DDS files in both `Textures/Models/` and `Textures/Sprites/`. Tested in-game — working.

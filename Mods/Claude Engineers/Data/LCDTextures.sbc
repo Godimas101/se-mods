@@ -8,7 +8,7 @@
         <TypeId>LCDTextureDefinition</TypeId>
         <SubtypeId>Claude Engineer 01</SubtypeId>
       </Id>
-      <LocalizationId>ClaudeEngineers_01</LocalizationId>
+      <LocalizationId>Claude Engineer 01</LocalizationId>
       <TexturePath>Textures\Models\claude_engineer01.dds</TexturePath>
       <SpritePath>Textures\Sprites\claude_engineer01.dds</SpritePath>
       <Selectable>true</Selectable>
@@ -19,7 +19,7 @@
         <TypeId>LCDTextureDefinition</TypeId>
         <SubtypeId>Claude Engineer 02</SubtypeId>
       </Id>
-      <LocalizationId>ClaudeEngineers_02</LocalizationId>
+      <LocalizationId>Claude Engineer 02</LocalizationId>
       <TexturePath>Textures\Models\claude_engineer02.dds</TexturePath>
       <SpritePath>Textures\Sprites\claude_engineer02.dds</SpritePath>
       <Selectable>true</Selectable>
