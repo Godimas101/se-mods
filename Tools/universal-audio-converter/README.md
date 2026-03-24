@@ -22,6 +22,8 @@ Four tools in one launcher:
 | **Audio Editor** | Visual WAV editor with waveform display |
 | **SBC Generator** | Generate AudioDefinition + SoundBlock SBC files for SE mods |
 
+<img src="https://i.imgur.com/sem8z0T.png" alt="Alt text" width="500">
+
 ---
 
 ## Recommended workflow
