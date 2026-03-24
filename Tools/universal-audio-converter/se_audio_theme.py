@@ -10,9 +10,13 @@ Orange accent variant of se_theme.py (CYAN="#ff8c00", BLUE="#c45c00").
 
 import base64
 import io
+import json
 import math
+import threading
 import tkinter as tk
 from tkinter import ttk
+import urllib.request
+import webbrowser
 
 
 # ===========================================================================
@@ -410,6 +414,123 @@ class AudioEditorReferenceWindow(tk.Toplevel):
         foot.pack(fill="x", padx=14, pady=(8, 12))
         ttk.Button(foot, text="CLOSE", command=self.destroy,
                    style="SE.TButton").pack(side="right")
+
+
+# ===========================================================================
+# Supporters Window
+# ===========================================================================
+
+_SUPPORTERS_URL = "https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/supporters.json"
+_PATREON_URL    = "https://patreon.com/Godimas101"
+
+
+class SupportersWindow(tk.Toplevel):
+    """Dark-themed popup listing Patreon supporters, fetched live from GitHub."""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Our Supporters")
+        self.configure(bg=BG)
+        self.resizable(True, True)
+        self.geometry("500x460")
+        self.minsize(400, 300)
+        self.transient(parent)
+        self._build()
+        threading.Thread(target=self._fetch, daemon=True).start()
+
+    def _build(self):
+        # Header
+        hdr = ttk.Frame(self, style="TFrame")
+        hdr.pack(fill="x", padx=14, pady=(12, 0))
+        ttk.Label(hdr, text="\u25a3  OUR SUPPORTERS",
+                  style="Section.TLabel").pack(side="left")
+
+        tk.Frame(self, bg=BORDER, height=1).pack(fill="x", padx=14, pady=(8, 0))
+        ttk.Label(self,
+                  text="These folks help keep the mods and tools going. Thank you! \u2665",
+                  style="Muted.TLabel").pack(anchor="w", padx=14, pady=(4, 8))
+
+        # Scrollable content
+        content_frame = ttk.Frame(self, style="Panel.TFrame")
+        content_frame.pack(fill="both", expand=True, padx=14)
+
+        self._txt = tk.Text(
+            content_frame,
+            bg=PANEL, fg=TEXT,
+            font=("Courier New", 9),
+            relief="flat", bd=0,
+            highlightthickness=0,
+            wrap="word",
+            padx=12, pady=8,
+            cursor="arrow",
+            state="normal",
+        )
+        vsb = ttk.Scrollbar(content_frame, orient="vertical",
+                            command=self._txt.yview,
+                            style="SE.Vertical.TScrollbar")
+        self._txt.configure(yscrollcommand=vsb.set)
+        self._txt.tag_configure("tier",
+                                foreground=CYAN,
+                                font=("Courier New", 10, "bold"),
+                                spacing1=10, spacing3=2)
+        self._txt.tag_configure("member",
+                                foreground=TEXT,
+                                font=("Courier New", 9),
+                                lmargin1=16, lmargin2=16,
+                                spacing3=2)
+        self._txt.tag_configure("muted",
+                                foreground=MUTED,
+                                font=("Courier New", 9),
+                                lmargin1=16)
+        vsb.pack(side="right", fill="y")
+        self._txt.pack(side="left", fill="both", expand=True)
+
+        self._txt.insert("end", "Loading...\n", "muted")
+        self._txt.config(state="disabled")
+
+        # Footer
+        foot = ttk.Frame(self, style="TFrame")
+        foot.pack(fill="x", padx=14, pady=(8, 12))
+        ttk.Button(foot, text="SUPPORT ON PATREON",
+                   command=lambda: webbrowser.open(_PATREON_URL),
+                   style="SE.TButton").pack(side="left")
+        ttk.Button(foot, text="CLOSE", command=self.destroy,
+                   style="SE.TButton").pack(side="right")
+
+    def _fetch(self):
+        try:
+            req = urllib.request.Request(
+                _SUPPORTERS_URL,
+                headers={"User-Agent": "SE-Audio-Converter"}
+            )
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                data = json.loads(resp.read().decode())
+            self.after(0, lambda: self._populate(data))
+        except Exception:
+            self.after(0, lambda: self._show_error())
+
+    def _populate(self, data):
+        if not self.winfo_exists():
+            return
+        self._txt.config(state="normal")
+        self._txt.delete("1.0", "end")
+        tiers = data.get("tiers", [])
+        if not tiers:
+            self._txt.insert("end", "No supporters listed yet.\n", "muted")
+        else:
+            for tier_obj in tiers:
+                self._txt.insert("end", tier_obj.get("tier", "Unknown") + "\n", "tier")
+                for name in tier_obj.get("members", []):
+                    self._txt.insert("end", f"  {name}\n", "member")
+        self._txt.config(state="disabled")
+
+    def _show_error(self):
+        if not self.winfo_exists():
+            return
+        self._txt.config(state="normal")
+        self._txt.delete("1.0", "end")
+        self._txt.insert("end", "Could not load supporters list.\nCheck your internet connection.\n", "muted")
+        self._txt.config(state="disabled")
 
 
 # ===========================================================================

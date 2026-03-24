@@ -21,7 +21,14 @@ class HomeScreen(ttk.Frame):
     def __init__(self, parent, app):
         super().__init__(parent, style="TFrame")
         self._app = app
+        self._supporters_window = None
         self._build()
+
+    def _open_supporters(self):
+        if self._supporters_window and self._supporters_window.winfo_exists():
+            self._supporters_window.lift()
+            return
+        self._supporters_window = T.SupportersWindow(self.winfo_toplevel())
 
     # -----------------------------------------------------------------------
 
@@ -136,8 +143,38 @@ class HomeScreen(ttk.Frame):
         claude.bind("<Enter>", lambda _e: claude.config(fg=T.CYAN))
         claude.bind("<Leave>", lambda _e: claude.config(fg=T.MUTED))
 
-        ttk.Label(self, text="v1.0  \u00b7  SE Audio Converter",
-                  style="Muted.TLabel").pack(anchor="center", pady=(4, 10))
+        patreon_row = tk.Frame(self, bg=T.BG)
+        patreon_row.pack(anchor="center", pady=(4, 2))
+
+        tk.Label(patreon_row, text="Powered by our ",
+                 bg=T.BG, fg=T.MUTED,
+                 font=("Courier New", 8)).pack(side="left")
+
+        supporters_lbl = tk.Label(patreon_row, text="Supporters",
+                                  bg=T.BG, fg=T.MUTED,
+                                  font=("Courier New", 8, "underline"),
+                                  cursor="hand2")
+        supporters_lbl.pack(side="left")
+        supporters_lbl.bind("<Button-1>", lambda _e: self._open_supporters())
+        supporters_lbl.bind("<Enter>", lambda _e: supporters_lbl.config(fg=T.CYAN))
+        supporters_lbl.bind("<Leave>", lambda _e: supporters_lbl.config(fg=T.MUTED))
+
+        tk.Label(patreon_row, text=" on ",
+                 bg=T.BG, fg=T.MUTED,
+                 font=("Courier New", 8)).pack(side="left")
+
+        patreon_lbl = tk.Label(patreon_row, text="Patreon",
+                               bg=T.BG, fg=T.MUTED,
+                               font=("Courier New", 8, "underline"),
+                               cursor="hand2")
+        patreon_lbl.pack(side="left")
+        patreon_lbl.bind("<Button-1>", lambda _e: webbrowser.open(
+            "https://patreon.com/Godimas101"))
+        patreon_lbl.bind("<Enter>", lambda _e: patreon_lbl.config(fg=T.CYAN))
+        patreon_lbl.bind("<Leave>", lambda _e: patreon_lbl.config(fg=T.MUTED))
+
+        ttk.Label(self, text="v1.1  \u00b7  SE Audio Converter",
+                  style="Muted.TLabel").pack(anchor="center", pady=(0, 10))
 
     # -----------------------------------------------------------------------
 
