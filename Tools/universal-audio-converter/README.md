@@ -1,12 +1,11 @@
 # Universal Audio Converter
-# Note -> Tool is currently in a pre-release state. Feel free to use whats here though!
 ### Space Engineers audio tools for modders
 
 ---
 
 ## ⬇ Download
 
-> **Exe coming soon** — build instructions below in the meantime.
+Download `SE Audio Converter.exe` from the [releases page](../../releases).
 
 > Place [`ffmpeg.exe`](https://ffmpeg.org/download.html) and (optionally) [`xWMAEncode.exe`](#xwmaencode) in the same folder as the exe. Neither is bundled — see [Setup & Requirements](#setup--requirements) below.
 
@@ -172,7 +171,7 @@ Pick a multiplier from the dropdown and click **APPLY**:
 | **EXTRACT L** | Keep only the left channel as mono |
 | **EXTRACT R** | Keep only the right channel as mono |
 
-> **SE tip:** D2 (Stereo) wave type needs a stereo file. D3 (3D positional) works best with mono. Use the channel tools to match your intended wave type before generating your SBC.
+> **SE tip:** Space Engineers sound files — including Sound Block (Sb category) sounds — must be **mono**. Use **STEREO→MONO** before converting to XWM. Stereo files will play left-channel only in-game.
 
 ### Undo
 Every edit is pushed to a 20-level undo stack. Click **UNDO** to step back one edit at a time.
@@ -201,7 +200,7 @@ The orange playhead cursor tracks position on the waveform in real time.
 |---------|-------|
 | **SubtypeId** | Unique ID for this sound — used in SBC and referenced in-game |
 | **Category** | `Sb` for Sound Block sounds, `Music` for music, others for game events |
-| **Wave Type** | `D2` = stereo (no position), `D3` = 3D positional mono |
+| **Wave Type** | `D2` = no 3D positioning (Sound Blocks, music), `D3` = 3D positional (block-attached sounds) — both require mono audio |
 | **Volume** | 1.0 = original volume |
 | **Max Distance** | Relevant for D3/positional sounds — in metres |
 | **Loop Type** | None / Simple loop / Start + Loop + End |

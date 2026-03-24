@@ -319,25 +319,19 @@ class SBCScreen(ttk.Frame):
                  bg=T.BG, fg=T.CYAN,
                  font=("Courier New", 10, "bold")).pack(anchor="w", pady=(0, 4))
 
-        # Drag-drop zone
-        dnd_text = (
-            "Drop audio files here  (.wav  .xwm  .mp3  .ogg  .flac  \u2026)"
-            if _HAS_DND else
-            "drag-drop not available \u2014 use ADD FILES button"
-        )
-        self._dnd_zone = tk.Label(
-            left,
-            text=dnd_text,
-            bg=T.PANEL, fg=T.MUTED,
-            font=("Courier New", 8),
-            relief="flat", bd=0, pady=10,
-            wraplength=256, justify="center",
-            highlightthickness=1,
-            highlightbackground=T.BORDER,
-        )
-        self._dnd_zone.pack(fill="x", pady=(0, 4))
-
+        # Drag-drop zone (only shown when tkinterdnd2 is available)
         if _HAS_DND:
+            self._dnd_zone = tk.Label(
+                left,
+                text="Drop audio files here  (.wav  .xwm  .mp3  .ogg  .flac  \u2026)",
+                bg=T.PANEL, fg=T.MUTED,
+                font=("Courier New", 8),
+                relief="flat", bd=0, pady=10,
+                wraplength=256, justify="center",
+                highlightthickness=1,
+                highlightbackground=T.BORDER,
+            )
+            self._dnd_zone.pack(fill="x", pady=(0, 4))
             self._dnd_zone.drop_target_register(DND_FILES)  # type: ignore[name-defined]
             self._dnd_zone.dnd_bind("<<Drop>>", self._on_dnd_drop)
             self._dnd_zone.bind(
@@ -354,7 +348,7 @@ class SBCScreen(ttk.Frame):
         cols = ("name", "fmt", "dur")
         self._tree = ttk.Treeview(
             tree_frame, columns=cols, show="headings",
-            style="SE.Treeview", selectmode="browse", height=8)
+            style="SE.Treeview", selectmode="browse", height=10)
         self._tree.heading("name", text="File")
         self._tree.heading("fmt",  text="Fmt")
         self._tree.heading("dur",  text="Duration")
@@ -405,12 +399,12 @@ class SBCScreen(ttk.Frame):
 
         canvas = tk.Canvas(right_outer, bg=T.BG, bd=0, highlightthickness=0,
                            height=310)
-        vsb = ttk.Scrollbar(right_outer, orient="vertical",
-                            command=canvas.yview,
-                            style="SE.Vertical.TScrollbar")
-        canvas.configure(yscrollcommand=vsb.set)
+        self._settings_vsb = ttk.Scrollbar(right_outer, orient="vertical",
+                                           command=canvas.yview,
+                                           style="SE.Vertical.TScrollbar")
+        canvas.configure(yscrollcommand=self._settings_vsb.set)
 
-        vsb.pack(side="right", fill="y")
+        # Scrollbar is hidden until a file is selected
         canvas.pack(side="left", fill="both", expand=True)
 
         self._settings_frame = ttk.Frame(canvas, style="TFrame")
@@ -433,10 +427,9 @@ class SBCScreen(ttk.Frame):
         self._build_settings_widgets(self._settings_frame)
 
     def _build_settings_widgets(self, parent):
-        # Placeholder shown when no file is selected
         self._settings_placeholder = tk.Label(
             parent,
-            text="Select a file from the list to edit its settings.",
+            text="Load a file to adjust its settings.",
             bg=T.BG, fg=T.MUTED, font=("Courier New", 9))
         self._settings_placeholder.pack(anchor="w", pady=(8, 0), padx=8)
 
@@ -449,7 +442,7 @@ class SBCScreen(ttk.Frame):
                              self._var_subtype)
         self._make_entry_row(self._sect_identity, "Display Name:",
                              self._var_display)
-        self._make_entry_row(self._sect_identity, "File Path in Mod:",
+        self._make_entry_row(self._sect_identity, "Path In Mod:",
                              self._var_file_path,
                              note="e.g. Audio\\MyMod\\sound.wav")
 
@@ -516,7 +509,7 @@ class SBCScreen(ttk.Frame):
         self._var_stream    = tk.BooleanVar(value=False)
         self._var_prev_sync = tk.BooleanVar(value=False)
         self._make_entry_row(self._sect_advanced, "Pitch Variation:",  self._var_pitch_var)
-        self._make_entry_row(self._sect_advanced, "Volume Variation:", self._var_vol_var)
+        self._make_entry_row(self._sect_advanced, "Vol. Variation:", self._var_vol_var)
         self._make_entry_row(self._sect_advanced, "Sound Limit:",      self._var_snd_limit)
         self._make_check_row(self._sect_advanced, "Stream Sound:",     self._var_stream)
         self._make_check_row(self._sect_advanced, "Prevent Sync:",     self._var_prev_sync)
@@ -538,12 +531,11 @@ class SBCScreen(ttk.Frame):
         # Sb is the default; section starts visible once a file is loaded
 
         # ── APPLY TO ALL ────────────────────────────────────────────────────
-        apply_row = tk.Frame(parent, bg=T.BG)
-        apply_row.pack(fill="x", padx=8, pady=(10, 4))
-        ttk.Button(apply_row, text="APPLY SETTINGS TO ALL FILES",
+        self._apply_row = tk.Frame(parent, bg=T.BG)
+        ttk.Button(self._apply_row, text="APPLY SETTINGS TO ALL FILES",
                    command=self._on_apply_to_all,
                    style="SE.TButton").pack(anchor="w")
-        tk.Label(apply_row,
+        tk.Label(self._apply_row,
                  text="Copies category, volume, wave type, loop and other\n"
                       "non-identity settings to every file in the list.",
                  bg=T.BG, fg=T.MUTED,
@@ -611,16 +603,20 @@ class SBCScreen(ttk.Frame):
     def _set_settings_visible(self, visible: bool) -> None:
         if visible:
             self._settings_placeholder.pack_forget()
+            self._settings_vsb.pack(side="right", fill="y")
             self._sect_identity.pack(fill="x", pady=(8, 0), padx=4)
             self._sect_playback.pack(fill="x", pady=(8, 0), padx=4)
             self._sect_advanced.pack(fill="x", pady=(8, 0), padx=4)
+            self._apply_row.pack(fill="x", padx=8, pady=(10, 4))
             self._on_category_change()
             self._on_loop_type_change()
         else:
-            self._settings_placeholder.pack(anchor="w", pady=(8, 0), padx=8)
+            self._settings_vsb.pack_forget()
+            self._apply_row.pack_forget()
             for s in (self._sect_identity, self._sect_playback,
                       self._sect_advanced, self._sect_music, self._sect_sb):
                 s.pack_forget()
+            self._settings_placeholder.pack(anchor="w", pady=(8, 0), padx=8)
 
     # -----------------------------------------------------------------------
     # Output area
@@ -675,14 +671,11 @@ class SBCScreen(ttk.Frame):
         vsb = ttk.Scrollbar(frame, orient="vertical",
                             command=txt.yview,
                             style="SE.Vertical.TScrollbar")
-        hsb = ttk.Scrollbar(frame, orient="horizontal", command=txt.xview)
-        txt.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+        txt.configure(yscrollcommand=vsb.set)
+        btn_row = tk.Frame(frame, bg=T.BG)
+        btn_row.pack(side="bottom", fill="x", pady=(4, 0))
         vsb.pack(side="right", fill="y")
         txt.pack(side="top", fill="both", expand=True)
-        hsb.pack(side="bottom", fill="x")
-
-        btn_row = tk.Frame(frame, bg=T.BG)
-        btn_row.pack(fill="x", pady=(4, 0))
         ttk.Button(btn_row, text="COPY TO CLIPBOARD",
                    command=lambda: self._on_copy(txt),
                    style="SE.TButton").pack(side="left", padx=(0, 8))

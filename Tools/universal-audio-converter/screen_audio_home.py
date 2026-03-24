@@ -26,6 +26,35 @@ class HomeScreen(ttk.Frame):
     # -----------------------------------------------------------------------
 
     def _build(self):
+        # ── Warning box (packed first so it anchors to the bottom) ───────────
+        warn_outer = tk.Frame(
+            self, bg=T.ORANGE,
+            highlightthickness=1, highlightbackground=T.ORANGE,
+        )
+        warn_outer.pack(side="bottom", fill="x", padx=24, pady=(0, 10))
+
+        warn_inner = tk.Frame(warn_outer, bg=T.PANEL)
+        warn_inner.pack(fill="x", padx=1, pady=1)
+
+        warn_text = tk.Frame(warn_inner, bg=T.PANEL)
+        warn_text.pack(fill="x", padx=14, pady=8)
+
+        tk.Label(
+            warn_text,
+            text="IMPORTANT:  Space Engineers sound files must be MONO.",
+            bg=T.PANEL, fg=T.ORANGE,
+            font=("Courier New", 9, "bold"),
+            anchor="w",
+        ).pack(anchor="w")
+
+        tk.Label(
+            warn_text,
+            text="Use the Audio Editor (Stereo \u2192 Mono) before converting. Stereo files will play left-channel only in-game.",
+            bg=T.PANEL, fg=T.MUTED,
+            font=("Courier New", 9),
+            anchor="w",
+        ).pack(anchor="w", pady=(2, 0))
+
         # ── Header ──────────────────────────────────────────────────────────
         T.build_header(
             self,

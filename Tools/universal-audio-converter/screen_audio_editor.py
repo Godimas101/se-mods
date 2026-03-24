@@ -560,8 +560,12 @@ class EditorScreen(ttk.Frame):
         self._play_start_time:  float = 0.0  # time.time() at play start
         self._play_region_frames: int = 0    # length of playing region
         self._ref_window              = None
+        self._dirty:     bool         = False
 
         self._build_ui()
+
+        # Guard X-button close while unsaved edits are present
+        self.winfo_toplevel().protocol("WM_DELETE_WINDOW", self._on_close_window)
 
         if not _HAS_NUMPY:
             self._log("numpy not installed \u2014 install it to use the Audio Editor.", "error")
@@ -844,8 +848,26 @@ class EditorScreen(ttk.Frame):
     # -----------------------------------------------------------------------
 
     def _on_back(self):
+        if not self._confirm_discard():
+            return
         self._on_stop()
+        self.winfo_toplevel().protocol("WM_DELETE_WINDOW", self.winfo_toplevel().destroy)
         self._app.show_screen("home")
+
+    def _confirm_discard(self) -> bool:
+        """Return True if it's safe to discard the current edit session."""
+        if not self._dirty:
+            return True
+        return T.themed_askokcancel(
+            self.winfo_toplevel(),
+            "Unsaved Changes",
+            "You have unsaved changes.\nDiscard them and continue?",
+        )
+
+    def _on_close_window(self):
+        """WM_DELETE_WINDOW handler — guard against losing unsaved work."""
+        if self._confirm_discard():
+            self.winfo_toplevel().destroy()
 
     def _on_open(self):
         path = filedialog.askopenfilename(
@@ -857,6 +879,7 @@ class EditorScreen(ttk.Frame):
         self._load_file(Path(path))
 
     def _load_file(self, path: Path):
+        self._on_stop()
         if not _HAS_NUMPY:
             T.themed_showinfo(self.winfo_toplevel(), "numpy Missing",
                               "Install numpy to use the Audio Editor:\n\npip install numpy sounddevice")
@@ -881,6 +904,7 @@ class EditorScreen(ttk.Frame):
             self._log(f"  {len(samples)/sr:.2f}s  \u00b7  {sr} Hz  \u00b7  "
                       f"{'Stereo' if ch == 2 else 'Mono'}  \u00b7  "
                       f"{len(samples)} frames", "muted")
+            self._dirty = False
         except Exception as exc:
             T.themed_showinfo(self.winfo_toplevel(), "Load Error", str(exc))
 
@@ -889,6 +913,7 @@ class EditorScreen(ttk.Frame):
             return
         try:
             save_wav(self._path, self._samples, self._sample_rate)
+            self._dirty = False
             self._log(f"Saved: {self._path.name}", "success")
         except Exception as exc:
             T.themed_showinfo(self.winfo_toplevel(), "Save Error", str(exc))
@@ -908,6 +933,7 @@ class EditorScreen(ttk.Frame):
             save_wav(Path(path), self._samples, self._sample_rate)
             self._path = Path(path)
             self._file_label_var.set(self._path.name)
+            self._dirty = False
             self._log(f"Saved as: {self._path.name}", "success")
         except Exception as exc:
             T.themed_showinfo(self.winfo_toplevel(), "Save Error", str(exc))
@@ -1104,6 +1130,7 @@ class EditorScreen(ttk.Frame):
         self._update_channel_ui(new_samples.shape[1],
                                 reset_channels=(new_samples.shape[1] != prev_ch))
         self._update_info()
+        self._dirty = True
         self._log(f"\u2713 {label}", "success")
 
     def _ch_mask(self) -> list:

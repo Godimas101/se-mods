@@ -72,7 +72,7 @@ def convert_to_wav(input_path: Path, output_path: Path, ffmpeg: str) -> None:
     """Convert any audio file to 16-bit PCM WAV at 44100 Hz via ffmpeg."""
     result = subprocess.run(
         [ffmpeg, "-y", "-i", str(input_path),
-         "-ar", "44100", "-ac", "2", "-sample_fmt", "s16",
+         "-ar", "44100", "-sample_fmt", "s16",
          str(output_path)],
         capture_output=True, text=True,
     )

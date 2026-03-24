@@ -531,6 +531,38 @@ All three files written from local workshop mod data + web research, then synced
 
 ---
 
+### 2026-03-23 (Session 2) — Universal Audio Converter Polish + SE Audio Research
+
+#### Audio Editor — Unsaved Changes Guard
+- Added `_dirty` flag to `AudioEditorScreen`. Set in `_apply()`, cleared on `_load_file()` and successful save.
+- `_on_back()` now calls `_confirm_discard()` before navigating away. Shows dark-themed OK/Cancel dialog if dirty.
+- `WM_DELETE_WINDOW` protocol registered on the toplevel when editor screen loads — same guard on X-button close.
+- Protocol reset to default destroy before `show_screen("home")` so the home screen isn't guarded by the stale handler.
+
+#### Audio Editor — Undo No Longer Resets Selection
+- `_on_undo()` was calling `select_all()` after restoring samples. Now preserves the previous selection (clamped to restored length), clearing only if the selection collapses to zero.
+
+#### Audio Editor — Playing File Stops on New File Open
+- `_load_file()` now calls `_on_stop()` at the top so a playing file stops when a new file is opened.
+
+#### Audio to SBC Screen — UI Polish
+- Removed "drag-drop not available" label when `tkinterdnd2` is not installed — no message shown, space given back to file list.
+- Treeview height raised from 8 → 10 rows.
+- "File Path in Mod:" label shortened to "Path In Mod:" to prevent truncation.
+- "Volume Variation:" label shortened to "Vol. Variation:".
+- Horizontal scrollbar removed from output text area entirely.
+- Vertical scrollbar no longer extends below the output text area (pack order fixed: btn_row reserves bottom space first).
+- No-file-selected state: scrollable settings panel and Apply button hidden; plain "Load a file to adjust its settings." text shown instead. Canvas always present so left panel height is unaffected.
+
+#### SE Sound Block Audio Research — Key Finding
+- **Confirmed:** Space Engineers Sound Block sounds must be **mono** (verified against vanilla files AND wiki/Steam guide).
+- Vanilla `SoundBlock_Alert1.wav` and all other Sound Block wavs: **16-bit mono 44100 Hz**.
+- **D2** = 2D sounds (music, HUD) — stereo OK. **D3** = 3D positional sounds — mono required.
+- Sound Block sounds are 3D entities in the game world; engine needs mono for spatial positioning.
+- **Bug found:** Converter's ffmpeg command forces `-ac 2` (stereo) on all output — wrong for SE Sound Block use.
+- **Pending fix:** Remove `-ac 2` so output preserves source channels. Add UI warning that SE Sound Block sounds must be mono. Implement before release.
+- Note: L/R channel editing in the audio editor is still correct and useful — relevant for music, non-SE games, any stereo use case.
+
 ### 2026-03-14 — CustomData Section Header Standardization
 - **Change:** All CustomData section headers now follow consistent `; [ SCREENNAME - CATEGORY ]` pattern
 - **Scrolling headers:** Were mixed (`; [ SCROLLING OPTIONS ]`, `; [ SCREENNAME - SCROLLING OPTIONS ]`) — now all use `; [ SCREENNAME - SCROLLING OPTIONS ]`
