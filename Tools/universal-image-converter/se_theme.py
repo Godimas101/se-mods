@@ -8,7 +8,11 @@ and reusable widget helpers.  Import this module in every screen.
 
 import base64
 import io
+import json
 import math
+import threading
+import urllib.request
+import webbrowser
 import tkinter as tk
 from tkinter import ttk
 
@@ -348,6 +352,144 @@ class LCDReferenceWindow(tk.Toplevel):
                   style="Muted.TLabel").pack(side="left")
         ttk.Button(foot, text="CLOSE", command=self.destroy,
                    style="SE.TButton").pack(side="right")
+
+
+# ===========================================================================
+# Supporters Window
+# ===========================================================================
+
+_SUPPORTERS_URL = ("https://raw.githubusercontent.com/Godimas101/"
+                   "personal-projects/main/patreon/supporters.json")
+_PATREON_URL = "https://patreon.com/Godimas101"
+
+
+class SupportersWindow(tk.Toplevel):
+    """Dark-themed popup that fetches and displays Patreon supporters live."""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Supporters")
+        self.configure(bg=BG)
+        self.resizable(True, True)
+        self.geometry("500x460")
+        self.minsize(400, 300)
+        self.transient(parent)
+        self._build()
+        threading.Thread(target=self._fetch, daemon=True).start()
+
+    def _build(self):
+        hdr = ttk.Frame(self, style="TFrame")
+        hdr.pack(fill="x", padx=16, pady=(14, 0))
+        ttk.Label(hdr, text="\u25a3  OUR SUPPORTERS",
+                  style="Section.TLabel").pack(side="left")
+        tk.Frame(self, bg=BORDER, height=1).pack(fill="x", padx=16, pady=(8, 0))
+
+        tk.Label(self,
+                 text="These humans help keep the mods and tools free for everyone.",
+                 bg=BG, fg=MUTED, font=("Courier New", 9),
+                 justify="left", anchor="w").pack(fill="x", padx=16, pady=(10, 0))
+
+        # Scrollable content area
+        container = tk.Frame(self, bg=BG)
+        container.pack(fill="both", expand=True, padx=16, pady=(8, 0))
+
+        canvas = tk.Canvas(container, bg=BG, bd=0, highlightthickness=0)
+        vsb = ttk.Scrollbar(container, orient="vertical",
+                            command=canvas.yview,
+                            style="SE.Vertical.TScrollbar")
+        canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
+
+        self._scroll_frame = tk.Frame(canvas, bg=BG)
+        self._canvas_window = canvas.create_window(
+            (0, 0), window=self._scroll_frame, anchor="nw")
+
+        def _on_frame_configure(_e):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        def _on_canvas_configure(e):
+            canvas.itemconfig(self._canvas_window, width=e.width)
+
+        self._scroll_frame.bind("<Configure>", _on_frame_configure)
+        canvas.bind("<Configure>", _on_canvas_configure)
+
+        self._status_lbl = tk.Label(
+            self._scroll_frame,
+            text="Loading supporters\u2026",
+            bg=BG, fg=MUTED, font=("Courier New", 9),
+            anchor="w")
+        self._status_lbl.pack(anchor="w", pady=6)
+
+        tk.Frame(self, bg=BORDER, height=1).pack(fill="x", padx=16, pady=(8, 0))
+
+        btn_row = ttk.Frame(self, style="TFrame")
+        btn_row.pack(fill="x", padx=16, pady=(10, 14))
+
+        patreon_btn = tk.Button(
+            btn_row, text="SUPPORT ON PATREON",
+            bg=PANEL, fg=CYAN,
+            activebackground=HOVER, activeforeground=CYAN,
+            font=("Courier New", 9, "bold"),
+            relief="flat", bd=0, padx=12, pady=4, cursor="hand2",
+            highlightthickness=1,
+            highlightbackground=CYAN, highlightcolor=CYAN,
+            command=lambda: webbrowser.open(_PATREON_URL),
+        )
+        patreon_btn.pack(side="left")
+
+        ttk.Button(btn_row, text="CLOSE", command=self.destroy,
+                   style="SE.TButton").pack(side="right")
+
+    def _fetch(self):
+        try:
+            req = urllib.request.Request(
+                _SUPPORTERS_URL,
+                headers={"Cache-Control": "no-cache",
+                         "User-Agent": "SE-Image-Converter/1.0"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = json.loads(resp.read().decode())
+            self.after(0, lambda: self._populate(data))
+        except Exception as exc:
+            self.after(0, lambda: self._show_error(str(exc)))
+
+    def _populate(self, data):
+        if not self.winfo_exists():
+            return
+        self._status_lbl.destroy()
+
+        tiers = data.get("tiers", [])
+        if not tiers or not any(t.get("members") for t in tiers):
+            tk.Label(self._scroll_frame,
+                     text="No supporters yet \u2014 be the first!",
+                     bg=BG, fg=MUTED, font=("Courier New", 9),
+                     anchor="w").pack(anchor="w", pady=6)
+            return
+
+        for tier in tiers:
+            members = tier.get("members", [])
+            if not members:
+                continue
+            tk.Label(self._scroll_frame,
+                     text=tier.get("tier", "Supporters"),
+                     bg=BG, fg=CYAN,
+                     font=("Courier New", 10, "bold"),
+                     anchor="w").pack(anchor="w", pady=(10, 2))
+            tk.Frame(self._scroll_frame, bg=BORDER, height=1).pack(
+                fill="x", pady=(0, 6))
+            for name in members:
+                tk.Label(self._scroll_frame,
+                         text=f"  \u2713  {name}",
+                         bg=BG, fg=TEXT,
+                         font=("Courier New", 9),
+                         anchor="w").pack(anchor="w")
+
+    def _show_error(self, msg):
+        if not self.winfo_exists():
+            return
+        self._status_lbl.config(
+            text=f"Could not load supporters: {msg}",
+            fg=RED)
 
 
 # ===========================================================================

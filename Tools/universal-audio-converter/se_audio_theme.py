@@ -432,8 +432,8 @@ class SupportersWindow(tk.Toplevel):
         self.title("Our Supporters")
         self.configure(bg=BG)
         self.resizable(True, True)
-        self.geometry("500x460")
-        self.minsize(400, 300)
+        self.geometry("500x540")
+        self.minsize(400, 380)
         self.transient(parent)
         self._build()
         threading.Thread(target=self._fetch, daemon=True).start()
@@ -491,9 +491,17 @@ class SupportersWindow(tk.Toplevel):
         # Footer
         foot = ttk.Frame(self, style="TFrame")
         foot.pack(fill="x", padx=14, pady=(8, 12))
-        ttk.Button(foot, text="SUPPORT ON PATREON",
-                   command=lambda: webbrowser.open(_PATREON_URL),
-                   style="SE.TButton").pack(side="left")
+        patreon_btn = tk.Button(
+            foot, text="SUPPORT ON PATREON",
+            bg=PANEL, fg=CYAN,
+            activebackground=HOVER, activeforeground=CYAN,
+            font=("Courier New", 9, "bold"),
+            relief="flat", bd=0, padx=12, pady=4, cursor="hand2",
+            highlightthickness=1,
+            highlightbackground=CYAN, highlightcolor=CYAN,
+            command=lambda: webbrowser.open(_PATREON_URL),
+        )
+        patreon_btn.pack(side="left")
         ttk.Button(foot, text="CLOSE", command=self.destroy,
                    style="SE.TButton").pack(side="right")
 
