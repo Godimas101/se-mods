@@ -68,9 +68,15 @@ Required for the **Audio Converter** (all format conversions).
 ### xWMAEncode
 Required **only** if you want XWM output from the Audio Converter.
 
-1. Download the **DirectX SDK (June 2010)** from **[archive.org/details/dxsdk_2010](https://archive.org/details/dxsdk_2010)**
-2. Install it and navigate to `C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Utilities\bin\x86\`
-3. Copy `xWMAEncode.exe` next to `SE Audio Converter.exe` — or add it to PATH
+The easiest source is the **Space Engineers Mod SDK** — if you have SE installed via Steam, it's already on your machine:
+
+```
+[Steam library]\steamapps\common\SpaceEngineersModSDK\Tools\xWMAEncode.exe
+```
+
+Copy `xWMAEncode.exe` next to `SE Audio Converter.exe` — or add its folder to your system PATH.
+
+> No Mod SDK? You can also grab it from the **DirectX SDK (June 2010)** at [archive.org/details/dxsdk_2010](https://archive.org/details/dxsdk_2010) under `Utilities\bin\x86\`.
 
 > If xWMAEncode is not found, XWM output is automatically greyed out in the converter. All other features work without it.
 
@@ -167,13 +173,16 @@ Pick a multiplier from the dropdown and click **APPLY**:
 > Note: speed changes use linear resampling. Quality is good for game audio — if you need studio-grade resampling, process in a DAW first and bring the WAV in.
 
 #### Channels
+
+The waveform canvas shows two lanes for stereo files — **R** on top, **L** on bottom. The **R** and **L** toggle buttons (lit orange = active) control which channel EXTRACT and SOLO target.
+
 | Button | What it does |
 |--------|-------------|
-| **MONO→STEREO** | Duplicate the single channel to left and right |
-| **STEREO→MONO** | Average left and right channels into one |
+| **MONO→STEREO** | Duplicate the single channel to both L and R |
+| **STEREO→MONO** | Mix L and R down to a single mono track |
 | **SWAP L/R** | Swap left and right channels |
-| **EXTRACT L** | Keep only the left channel as mono |
-| **EXTRACT R** | Keep only the right channel as mono |
+| **EXTRACT** | Discard the inactive channel — keeps only the active one as mono. Toggle one channel on and the other off before pressing. |
+| **SOLO** | Mute the inactive channel so only the active one plays. File stays stereo. Works on a time selection if one is active. |
 
 > **SE tip:** Space Engineers sound files — including Sound Block (Sb category) sounds — must be **mono**. Use **STEREO→MONO** before converting to XWM. Stereo files will play left-channel only in-game.
 
