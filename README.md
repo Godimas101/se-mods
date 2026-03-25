@@ -107,7 +107,7 @@ D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\
 
 All mods are free and always will be. If they're adding to your game, consider supporting on Patreon — it helps keep the updates and new mods coming.
 
-[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/patreon-medium.png)](https://patreon.com/Godimas101)
+[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/images/buttons/patreon-medium.png)](https://patreon.com/Godimas101)
 
 ---
 

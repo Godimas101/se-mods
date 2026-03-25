@@ -132,7 +132,7 @@ Values sourced from SE game tools and game files (2026).
 
 This tool is free and always will be. If it saves you time on your next mod, consider supporting on Patreon — it helps keep the tools and mods coming.
 
-[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/patreon-medium.png)](https://patreon.com/Godimas101)
+[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/images/buttons/patreon-medium.png)](https://patreon.com/Godimas101)
 
 ---
 
