@@ -1,5 +1,7 @@
-# Universal Audio Converter
+# 🔊 Universal Audio Converter
 ### Space Engineers audio tools for modders
+
+> From any format to XWM — without losing your mind or your channels.
 
 ---
 
@@ -271,3 +273,15 @@ Output: `dist\SE Audio Converter.exe`
 Made with ♥ by **Godimas** and **Claude**
 
 Audio format information sourced from SE game files and the DirectX SDK documentation.
+
+---
+
+## 🧡 Support
+
+This tool is free and always will be. If it saves you time on your next mod, consider supporting on Patreon — it helps keep the tools and mods coming.
+
+[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/patreon-medium.png)](https://patreon.com/Godimas101)
+
+---
+
+*Keep it mono, keep it clean.* 🎵

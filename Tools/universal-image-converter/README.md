@@ -1,5 +1,7 @@
-# Universal Image Converter
+# 🖼️ Universal Image Converter
 ### Space Engineers image tools for modders and players
+
+> Your pixels, Space Engineers-ready — no modding degree required.
 
 ---
 
@@ -123,3 +125,15 @@ Made with ♥ by **Godimas** and **Claude**
 
 Image to LCD encoding reverse engineered from [Whiplash's Image Converter](https://github.com/Whiplash141/Whips-Image-Converter) by Whiplash141.
 Values sourced from SE game tools and game files (2026).
+
+---
+
+## 🧡 Support
+
+This tool is free and always will be. If it saves you time on your next mod, consider supporting on Patreon — it helps keep the tools and mods coming.
+
+[![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/patreon-medium.png)](https://patreon.com/Godimas101)
+
+---
+
+*May cause an uncontrollable urge to texture every LCD on your base.* 🖥️

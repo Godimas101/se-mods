@@ -563,6 +563,41 @@ All three files written from local workshop mod data + web research, then synced
 - **Pending fix:** Remove `-ac 2` so output preserves source channels. Add UI warning that SE Sound Block sounds must be mono. Implement before release.
 - Note: L/R channel editing in the audio editor is still correct and useful — relevant for music, non-SE games, any stereo use case.
 
+### 2026-03-24 — InfoLCD Threshold Fix Refinement + Mono Bug Fix + Audio Converter v1.1
+
+#### InfoLCD — unknownItemDefinitions Fix Revision (Ores, Ingots, Components, Ammo, Cargo)
+
+- **Previous fix was incomplete:** Moving `unknownItemDefinitions.Clear()` to the top of `Run()` stopped the oscillation but broke threshold config for modded items. Items were recreated fresh every tick without reading the saved CustomData value — always defaulted to 1000.
+- **Root cause clarified:** The oscillation was caused by items reading `minAmount = 1000` hardcoded at creation time, not by where `Clear()` lived.
+- **Final fix (all five screens):**
+  1. `Clear()` moved back into `UpdateContents()` (correct — items are rebuilt from scratch each tick; Clear() must run there)
+  2. At item creation time, read `minAmount` from config: `itemDefinition.minAmount = config.ContainsKey(...) ? config.Get(...).ToInt32() : 1000;`
+  3. After `UpdateContents()`, auto-trigger `CreateConfig()` if new unknown items aren't yet in config — writes the threshold key the first time a new modded item appears
+- **Duplicate write bug found and fixed:** `CreateConfig()` was writing `unknownItemDefinitions` entries twice — once via `CreateCargoItemDefinitionList()` (which already includes unknown items in `itemDefinitions`) and again in a dedicated loop below it. Removed the second loop from all affected screens (Cargo didn't have it).
+- **Patch released to Workshop.**
+
+#### AdditionalItems.ini — Example Items Updated
+
+- **Engineered Coffee mod:** Added missing drink items — `ECDarkRoast` (ConsumableItem, volume=1.0, sortId=drink) and verified existing entries.
+- **Powers mod (https://steamcommunity.com/sharedfiles/filedetails/?id=2558149005):** Added Deuterium ore variants as examples — `Deuterium`, `Deuterium1` (Frozen Deuterium), `Deuterium2` (Frozen Dense Deuterium). All `typeId=Ore`, `volume=0.37`, `sortId=ore`.
+
+#### Universal Audio Converter — Mono Bug Fix + v1.1 Release
+
+- **Bug fixed:** ffmpeg pipeline forced `-ac 2` (stereo) on all conversions. SE Sound Block sounds must be mono — stereo files play left-channel only in-game (engine uses mono for 3D spatial positioning).
+- **Fix:** Removed `-ac 2` from converter's ffmpeg command. Output now preserves source channel count.
+- **Home screen warning added:** Orange-bordered IMPORTANT warning box pinned to the bottom of the home screen. Packed `side="bottom"` first so it anchors correctly regardless of content height above it.
+- **Patreon supporters popup:** `SupportersWindow` class added to `se_audio_theme.py`. Fetches live `supporters.json` from GitHub in a background thread. Tier + member list displayed; SUPPORT ON PATREON (cyan-bordered button) + CLOSE in footer.
+- **Footer updated:** "Powered by our Supporters on Patreon" row added to home screen below credits.
+- **Version bumped to v1.1.**
+
+#### Universal Image Converter — Patreon Supporters Popup
+
+- `SupportersWindow` class added to `se_theme.py` (same structure as audio converter version, BLUE/CYAN link color scheme).
+- "Powered by our Supporters on Patreon" footer row added to home screen.
+- Version remains v1.3.
+
+---
+
 ### 2026-03-14 — CustomData Section Header Standardization
 - **Change:** All CustomData section headers now follow consistent `; [ SCREENNAME - CATEGORY ]` pattern
 - **Scrolling headers:** Were mixed (`; [ SCROLLING OPTIONS ]`, `; [ SCREENNAME - SCROLLING OPTIONS ]`) — now all use `; [ SCREENNAME - SCROLLING OPTIONS ]`
