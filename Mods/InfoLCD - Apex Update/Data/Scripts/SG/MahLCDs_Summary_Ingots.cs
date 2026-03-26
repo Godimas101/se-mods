@@ -313,14 +313,6 @@ namespace MahrianeIndustries.LCDInfo
                 }
             }
 
-            foreach (CargoItemDefinition definition in unknownItemDefinitions)
-            {
-                if (item_types.Contains(definition.typeId))
-                {
-                    int minAmount = config.ContainsKey(CONFIG_SECTION_ID, definition.subtypeId) ? (int)config.Get(CONFIG_SECTION_ID, definition.subtypeId).ToInt64() : definition.minAmount;
-                    itemDefinitions.Add(new CargoItemDefinition { typeId = definition.typeId, subtypeId = definition.subtypeId, displayName = definition.displayName, volume = definition.volume, minAmount = minAmount, sortId = definition.sortId });
-                }
-            }
         }
 
         IMyTextSurface mySurface;
@@ -390,7 +382,7 @@ namespace MahrianeIndustries.LCDInfo
                 if (!config.ContainsKey(CONFIG_SECTION_ID, def.subtypeId))
                 {
                     CreateConfig();
-                    LoadConfig();
+                    config.TryParse(myTerminalBlock.CustomData, CONFIG_SECTION_ID, out _);
                     break;
                 }
             }
