@@ -151,6 +151,13 @@ namespace MahrianeIndustries.LCDInfo
             sb.AppendLine($"DetailedInfo={detailedInfo}");
 
             sb.AppendLine();
+            sb.AppendLine("; [ WEAPONS - AMMO ENTRIES (auto-populated) ]");
+            foreach (CargoItemDefinition itemDefinition in unknownItemDefinitions)
+            {
+                sb.AppendLine($"{itemDefinition.subtypeId}=0");
+            }
+
+            sb.AppendLine();
 
             CreateCargoItemDefinitionList();
 
@@ -265,13 +272,6 @@ namespace MahrianeIndustries.LCDInfo
                 }
             }
 
-            foreach (CargoItemDefinition definition in unknownItemDefinitions)
-            {
-                if (item_types.Contains(definition.typeId))
-                {
-                    itemDefinitions.Add(new CargoItemDefinition { typeId = definition.typeId, subtypeId = definition.subtypeId, displayName = definition.displayName, volume = definition.volume, minAmount = 0, sortId = definition.sortId });
-                }
-            }
         }
 
         IMyTextSurface mySurface;
@@ -363,6 +363,18 @@ namespace MahrianeIndustries.LCDInfo
 
             UpdateBlocksAndInventories();
             UpdateContents();
+
+            // Auto-add newly discovered modded items to config
+            foreach (CargoItemDefinition def in unknownItemDefinitions)
+            {
+                if (!config.ContainsKey(CONFIG_SECTION_ID, def.subtypeId))
+                {
+                    CreateConfig();
+                    MyIniParseResult r;
+                    config.TryParse(myTerminalBlock.CustomData, CONFIG_SECTION_ID, out r);
+                    break;
+                }
+            }
 
             pixelPerChar = MahDefinitions.pixelPerChar * surfaceData.textSize;
             var myFrame = mySurface.DrawFrame();
@@ -541,6 +553,7 @@ namespace MahrianeIndustries.LCDInfo
         {
             try
             {
+                unknownItemDefinitions.Clear();
                 cargo.Clear();
 
                 foreach (var inventory in inventories)
@@ -577,6 +590,7 @@ namespace MahrianeIndustries.LCDInfo
                                     itemDefinition.sortId = "misc"; // default category
 
                                     itemDefinitions.Add(itemDefinition);
+                                    unknownItemDefinitions.Add(itemDefinition);
                                 }
 
                                 cargo[subtypeId].definition = itemDefinition;

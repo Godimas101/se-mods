@@ -598,6 +598,46 @@ All three files written from local workshop mod data + web research, then synced
 
 ---
 
+### 2026-03-25 — InfoLCD CustomData Reset Bug + Header Flip-Flop + Weapons Screen Fix
+
+#### Root Cause: CustomData Regression (All Summary Screens)
+
+- **Bug:** A previous session added `LoadConfig()` after `CreateConfig()` in the unknown-items auto-add loop. `LoadConfig()` rewrites `surfaceData`, scroll position, and all category flags from config — so any unsaved CustomData edits were silently overwritten the moment the CustomData dialog closed.
+- **Fix:** Replaced `LoadConfig()` with a bare `config.TryParse()` call. This refreshes the MyIni parser state (so new keys are readable) without touching any live display properties.
+- **Applied to:** Ores, Ingots, Components, Ammo, Items, Cargo, Weapons (all 7 summary screens).
+
+#### Root Cause: Header Counter Flip-Flop (Ores, Ingots, Components, Ammo, Items)
+
+- **Bug:** Screen headers alternated between two values every refresh (e.g., `Items [75/102/0/105]` then `Items [75/102/22/105]`). The count in the 3rd header slot oscillated 0↔N.
+- **Root cause:** `CreateCargoItemDefinitionList()` (called from `LoadConfig()` every tick) pre-seeded `itemDefinitions` with the previous tick's `unknownItemDefinitions`. On tick A: unknowns were in `itemDefinitions` → `UpdateContents()` found them → didn't re-add to `unknownItemDefinitions` → count = 0. On tick B: `CreateCargoItemDefinitionList()` ran fresh → unknowns NOT in `itemDefinitions` → `UpdateContents()` re-added them → count = N. Alternated every tick.
+- **Fix:** Removed the `foreach (CargoItemDefinition definition in unknownItemDefinitions) { itemDefinitions.Add(...) }` block from `CreateCargoItemDefinitionList()` in all five affected files.
+
+#### Root Cause: Items Screen Always Re-Triggering CreateConfig()
+
+- **Bug:** The Items screen's unknown-items loop checked `config.ContainsKey(CONFIG_SECTION_ID, def.subtypeId)` (e.g., "Welder"), but `CreateConfig()` writes keys as `typeId_subtypeId` (e.g., `PhysicalGunObject_Welder`). The key was never found, so `CreateConfig()` fired every tick.
+- **Fix:** Dual-check both formats: `config.ContainsKey(CONFIG_SECTION_ID, $"{def.typeId}_{def.subtypeId}")` OR `config.ContainsKey(CONFIG_SECTION_ID, def.subtypeId)`.
+
+#### C# 6 Compatibility Fix (All 6 Files)
+
+- **Bug:** Initial implementation used `out _` discard syntax — C# 7+ only. SE mod compiler targets C# 6. Produced: `Feature 'tuples' is not available in C# 6. Please use language version 7.0 or greater.`
+- **Fix:** Replaced all instances with an explicit variable: `MyIniParseResult r; config.TryParse(myTerminalBlock.CustomData, CONFIG_SECTION_ID, out r);`
+
+#### Weapons Screen Fix
+
+- **Bug:** Weapons screen had `unknownItemDefinitions` declared and searched in `FindCargoItemDefinition()` but never populated. Unknown/modded items went directly into `itemDefinitions` only. Since `CreateCargoItemDefinitionList()` clears `itemDefinitions` each tick, these items were re-created as fresh objects every tick and never written to CustomData config.
+- **Fix — four changes to `MahLCDs_Summary_Weapons.cs`:**
+  1. **`CreateConfig()`:** Added auto-populated section after `DetailedInfo` line — iterates `unknownItemDefinitions` and writes `subtypeId=0` for each.
+  2. **`CreateCargoItemDefinitionList()`:** Removed the `unknownItemDefinitions` foreach block (same flip-flop fix as other screens).
+  3. **`UpdateContents()`:** Added `unknownItemDefinitions.Clear()` before `cargo.Clear()`, and `unknownItemDefinitions.Add(itemDefinition)` alongside the existing `itemDefinitions.Add(itemDefinition)` when an unknown item is created.
+  4. **`Run()`:** Added auto-add loop after `UpdateContents()` — same pattern as other screens: if unknown item not in config, call `CreateConfig()` + `config.TryParse()`.
+
+#### User Confirmation
+
+- User confirmed the 6 originally-affected screens (Ores, Ingots, Components, Ammo, Items, Cargo) are no longer having the problem after the fix was released.
+- Weapons screen was reported separately by the same user as having the same issue — addressed in this session.
+
+---
+
 ### 2026-03-14 — CustomData Section Header Standardization
 - **Change:** All CustomData section headers now follow consistent `; [ SCREENNAME - CATEGORY ]` pattern
 - **Scrolling headers:** Were mixed (`; [ SCROLLING OPTIONS ]`, `; [ SCREENNAME - SCROLLING OPTIONS ]`) — now all use `; [ SCREENNAME - SCROLLING OPTIONS ]`
