@@ -139,15 +139,8 @@ namespace MahrianeIndustries.LCDInfo
                             addedOtherContent = true;
                         }
                     }
-                    else if (!inOurSection && addedOtherContent)
-                    {
-                        // Add any non-blank line that's not in our section (skip blanks to prevent accumulation)
-                        if (!string.IsNullOrWhiteSpace(trimmed))
-                            sb.AppendLine(line);
-                    }
                     else if (!inOurSection && !string.IsNullOrWhiteSpace(trimmed))
                     {
-                        // First non-empty line before any section
                         sb.AppendLine(line);
                         addedOtherContent = true;
                     }
