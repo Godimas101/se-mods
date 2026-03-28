@@ -671,6 +671,31 @@ All three files written from local workshop mod data + web research, then synced
 
 ---
 
+### 2026-03-28 (Session 2) — CustomData Self-Repair + AdditionalItems World Storage + AirlockMonitor Scrolling
+
+#### InfoLCD — CustomData Self-Repair (Blank Line Accumulation Follow-Up)
+
+- **Context:** SDG server admin reported that the blank line fix (previous session) prevented new accumulation but didn't repair grids already stored to disk via the Torch Hangar plugin. Those grids would load with hundreds of accumulated blank lines already in CustomData.
+- **Problem with naive fix:** Calling `CreateConfig()` on first load would reset all user settings to defaults, because `surfaceData` is null on fresh script instantiation and `TryCreateSurfaceData()` fills it with defaults before writing.
+- **Fix:** Added `ConfigHelpers.StripExcessBlankLines(IMyTerminalBlock)` — strips any sequence of 3+ newlines (2+ consecutive blank lines) down to 2 newlines (1 blank line). Added `bool needsCleanup = true` field to all 7 cargo screens. On first tick, if `needsCleanup` is true, calls `StripExcessBlankLines` then sets flag to false. One-time check per grid load, zero per-tick cost after.
+- **Why `\n\n\n` threshold:** Intentional single blank lines within config sections are `\n\n` — below threshold, preserved. Accumulated lines are `\n\n\n`+ — caught and collapsed. No false positives on normal CustomData.
+- **Tested:** Dirty CustomData from the server user (hundreds of blank lines between 6 sections) pasted into a cockpit. Post-load: all excess blank lines gone, all custom settings preserved exactly (ExcludeIds=Airlock, IceMinAmount, UraniumMinAmount, thresholds, TextSize, ViewPortOffsets).
+- **Works for:** Both standard LCD panels and multi-surface cockpits. Per-script-instance flag means cockpit surfaces clean up independently and idempotently.
+
+#### InfoLCD — AdditionalItems.ini World Storage Support
+
+- **Problem:** `AdditionalItems.ini` lives in the mod folder, which Steam overwrites on every mod update. Server admins and advanced users lose custom item definitions after each update.
+- **Fix:** `LoadExternalItems()` now checks world storage first (`MyAPIGateway.Utilities.ReadFileInWorldStorage`) before falling back to mod location. World storage path: `[SaveFolder]/Storage/[ModId]_MahDefinitions/AdditionalItems.ini`.
+- **Implementation:** Extracted shared `ParseExternalItemsReader(TextReader)` helper to avoid duplicating 80 lines of parsing logic. Added `TryLoadExternalItemsFromWorldStorage()` that uses the same parser. Log message reports which source was used.
+
+#### InfoLCD — AirlockMonitor Scrolling
+
+- **Screen purpose:** Status monitor for a named airlock zone — one pressure bar (from first matching air vent) + list of all matching doors with on/off and open/closed state. SearchId filters the zone (e.g. `SearchId=Hangar Airlock`). One screen per airlock zone.
+- **Added:** `ToggleScroll`, `ReverseDirection`, `ScrollSpeed`, `ScrollLines` config options. Door list calculates available lines from remaining screen height, applies wraparound startIndex, draws only what fits. Completes the scrolling update across all applicable screens.
+- **Note:** AirlockMonitor uses blind-append CustomData pattern (non-cargo screen) — no `needsCleanup` needed.
+
+---
+
 ### 2026-03-28 — InfoLCD CustomData Blank Line Accumulation Bug + SG Core Asset Pass
 
 #### InfoLCD — CustomData Blank Line Accumulation (20,000+ Line Growth Bug)
