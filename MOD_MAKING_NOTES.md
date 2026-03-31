@@ -264,6 +264,18 @@ for (int i = 0; i < totalDataLines && linesDrawn < availableDataLines; i++)
 
 #### Known Issues & Solutions
 
+**INI Parse Failure — configError Not Set (Fixed 2026-03-30)**
+- **Problem:** If `MyIni.TryParse` fails (e.g. malformed CustomData section header like `[SettingsDamageMonitorStatus` missing the closing `]`), the `else` branch only logged the error — it never set `configError = true`. The screen would silently render with empty defaults (header visible, no data) instead of showing the "Config error. Please Delete CustomData" message.
+- **Fix:** Added `configError = true;` after the `MyLog.Default.WriteLine` in the `else` branch of `LoadConfig()` in all 17 affected screens (commit 869a73a).
+- **Note:** The Farming screen uses a different config pattern and was not affected by this bug.
+
+**Farming Screen — Subgrid Architecture Issues (Partially Fixed 2026-03-30)**
+- **Problem:** `ShowSubgrids=False` does not prevent farm plots on rotor subgrids from appearing. Root cause not fully confirmed — patches were applied to the subgrid cache and display guard, but blocks are likely reaching the screen via the main grid scan through a mechanism not yet identified. Also: `subgridScanTick` was incrementing every frame regardless of `ShowSubgrids`, and the ice bar `GetBlocks` call was hardcoded to `true` for subgrids.
+- **Partial fixes applied:** Subgrid cache gated behind `showSubgrids`, display guard added, ice bar scan updated (commits 8601f95, e96f448).
+- **Remaining:** The Farming screen was written with a different architecture from the rest of the mod (no `configError` handling, no `TryGetConfigBool`, bespoke subgrid logic). Needs a full refactor of `UpdateBlocks` and `LoadConfig` to match the GasProduction/Container pattern. Tracked in GitHub issue #3.
+
+---
+
 **Update10 Scroll Speed Bug**
 - **Problem:** Using `ticksSinceLastScroll++` on an Update10 screen makes `scrollSpeed=60` take ~10 seconds instead of ~1 second.
 - **Root Cause:** Update10 fires once every 10 game ticks. Incrementing by 1 means you're measuring calls, not ticks.
