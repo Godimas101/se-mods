@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <CategoryClasses>
+
+        <!--
+            Sturmgrenadier Core Vanilla Combat - Block Categories
+            Adds third-party weapon mod blocks into vanilla G-menu categories.
+            Workshop mods covered:
+              3072090172 - Elindis Coilgun Turret (ElindisGaussTurret)
+              3047124387 - Elindis Torpedo Turret (ElindisTorpedoTurret)
+              3033742549 - Elindis Hailstorm Rocket Turret (ElindisHailstormTurret)
+              3326935220 - Artillery MKII Turret -Goliath- base mod (Artillery_MKII, Shell_Storage)
+              3621015746 - Artillery MKII Turret -Goliath- [Mod Adjuster For SG] (patches 3326935220)
+              3056537192 - Elindis Torpedo Launcher / Fixed Weapon (ElindisTorpedoLauncher)
+        -->
+
+        <!-- Adds all turrets + fixed torpedo launcher to the vanilla Weapons category -->
+        <Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+            <Id>
+                <TypeId>GuiBlockCategoryDefinition</TypeId>
+                <SubtypeId/>
+            </Id>
+            <DisplayName>DisplayName_Category_Weapons</DisplayName>
+            <Name>Section1_Position3_Weapons</Name>
+            <ItemIds>
+                <!-- Turrets -->
+                <string>LargeMissileTurret/ElindisGaussTurret</string>
+                <string>LargeMissileTurret/ElindisTorpedoTurret</string>
+                <string>LargeMissileTurret/ElindisHailstormTurret</string>
+                <string>LargeMissileTurret/Artillery_MKII</string>
+                <!-- Fixed weapon (torpedo launcher) -->
+                <string>SmallMissileLauncher/ElindisTorpedoLauncher</string>
+            </ItemIds>
+        </Category>
+
+        <!-- Adds Heavy Artillery Storage Rack to the vanilla Decorative category (alongside vanilla storage shelves) -->
+        <Category xsi:type="MyObjectBuilder_GuiBlockCategoryDefinition">
+            <Id>
+                <TypeId>GuiBlockCategoryDefinition</TypeId>
+                <SubtypeId/>
+            </Id>
+            <DisplayName>DisplayName_Category_Decorative</DisplayName>
+            <Name>Section1_Position3_Decorative</Name>
+            <ItemIds>
+                <string>CubeBlock/Shell_Storage</string>
+            </ItemIds>
+        </Category>
+
+    </CategoryClasses>
+</Definitions>

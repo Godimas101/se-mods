@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <BlockVariantGroups>
+
+        <!--
+            Sturmgrenadier Core Vanilla Combat - Block Variant Groups
+            Extends vanilla weapon scroll groups with modded weapon blocks.
+            BVGs are non-additive — all vanilla blocks must be included or they disappear.
+            DisplayName MUST use a vanilla localization key (DisplayName_*) or DisplayNameEnum is null → crash.
+
+            Mods required: 3072090172, 3047124387, 3033742549, 3326935220 (+ 3621015746 adjuster), 3056537192
+        -->
+
+        <!-- Extends the vanilla turret scroll group with modded turrets -->
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="TurretGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\gatling_turret.dds</Icon>
+            <DisplayName>DisplayName_BlockGroup_TurretGroup</DisplayName>
+            <Description>Description_BlockGroup_TurretGroup</Description>
+            <Blocks>
+                <!-- Vanilla turrets (must be preserved) -->
+                <Block Type="MyObjectBuilder_LargeGatlingTurret" Subtype="" />
+                <Block Type="MyObjectBuilder_LargeGatlingTurret" Subtype="SmallGatlingTurret" />
+                <Block Type="MyObjectBuilder_LargeGatlingTurret" Subtype="LargeGatlingTurretReskin" />
+                <Block Type="MyObjectBuilder_LargeGatlingTurret" Subtype="SmallGatlingTurretReskin" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="SmallMissileTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="LargeMissileTurretReskin" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="SmallMissileTurretReskin" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="LargeCalibreTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="LargeBlockMediumCalibreTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="SmallBlockMediumCalibreTurret" />
+                <Block Type="MyObjectBuilder_InteriorTurret" Subtype="LargeInteriorTurret" />
+                <Block Type="MyObjectBuilder_LargeGatlingTurret" Subtype="AutoCannonTurret" />
+                <!-- Modded turrets -->
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="ElindisGaussTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="ElindisTorpedoTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="ElindisHailstormTurret" />
+                <Block Type="MyObjectBuilder_LargeMissileTurret" Subtype="Artillery_MKII" />
+            </Blocks>
+        </BlockVariantGroup>
+
+        <!-- Extends the vanilla fixed-weapon scroll group with the Elindis Torpedo Launcher -->
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="ShipWeaponStaticGroup" />
+            <Icon>Textures\GUI\Icons\Cubes\missile_launcher.dds</Icon>
+            <DisplayName>DisplayName_BlockGroup_ShipWeaponStaticGroup</DisplayName>
+            <Description>Description_BlockGroup_ShipWeaponStaticGroup</Description>
+            <Blocks>
+                <!-- Vanilla fixed weapons (must be preserved) -->
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="LargeMissileLauncher" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="SmallMissileLauncherWarfare2" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncherReload" Subtype="SmallRocketLauncherReload" />
+                <Block Type="MyObjectBuilder_SmallGatlingGun" Subtype="" />
+                <Block Type="MyObjectBuilder_SmallGatlingGun" Subtype="SmallGatlingGunWarfare2" />
+                <Block Type="MyObjectBuilder_SmallGatlingGun" Subtype="SmallBlockAutocannon" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncherReload" Subtype="SmallRailgun" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncherReload" Subtype="LargeRailgun" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="LargeBlockLargeCalibreGun" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncherReload" Subtype="SmallBlockMediumCalibreGun" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="LargeFlareLauncher" />
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="SmallFlareLauncher" />
+                <!-- Modded fixed weapons -->
+                <Block Type="MyObjectBuilder_SmallMissileLauncher" Subtype="ElindisTorpedoLauncher" />
+            </Blocks>
+        </BlockVariantGroup>
+
+        <!-- Extends the vanilla storage shelf scroll group with the Heavy Artillery Storage Rack -->
+        <BlockVariantGroup>
+            <Id Type="MyObjectBuilder_BlockVariantGroup" Subtype="StorageShelves" />
+            <Icon>Textures\GUI\Icons\Cubes\Shelf_1.dds</Icon>
+            <DisplayName>DisplayName_BlockGroup_StorageShelves</DisplayName>
+            <Description>Description_StorageShelf</Description>
+            <Blocks>
+                <!-- Vanilla shelves (must be preserved) -->
+                <Block Type="MyObjectBuilder_CubeBlock" Subtype="StorageShelf1" />
+                <Block Type="MyObjectBuilder_CubeBlock" Subtype="StorageShelf2" />
+                <Block Type="MyObjectBuilder_CubeBlock" Subtype="StorageShelf3" />
+                <!-- Heavy Artillery Storage Rack (mod 3326935220) -->
+                <Block Type="MyObjectBuilder_CubeBlock" Subtype="Shell_Storage" />
+            </Blocks>
+        </BlockVariantGroup>
+
+    </BlockVariantGroups>
+</Definitions>
