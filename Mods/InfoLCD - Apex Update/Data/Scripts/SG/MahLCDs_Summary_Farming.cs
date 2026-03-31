@@ -418,7 +418,7 @@ namespace MahrianeIndustries.LCDInfo
                 }
 
                 Sandbox.ModAPI.Ingame.MyShipMass tmpMass = gridMass;
-                var allBlocks = MahUtillities.GetBlocks(myCubeGrid, searchId, excludeIds, ref tmpMass, true, false);
+                var allBlocks = MahUtillities.GetBlocks(myCubeGrid, searchId, excludeIds, ref tmpMass, surfaceData.showSubgrids, false);
                 if (allBlocks != null && allBlocks.Count > 0)
                 {
                     var iceData = MahUtillities.GetGridIceData(allBlocks, iceItemVolumeL, _cachedInventoryItems);
