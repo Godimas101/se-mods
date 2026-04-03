@@ -4,7 +4,7 @@
 
 ## What's This?
 
-My full Space Engineers mod collection. The flagship project is **InfoLCD** — a suite of information display screens for LCDs. The rest are gameplay overhauls and balance patches built for the Sturmgrenadier server community.
+My full Space Engineers mod collection, now living in its own standalone repo: `se-mods`. The flagship project is **InfoLCD** — a suite of information display screens for LCDs. The rest are gameplay overhauls and balance patches built for the Sturmgrenadier server community.
 
 ## What Lives Here?
 
