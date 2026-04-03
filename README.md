@@ -1,37 +1,43 @@
 # 🛸 Space Engineers Mods
 
-> **Custom mods for Space Engineers — LCD displays, server gameplay overhauls, and compatibility patches.**
+> **"LCD scripts, server tweaks, and compatibility patches for engineers who like their bases slightly overengineered."**
 
-## What's This?
+This repo is the main home for my Space Engineers mod collection, now split out as the standalone `se-mods` repo. The flagship project is **InfoLCD**, backed up by server-focused balance work, compatibility patches, and a handful of odd little utility mods.
 
-My full Space Engineers mod collection, now living in its own standalone repo: `se-mods`. The flagship project is **InfoLCD** — a suite of information display screens for LCDs. The rest are gameplay overhauls and balance patches built for the Sturmgrenadier server community.
+## 🚀 Quick Start
 
-## What Lives Here?
+1. Browse the `Mods/` folder for the mod or project you want
+2. Use the Space Engineers Mod SDK to test changes locally or prep Workshop updates
+3. If you need asset prep, use the companion tools:
+   - [`universal-image-converter`](https://github.com/Godimas101/universal-image-converter/releases/latest)
+   - [`universal-audio-converter`](https://github.com/Godimas101/universal-audio-converter/releases/latest)
+
+## ✨ What's in the Hangar
 
 ### 📊 InfoLCD Series
 
 | Mod | Status | Notes |
 |-----|--------|-------|
-| **InfoLCD - Apex Update** | Active development | For the Apex Update modpack |
-| **InfoLCD - Apex Advanced** | Maintenance only | For the Apex Advanced modpack — kept in sync |
+| **InfoLCD - Apex Update** | Active development | Built for the Apex Update modpack |
+| **InfoLCD - Apex Advanced** | Maintenance only | Kept in sync for the Apex Advanced pack |
 
-20+ specialized screens: Items, Cargo, Power, Production, Ammo, Components, Doors, Damage, Gas, Life Support, and more. Scrolling lists, category filtering, subgrid scanning, CustomData configuration.
+20+ specialized screens live across the InfoLCD work: items, cargo, power, production, ammo, components, doors, damage, gas, life support, and more. Expect scrolling lists, category filtering, subgrid scanning, and CustomData-driven configuration.
 
-See [Mods/InfoLCD - Apex Update/CLAUDE.md](Mods/InfoLCD%20-%20Apex%20Update/CLAUDE.md) for the full screen inventory and implementation details.
+For the actual scripts, SBCs, and mod assets, start in [`Mods/InfoLCD - Apex Update/`](Mods/InfoLCD%20-%20Apex%20Update/).
 
 ---
 
 ### ⚙️ Sturmgrenadier Core Series
 
-Core gameplay overhaul for the Sturmgrenadier server ecosystem.
+Core gameplay overhaul work for the Sturmgrenadier server ecosystem.
 
 | Mod | Purpose |
 |-----|---------|
 | Sturmgrenadier Core Mod | Base overhaul |
-| Sturmgrenadier Core Power | Power system |
-| Sturmgrenadier Core Production | Production & crafting |
-| Sturmgrenadier Core Survival | Survival mechanics |
-| Sturmgrenadier Core Vanilla Combat | Combat balance |
+| Sturmgrenadier Core Power | Power system changes |
+| Sturmgrenadier Core Production | Production and crafting tweaks |
+| Sturmgrenadier Core Survival | Survival balance |
+| Sturmgrenadier Core Vanilla Combat | Combat rebalance |
 
 ---
 
@@ -45,12 +51,12 @@ Balance and compatibility patches for third-party mods used on Sturmgrenadier se
 | Dense Colorable Solar Panels | Power output |
 | Federal Industrial - Utilities | Compatibility |
 | Isy's Dense Solar Panels | Power output |
-| Life'Tech - Algaetechnology | Farming/resources |
+| Life'Tech - Algaetechnology | Farming and resources |
 | ModCubeBlocks Refinery x10 | Refinery speed |
 | ModCubeBlocks Upgrade Module | Module balance |
 | More Engineer Characters | Character compatibility |
 | More Wind Turbines | Wind power output |
-| [Mafoo] More Batteries | Battery capacity/charge |
+| [Mafoo] More Batteries | Battery capacity and charge |
 
 ---
 
@@ -59,39 +65,38 @@ Balance and compatibility patches for third-party mods used on Sturmgrenadier se
 | Mod | Description |
 |-----|-------------|
 | Not Just For Looks | Gives DLC cosmetic blocks actual useful stats |
-| Universal Image Converter | LCD image pack — subscribe to get ready-made images in-game |
+| Universal Image Converter | Workshop LCD image pack — separate from the standalone tool repo of the same name |
 
 ---
 
-### 🖼️ SE Image Converter (Standalone Tool)
+## 🧰 Companion Tools
 
-A Windows desktop tool for converting images to Space Engineers LCD formats — no Python required.
+These tools used to live alongside the mods, but now have their own homes:
 
-| Tool | What it does |
-|------|-------------|
-| **Image to DDS** | Converts images to `.dds` files ready for LCD texture mods |
-| **Image to LCD Text** | Converts images to SE colour-code strings for pasting directly into LCD text surfaces |
-
-**Download:** [Releases — space-engineers-image-converter](https://github.com/Godimas/space-engineers-image-converter/releases)
+| Repo | Use case |
+|------|----------|
+| [`universal-image-converter`](https://github.com/Godimas101/universal-image-converter/releases/latest) | Convert images to `.dds` textures or pasteable LCD text |
+| [`universal-audio-converter`](https://github.com/Godimas101/universal-audio-converter/releases/latest) | Convert, edit, and generate audio assets for SE mods |
+| [`space-engineers-modders-tool-kit`](https://github.com/Godimas101/space-engineers-modders-tool-kit) | Grab the broader toolbox in one place |
 
 ---
 
 ## 🛠️ Development Setup
 
-**Prerequisites:**
-- Space Engineers + Mod SDK (auto-installs via Steam)
-- Visual Studio or VS Code for C#
+**Prerequisites**
+- Space Engineers + Mod SDK (installed through Steam)
+- Visual Studio or VS Code for C# work
 
-**SDK location:**
-```
+**SDK location**
+```text
 D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\
 ```
 
-**Building:**
-1. Reference SDK DLLs for IntelliSense
+**Typical workflow**
+1. Reference the SDK DLLs for IntelliSense and API access
 2. Write scripts in `Data/Scripts/<namespace>/`
 3. Register LCD scripts in `Data/TextSurfaceScripts.sbc`
-4. Test via `%AppData%\SpaceEngineers\Mods\` or Workshop
+4. Test through `%AppData%\SpaceEngineers\Mods\` or via the Steam Workshop pipeline
 
 ---
 
@@ -101,18 +106,10 @@ D:\SteamLibrary\steamapps\common\SpaceEngineersModSDK\
 - [Mod API Documentation](https://keensoftwarehouse.github.io/SpaceEngineersModAPI/api/index.html)
 - [Steam Workshop](https://steamcommunity.com/app/244850/workshop/)
 
----
-
 ## 🧡 Support
 
-All mods are free and always will be. If they're adding to your game, consider supporting on Patreon — it helps keep the updates and new mods coming.
+All mods are free and always will be. If they’ve added something fun to your save, consider supporting on Patreon — it helps keep updates and new projects coming.
 
 [![Support on Patreon](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/images/buttons/patreon-medium.png)](https://patreon.com/Godimas101)
 
-Looking for the modding tools? Grab everything in one place:
-
-[![SE Modder's Tool Kit](https://raw.githubusercontent.com/Godimas101/personal-projects/main/patreon/images/buttons/git-medium.png)](https://github.com/Godimas101/space-engineers-modders-tool-kit)
-
----
-
-*"Building better blocks, one mod at a time."*
+*Building better blocks, one mod at a time.*
